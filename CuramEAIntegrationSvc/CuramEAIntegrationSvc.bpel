@@ -1,0 +1,418 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Thu Oct 08 11:20:03 EDT 2015
+  Author:  Spurthi
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="CuramEAIntegrationSvc"
+         targetNamespace="http://xmlns.oracle.com/DCAPP/ICReference/CuramEAIntegrationSvc/Service"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://xmlns.oracle.com/DCAPP/ICReference/CuramEAIntegrationSvc/Service"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/DCAPP/CuramEAIntegrationSvc/ICReferenceCasePollSvc"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/top/ICReferenceCasePollSvc"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/jms/DCAPP/CuramEAIntegrationSvc/ICRefNumPublishSvc"
+         xmlns:ns4="http://CRMIntegrationACAPi/terms/1.0"
+         xmlns:ns5="http://xmlns.oracle.com/DCAS_DEV5/ErrorHandlingDCASCmpService/ErrorHandlingDCASABCSImpl"
+         xmlns:ns6="http://xmlns.dhs.dc.gov/DCAS/ESB/ErrorHandlingService/V1"
+         xmlns:ns7="http://xmlns.oracle.com/NEW_APP/SyncExternalFamilyVerificationCmpService/SyncExternalFamilyVerificationABCSImpl"
+         xmlns:ns9="http://openhbx.org/api/terms/1.0"
+         xmlns:ns8="http://xmlns.oracle.com/DCAS/edi/dchealthlink.com/SyncIntegratedCases/v1"
+         xmlns:ns10="http://xmlns.oracle.com/pcbpel/adapter/jms/SOA_APP/CuramEAIntegrationSvc/Publish_HavenICID"
+         xmlns:ns11="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSynExternalFamilyABCSImpl"
+         xmlns:ns12="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal">
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="http://schemas.oracle.com/bpel/extension"
+          location="RuntimeFault.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="curameaintegrationsvc_client"
+                 partnerLinkType="ns1:ICReferenceCasePollSvc_plt"
+                 myRole="ICReferenceCasePollSvc_role"/>
+    <partnerLink name="ICRefNumPublishSvc"
+                 partnerLinkType="ns3:Produce_Message_plt"
+                 partnerRole="Produce_Message_role"/>
+    <partnerLink name="Invoke_ErrorHandler_Service"
+                 partnerLinkType="ns5:ErrorHandlingDCASABCSImpl"
+                 partnerRole="ErrorHandlingDCASABCSImplProvider"/>
+    <partnerLink name="Publish_HavenICID"
+                 partnerLinkType="ns10:Produce_Message_plt"
+                 partnerRole="Produce_Message_role"/>
+    <partnerLink name="CheckPDC" partnerLinkType="ns12:HavenSyncExternal"
+                 partnerRole="HavenSyncExternalProvider"/>
+  </partnerLinks>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="Recive_IC_PollData"
+              messageType="ns1:DchxeaiccaserefCollection_msg"/>
+    <variable name="InstanceTitle" type="xsd:string"/>
+    <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
+    <variable name="Invoke_ICIDNumPublish_Produce_Message_InputVariable"
+              messageType="ns3:Produce_Message_msg"/>
+    <variable name="Invoke_Error_Handler_process_InputVariable"
+              messageType="ns5:ErrorHandlingDCASABCSImplRequestMessage"/>
+    <variable name="Invoke_PublishHavenICID_InputVariable"
+              messageType="ns10:Produce_Message_msg"/>
+    <variable name="Invoke_CheckPDC_process_InputVariable"
+              messageType="ns12:HavenSyncExternalRequestMessage"/>
+    <variable name="Invoke_CheckPDC_process_OutputVariable"
+              messageType="ns12:HavenSyncExternalResponseMessage"/>
+  </variables>
+  <faultHandlers>
+    <catch faultName="bpelx:remoteFault" faultVariable="FaultVar"
+           faultMessageType="bpelx:RuntimeFaultMessage">
+      <sequence name="Sequence2">
+        <assign name="Assign_RemoteFaultData"
+                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+          <copy>
+            <from>xp20:current-dateTime()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Footer/ns6:TimeStamp</to>
+          </copy>
+          <copy>
+            <from>oraext:get-content-as-string($Recive_IC_PollData.DchxeaiccaserefCollection)</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:InputMsg</to>
+          </copy>
+          <copy>
+            <from>ora:generateGUID()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:GUID</to>
+          </copy>
+          <copy>
+            <from>'ESB_01'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SenderID</to>
+          </copy>
+          <copy>
+            <from>'ESB'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SenderName</to>
+          </copy>
+          <copy>
+            <from>ora:getComponentName()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:ServiceName</to>
+          </copy>
+          <copy>
+            <from>ora:getCompositeName()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:CompositeName</to>
+          </copy>
+          <copy>
+            <from>ora:getComponentName()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:Component</to>
+          </copy>
+          <copy>
+            <from>'ENAPP_01'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:TargetID</to>
+          </copy>
+          <copy>
+            <from>'DEV'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:EnvironmentName</to>
+          </copy>
+          <copy>
+            <from>'ENA_01'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SourceID</to>
+          </copy>
+          <copy>
+            <from>ora:getCompositeInstanceId()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:InstanceID</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorCode</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorDesc</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorMsg</to>
+          </copy>
+          <copy>
+            <from>'1'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorSeverity</to>
+          </copy>
+          <copy>
+            <from>'REMOTE_01'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorType</to>
+          </copy>
+        </assign>
+        <invoke name="Invoke_Error_Handler" bpelx:invokeAsDetail="no"
+                partnerLink="Invoke_ErrorHandler_Service"
+                portType="ns5:ErrorHandlingDCASABCSImpl" operation="process"
+                inputVariable="Invoke_Error_Handler_process_InputVariable"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+      </sequence>
+    </catch>
+    <catch faultName="bpelx:bindingFault" faultVariable="FaultVar"
+           faultMessageType="bpelx:RuntimeFaultMessage">
+      <sequence name="Sequence1">
+        <assign name="Assign_BindFaultData">
+          <copy>
+            <from>xp20:current-dateTime()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Footer/ns6:TimeStamp</to>
+          </copy>
+          <copy>
+            <from>oraext:get-content-as-string($Recive_IC_PollData.DchxeaiccaserefCollection)</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:InputMsg</to>
+          </copy>
+          <copy>
+            <from>ora:generateGUID()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:GUID</to>
+          </copy>
+          <copy>
+            <from>'ESB_01'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SenderID</to>
+          </copy>
+          <copy>
+            <from>'ESB'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SenderName</to>
+          </copy>
+          <copy>
+            <from>ora:getComponentName()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:ServiceName</to>
+          </copy>
+          <copy>
+            <from>ora:getCompositeName()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:CompositeName</to>
+          </copy>
+          <copy>
+            <from>ora:getComponentName()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:Component</to>
+          </copy>
+          <copy>
+            <from>'ENAPP_01'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:TargetID</to>
+          </copy>
+          <copy>
+            <from>'DEV'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:EnvironmentName</to>
+          </copy>
+          <copy>
+            <from>'ENA_01'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SourceID</to>
+          </copy>
+          <copy>
+            <from>ora:getCompositeInstanceId()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:InstanceID</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorCode</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorDesc</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorMsg</to>
+          </copy>
+          <copy>
+            <from>'1'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorSeverity</to>
+          </copy>
+          <copy>
+            <from>'BINDING_01'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorType</to>
+          </copy>
+        </assign>
+        <invoke name="Invoke_Error_Handler" bpelx:invokeAsDetail="no"
+                partnerLink="Invoke_ErrorHandler_Service"
+                portType="ns5:ErrorHandlingDCASABCSImpl" operation="process"
+                inputVariable="Invoke_Error_Handler_process_InputVariable"/>
+      </sequence>
+    </catch>
+    <catchAll>
+      <sequence name="Sequence3">
+        <assign name="Assign_FaultDetails">
+          <copy>
+            <from>'CURAMEAINTEGRATIONSVC'</from>
+            <to>$FaultVar.code</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+        </assign>
+        <assign name="Assign_GenricFaultData"
+                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+          <copy>
+            <from>xp20:current-dateTime()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Footer/ns6:TimeStamp</to>
+          </copy>
+          <copy>
+            <from>oraext:get-content-as-string($Recive_IC_PollData.DchxeaiccaserefCollection)</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:InputMsg</to>
+          </copy>
+          <copy>
+            <from>ora:generateGUID()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:GUID</to>
+          </copy>
+          <copy>
+            <from>'ESB_01'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SenderID</to>
+          </copy>
+          <copy>
+            <from>'ESB'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SenderName</to>
+          </copy>
+          <copy>
+            <from>ora:getComponentName()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:ServiceName</to>
+          </copy>
+          <copy>
+            <from>ora:getCompositeName()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:CompositeName</to>
+          </copy>
+          <copy>
+            <from>ora:getComponentName()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:Component</to>
+          </copy>
+          <copy>
+            <from>'ENAPP_01'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:TargetID</to>
+          </copy>
+          <copy>
+            <from>'DEV'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:EnvironmentName</to>
+          </copy>
+          <copy>
+            <from>'ENA_01'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SourceID</to>
+          </copy>
+          <copy>
+            <from>ora:getCompositeInstanceId()</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:InstanceID</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorCode</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorDesc</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorMsg</to>
+          </copy>
+          <copy>
+            <from>'1'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorSeverity</to>
+          </copy>
+          <copy>
+            <from>'GENRIC_01'</from>
+            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorType</to>
+          </copy>
+        </assign>
+        <invoke name="Invoke_Error_Handler" bpelx:invokeAsDetail="no"
+                partnerLink="Invoke_ErrorHandler_Service"
+                portType="ns5:ErrorHandlingDCASABCSImpl" operation="process"
+                inputVariable="Invoke_Error_Handler_process_InputVariable"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+    <!-- Receive input from requestor. (Note: This maps to operation defined in CuramEAIntegrationSvc.wsdl) -->
+    <receive name="receiveInput" partnerLink="curameaintegrationsvc_client"
+             portType="ns1:ICReferenceCasePollSvc_ptt" operation="receive"
+             variable="Recive_IC_PollData" createInstance="yes"/>
+    <assign name="Assign_Title">
+      <copy>
+        <from>$Recive_IC_PollData.DchxeaiccaserefCollection/ns2:Dchxeaiccaseref/ns2:iccasereference</from>
+        <to>$InstanceTitle</to>
+      </copy>
+    </assign>
+    <extensionActivity xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <bpelx:exec name="EmbeddingCompositeTitle" language="java"
+                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+        <![CDATA[String title = "CASEREF: "+(String)getVariableData("InstanceTitle");            
+setCompositeInstanceTitle(title);]]>
+      </bpelx:exec>
+    </extensionActivity>
+    <assign name="Assign_ICIDRefNum">
+      <copy>
+        <from>$Recive_IC_PollData.DchxeaiccaserefCollection/ns2:Dchxeaiccaseref/ns2:iccasereference</from>
+        <to>$Invoke_ICIDNumPublish_Produce_Message_InputVariable.body/ns4:IntegratedCase_ID</to>
+      </copy>
+      <copy>
+        <from>$Recive_IC_PollData.DchxeaiccaserefCollection/ns2:Dchxeaiccaseref/ns2:iccasereference</from>
+        <to>$Invoke_CheckPDC_process_InputVariable.payload/ns8:ICIDParameters/ns8:IntegratedCasereference_ID</to>
+      </copy>
+    </assign>
+    <invoke name="Invoke_CheckPDC" partnerLink="CheckPDC"
+            portType="ns12:HavenSyncExternal" operation="process"
+            inputVariable="Invoke_CheckPDC_process_InputVariable"
+            outputVariable="Invoke_CheckPDC_process_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <if name="If1">
+      <documentation>CheckPDC</documentation>
+      <condition>$Invoke_CheckPDC_process_OutputVariable.payload/integrated_case/curam_applicants/curam_applicant/is_primary_applicant !=''</condition>
+      <sequence name="Sequence4">
+        <invoke name="Invoke_ICIDNumPublish" partnerLink="ICRefNumPublishSvc"
+                portType="ns3:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="Invoke_ICIDNumPublish_Produce_Message_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+        <assign name="Asn_HavenICID">
+          <copy>
+            <from>$Recive_IC_PollData.DchxeaiccaserefCollection/ns2:Dchxeaiccaseref/ns2:iccasereference</from>
+            <to>$Invoke_PublishHavenICID_InputVariable.body/ns4:IntegratedCase_ID</to>
+          </copy>
+        </assign>
+        <invoke name="Invoke_PublishHavenICID" partnerLink="Publish_HavenICID"
+                portType="ns10:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="Invoke_PublishHavenICID_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+      <else>
+        <documentation>EmptyPDC</documentation>
+        <empty name="Exit"/>
+      </else>
+    </if>
+  </sequence>
+</process>

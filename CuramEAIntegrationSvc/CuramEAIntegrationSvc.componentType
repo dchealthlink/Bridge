@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<componentType xmlns="http://xmlns.oracle.com/sca/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ui="http://xmlns.oracle.com/soa/designer/">
+   <service name="curameaintegrationsvc_client" ui:wsdlLocation="ICReferenceCasePollSvc.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/DCAPP/CuramEAIntegrationSvc/ICReferenceCasePollSvc#wsdl.interface(ICReferenceCasePollSvc_ptt)"/>
+   </service>
+   <reference name="ICRefNumPublishSvc" ui:wsdlLocation="ICRefNumPublishSvc.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/jms/DCAPP/CuramEAIntegrationSvc/ICRefNumPublishSvc#wsdl.interface(Produce_Message_ptt)"/>
+   </reference>
+   <reference name="Invoke_ErrorHandler_Service" ui:wsdlLocation="http://dhsdcasesbsoaappdev01.dhs.dc.gov:8001/soa-infra/services/default/ErrorHandlingDCASCmpService/ErrorHandlingDCASABCSImpl.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/DCAS_DEV5/ErrorHandlingDCASCmpService/ErrorHandlingDCASABCSImpl#wsdl.interface(ErrorHandlingDCASABCSImpl)"/>
+   </reference>
+   <reference name="Publish_HavenICID" ui:wsdlLocation="Publish_HavenICID.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/jms/SOA_APP/CuramEAIntegrationSvc/Publish_HavenICID#wsdl.interface(Produce_Message_ptt)"/>
+   </reference>
+   <reference name="CheckPDC" ui:wsdlLocation="http://dhsdcasesbsoaappuat01.dhs.dc.gov:8001/soa-infra/services/HAVEN/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal#wsdl.interface(HavenSyncExternal)"/>
+   </reference>
+</componentType>

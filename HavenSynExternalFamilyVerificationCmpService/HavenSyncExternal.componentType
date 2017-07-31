@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<componentType xmlns="http://xmlns.oracle.com/sca/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ui="http://xmlns.oracle.com/soa/designer/">
+   <service name="havensyncexternal_client" ui:wsdlLocation="HavenSyncExternal.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal#wsdl.interface(HavenSyncExternal)"/>
+   </service>
+   <reference name="Invoke_ErrorHandling" ui:wsdlLocation="ErrorHandlingDCASABCSImpl.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/DCAS_DEV5/ErrorHandlingDCASCmpService/ErrorHandlingDCASABCSImpl#wsdl.interface(ErrorHandlingDCASABCSImpl)"/>
+   </reference>
+   <reference name="GetInegratedCasesbyICIDSP" ui:wsdlLocation="GetInegratedCasesbyICIDSP.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/Test/HavenSynExternalFamilyVerificationCmpService/GetInegratedCasesbyICIDSP#wsdl.interface(GetInegratedCasesbyICIDSP_ptt)"/>
+   </reference>
+   <reference name="GetPDCInfo" ui:wsdlLocation="GetPDCInfo.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenSynExternalFamilyVerificationCmpService/GetPDCInfo#wsdl.interface(GetPDCInfo_ptt)"/>
+   </reference>
+</componentType>

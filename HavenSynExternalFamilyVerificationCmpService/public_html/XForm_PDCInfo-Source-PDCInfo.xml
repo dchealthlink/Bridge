@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<integratedcases>
+   <integratedcase>
+      <integrated_case_reference>3965860</integrated_case_reference>
+      <product_delivery_cases>
+         <product_delivery_case>
+            <product_delivery_case_reference>3965863</product_delivery_case_reference>
+            <effectivedate>31-MAR-17</effectivedate>
+            <startdate>01-MAY-17</startdate>
+            <expectedenddate>31-DEC-17</expectedenddate>
+            <concern_role_id>-4414616443392360448</concern_role_id>
+         </product_delivery_case>
+         <product_delivery_case>
+            <product_delivery_case_reference>3965861</product_delivery_case_reference>
+            <effectivedate>01-MAR-17</effectivedate>
+            <startdate>01-APR-17</startdate>
+            <expectedenddate>31-DEC-17</expectedenddate>
+            <concern_role_id>4718683600915005440</concern_role_id>
+            <concern_role_id>-308459483137310720</concern_role_id>
+            <concern_role_id>concern_role_id1362</concern_role_id>
+         </product_delivery_case>
+         <product_delivery_case>
+            <product_delivery_case_reference>product_delivery_case_reference1363</product_delivery_case_reference>
+            <effectivedate>31-MAR-17</effectivedate>
+            <startdate>01-MAY-17</startdate>
+            <expectedenddate>31-DEC-17</expectedenddate>
+            <concern_role_id>concern_role_id1364</concern_role_id>
+            <concern_role_id>concern_role_id1365</concern_role_id>
+            <concern_role_id>concern_role_id1366</concern_role_id>
+         </product_delivery_case>
+      </product_delivery_cases>
+   </integratedcase>
+</integratedcases>

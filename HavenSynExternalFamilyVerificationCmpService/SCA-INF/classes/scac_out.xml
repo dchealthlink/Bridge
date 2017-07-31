@@ -1,0 +1,41 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>error</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>/Users/rahulchitturi/Desktop/PreProd/HavenSynExternalFamilyVerificationCmpService/composite.xml</file>
+      <name>/Users/rahulchitturi/Desktop/PreProd/HavenSynExternalFamilyVerificationCmpService/composite.xml</name>
+      <fix/>
+      <msg>oracle.fabric.common.FabricException: oracle.mds.config.MDSConfigurationException: MDS-01330: unable to load MDS configuration document    
+MDS-01329: unable to load element "persistence-config"
+MDS-01370: MetadataStore configuration for metadata-store-usage "mstore-usage_2" is invalid.    
+MDS-01259: The metadata store "oracle.mds.persistence.stores.db.DBMetadataStore" cannot be instantiated.    
+MDS-00003: error connecting to the database    
+Exception occurred while getting connection: oracle.ucp.UniversalConnectionPoolException: Cannot get Connection from Datasource: java.sql.SQLException: ORA-01017: invalid username/password; logon denied
+
+: MDS-01330: unable to load MDS configuration document    
+MDS-01329: unable to load element "persistence-config"
+MDS-01370: MetadataStore configuration for metadata-store-usage "mstore-usage_2" is invalid.    
+MDS-01259: The metadata store "oracle.mds.persistence.stores.db.DBMetadataStore" cannot be instantiated.    
+MDS-00003: error connecting to the database    
+Exception occurred while getting connection: oracle.ucp.UniversalConnectionPoolException: Cannot get Connection from Datasource: java.sql.SQLException: ORA-01017: invalid username/password; logon denied
+
+: oracle.mds.config.MDSConfigurationException: MDS-01330: unable to load MDS configuration document    
+MDS-01329: unable to load element "persistence-config"
+MDS-01370: MetadataStore configuration for metadata-store-usage "mstore-usage_2" is invalid.    
+MDS-01259: The metadata store "oracle.mds.persistence.stores.db.DBMetadataStore" cannot be instantiated.    
+MDS-00003: error connecting to the database    
+Exception occurred while getting connection: oracle.ucp.UniversalConnectionPoolException: Cannot get Connection from Datasource: java.sql.SQLException: ORA-01017: invalid username/password; logon denied
+
+: MDS-01330: unable to load MDS configuration document    
+MDS-01329: unable to load element "persistence-config"
+MDS-01370: MetadataStore configuration for metadata-store-usage "mstore-usage_2" is invalid.    
+MDS-01259: The metadata store "oracle.mds.persistence.stores.db.DBMetadataStore" cannot be instantiated.    
+MDS-00003: error connecting to the database    
+Exception occurred while getting connection: oracle.ucp.UniversalConnectionPoolException: Cannot get Connection from Datasource: java.sql.SQLException: ORA-01017: invalid username/password; logon denied
+
+</msg>
+   </Fault>
+</Faults>

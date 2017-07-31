@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sensors xmlns="http://xmlns.oracle.com/bpel/sensor">
+    <sensor sensorName="BAD_IC_REF" kind="reference" target="undefined" filter="$out.payload/ns1:ExternalFamilyVerificationsResponse/ns3:external_verified_family/ns3:id/ns3:id = ''" xmlns:ns1="http://xmlns.oracle.com/DCAS/edi/dchealthlink.com/SyncIntegratedCases/v1" xmlns:ns3="http://openhbx.org/api/terms/1.0">
+        <referenceConfig reference="CheckPDC" expression="$in.payload/ns1:GetICIDIntegratedCaseRequest/ns1:ICIDParameters/ns1:IntegratedCasereference_ID" operation="process" outputDataType="string" outputNamespace="http://www.w3.org/2001/XMLSchema"/>
+    </sensor>
+    <sensor sensorName="GOOD_IC_REF" kind="reference" target="undefined" filter="$out.payload/ns1:ExternalFamilyVerificationsResponse/ns3:external_verified_family/ns3:id/ns3:id != ''" xmlns:ns1="http://xmlns.oracle.com/DCAS/edi/dchealthlink.com/SyncIntegratedCases/v1" xmlns:ns3="http://openhbx.org/api/terms/1.0">
+        <referenceConfig reference="CheckPDC" expression="$in.payload/ns1:GetICIDIntegratedCaseRequest/ns1:ICIDParameters/ns1:IntegratedCasereference_ID" operation="process" outputDataType="string" outputNamespace="http://www.w3.org/2001/XMLSchema"/>
+    </sensor>
+</sensors>

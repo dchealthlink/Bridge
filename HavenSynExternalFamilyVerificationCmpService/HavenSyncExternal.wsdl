@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="HavenSyncExternal" targetNamespace="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal" xmlns:ns1="http://xmlns.oracle.com/DCAS/edi/dchealthlink.com/SyncIntegratedCases/v1" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+   <plnk:partnerLinkType name="HavenSyncExternal">
+      <plnk:role name="HavenSyncExternalProvider" portType="client:HavenSyncExternal"/>
+   </plnk:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal" xmlns:ns1="http://xmlns.oracle.com/DCAS/edi/dchealthlink.com/SyncIntegratedCases/v1" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+         <import namespace="http://xmlns.oracle.com/DCAS/edi/dchealthlink.com/SyncIntegratedCases/v1" schemaLocation="xsd/SyncExternalFamilyVerifications.xsd"/>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal" xmlns:ns1="http://xmlns.oracle.com/DCAS/edi/dchealthlink.com/SyncIntegratedCases/v1" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+         <include schemaLocation="xsd/assistance.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal" xmlns:ns1="http://xmlns.oracle.com/DCAS/edi/dchealthlink.com/SyncIntegratedCases/v1" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+         <xsd:include schemaLocation="xsd/PDCInfo.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="HavenSyncExternalRequestMessage">
+      <wsdl:part name="payload" element="ns1:GetICIDIntegratedCaseRequest"/>
+   </wsdl:message>
+   <wsdl:message name="HavenSyncExternalResponseMessage">
+      <wsdl:part name="payload" element="integrated_cases"/>
+   </wsdl:message>
+   <wsdl:portType name="HavenSyncExternal">
+      <wsdl:operation name="process">
+         <wsdl:input message="client:HavenSyncExternalRequestMessage"/>
+         <wsdl:output message="client:HavenSyncExternalResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

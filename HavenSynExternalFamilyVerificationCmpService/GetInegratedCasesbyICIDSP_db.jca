@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<adapter-config name="GetInegratedCasesbyICIDSP" adapter="Database Adapter"
+                wsdlLocation="GetInegratedCasesbyICIDSP.wsdl"
+                xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+   <connection-factory location="eis/DB/curamtohaven"
+                       UIConnectionName="CuramUAT" adapterRef=""/>
+   <endpoint-interaction portType="GetInegratedCasesbyICIDSP_ptt"
+                         operation="GetInegratedCasesbyICIDSP">
+      <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+         <property name="ProcedureName" value="GET_INTEGRATED_CASE_BY_CASEREF"/>
+         <property name="GetActiveUnitOfWork" value="false"/>
+      </interaction-spec>
+      <output/>
+   </endpoint-interaction>
+</adapter-config>

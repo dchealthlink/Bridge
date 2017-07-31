@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<adapter-config name="ICReferenceCasePollSvc" adapter="Database Adapter"
+                wsdlLocation="ICReferenceCasePollSvc.wsdl"
+                xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+   <connection-factory location="eis/DB/ICPoll" UIConnectionName="JMYCURMDB"
+                       adapterRef=""/>
+   <endpoint-activation portType="ICReferenceCasePollSvc_ptt"
+                        operation="receive">
+      <activation-spec className="oracle.tip.adapter.db.DBActivationSpec">
+         <property name="DescriptorName"
+                   value="ICReferenceCasePollSvc.Dchxeaiccaseref"/>
+         <property name="QueryName" value="ICReferenceCasePollSvcSelect"/>
+         <property name="MappingsMetaDataURL"
+                   value="ICReferenceCasePollSvc-or-mappings.xml"/>
+         <property name="PollingStrategy" value="LogicalDeletePollingStrategy"/>
+         <property name="MarkReadColumn" value="STATUS"/>
+         <property name="MarkReadValue" value="UPDATED"/>
+         <property name="MarkReservedValue"
+                   value="R${weblogic.Name-2}-${IP-2}"/>
+         <property name="MarkUnreadValue" value="CREATE"/>
+         <property name="PollingInterval" value="2"/>
+         <property name="MaxRaiseSize" value="1"/>
+         <property name="MaxTransactionSize" value="1"/>
+         <property name="NumberOfThreads" value="1"/>
+         <property name="ReturnSingleResultSet" value="false"/>
+      </activation-spec>
+   </endpoint-activation>
+</adapter-config>

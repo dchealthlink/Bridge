@@ -1,0 +1,43 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>344</line>
+      <col/>
+      <file>CuramEAIntegrationSvc.bpel</file>
+      <name>CuramEAIntegrationSvc.bpel</name>
+      <fix>Add a predicate to select an element from the sequence.</fix>
+      <msg>The XPath segment "child::ns2:Dchxeaiccaseref" selects a sequence of elements - a predicate MAY be needed to correctly select an element.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>356</line>
+      <col/>
+      <file>CuramEAIntegrationSvc.bpel</file>
+      <name>CuramEAIntegrationSvc.bpel</name>
+      <fix>Add a predicate to select an element from the sequence.</fix>
+      <msg>The XPath segment "child::ns2:Dchxeaiccaseref" selects a sequence of elements - a predicate MAY be needed to correctly select an element.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>360</line>
+      <col/>
+      <file>CuramEAIntegrationSvc.bpel</file>
+      <name>CuramEAIntegrationSvc.bpel</name>
+      <fix>Add a predicate to select an element from the sequence.</fix>
+      <msg>The XPath segment "child::ns2:Dchxeaiccaseref" selects a sequence of elements - a predicate MAY be needed to correctly select an element.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>381</line>
+      <col/>
+      <file>CuramEAIntegrationSvc.bpel</file>
+      <name>CuramEAIntegrationSvc.bpel</name>
+      <fix>Add a predicate to select an element from the sequence.</fix>
+      <msg>The XPath segment "child::ns2:Dchxeaiccaseref" selects a sequence of elements - a predicate MAY be needed to correctly select an element.</msg>
+   </Fault>
+</Faults>
