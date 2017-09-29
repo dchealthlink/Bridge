@@ -1,0 +1,157 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Sep 26 16:28:48 EDT 2017
+  Author:  rahulchitturi
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="HavenDeductions"
+               targetNamespace="http://xmlns.oracle.com/Haven/HavenDeductionsService/HavenDeductions"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Haven/HavenDeductionsService/HavenDeductions"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/Test/DeductionsService/DeductionsServiceABCSImpl"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenDeductionsService/DeductionsSP"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/sp/DeductionsSP"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/sp/DeductionsService"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="http://schemas.oracle.com/bpel/extension"
+          location="RuntimeFault.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <import location="xsd/sp_out_format.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <partnerLinks>
+    <partnerLink name="HavenDeductionsService"
+                 partnerLinkType="ns1:DeductionsServiceABCSImpl"
+                 myRole="DeductionsServiceABCSImplProvider"/>
+    <partnerLink name="DeductionsSP" partnerLinkType="ns2:DeductionsSP_plt"
+                 partnerRole="DeductionsSP_role"/>
+  </partnerLinks>
+  <variables>
+    <variable name="DeductionsService_InputVariable"
+              messageType="ns1:DeductionsServiceRequestMessage"/>
+    <variable name="DeductionsSP_InputVariable" messageType="ns2:args_in_msg"/>
+    <variable name="DeductionsSP_OutputVariable"
+              messageType="ns2:args_out_msg"/>
+    <variable name="DeductionsService_OutputVariable"
+              messageType="ns1:DeductionsServiceResponseMessage"/>
+    <variable name="FormatResp" element="deductions"/>
+    <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
+  </variables>
+  <faultHandlers>
+    <catchAll>
+      <sequence name="Sequence1">
+        <assign name="Assign3">
+          <copy>
+            <from>"DeductionsFaultCode"</from>
+            <to>$FaultVar.code</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+        </assign>
+        <assign name="Assign4">
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$DeductionsService_OutputVariable.IncomeOutputParameters/ns3:ResponseText</to>
+          </copy>
+          <copy>
+            <from>"FAILURE-500"</from>
+            <to>$DeductionsService_OutputVariable.IncomeOutputParameters/ns3:ResponseCode</to>
+          </copy>
+        </assign>
+        <reply name="ReplyErrorResp"
+               variable="DeductionsService_OutputVariable"
+               partnerLink="HavenDeductionsService"
+               portType="ns1:DeductionsServiceABCSImpl"
+               operation="DeductionsService"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <sequence name="main">
+    <receive name="ReceiveInput" createInstance="yes"
+             partnerLink="HavenDeductionsService"
+             portType="ns1:DeductionsServiceABCSImpl"
+             operation="DeductionsService"
+             variable="DeductionsService_InputVariable"/>
+    <assign name="Assign1">
+      <copy>
+        <from>$DeductionsService_InputVariable.IncomeInputParameters/ns3:I_CONCERNROLEID</from>
+        <to>$DeductionsSP_InputVariable.InputParameters/ns4:I_CONCERNROLEID</to>
+      </copy>
+    </assign>
+    <invoke name="InvokeDeductionsSP"
+            partnerLink="DeductionsSP" portType="ns2:DeductionsSP_ptt"
+            operation="DeductionsSP"
+            inputVariable="DeductionsSP_InputVariable"
+            outputVariable="DeductionsSP_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <if name="If1">
+      <documentation/>
+      <condition>$DeductionsSP_OutputVariable.OutputParameters/ns4:O_RESPONSE_CODE="DATA_FOUND"</condition>
+      <sequence>
+        <assign name="Assign2">
+          <copy>
+            <from>oraext:parseEscapedXML($DeductionsSP_OutputVariable.OutputParameters/ns4:O_USER_DETAILS_CLOB)</from>
+            <to>$FormatResp</to>
+          </copy>
+        </assign>
+        <assign name="Transform1">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/XformResp.xsl", $DeductionsSP_OutputVariable.OutputParameters, "FormatResp", $FormatResp)</from>
+            <to variable="DeductionsService_OutputVariable"
+                part="IncomeOutputParameters"/>
+          </copy>
+        </assign>
+      </sequence>
+      <else>
+        <assign name="Transform2">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Transformation_1.xsl", $DeductionsService_OutputVariable.IncomeOutputParameters, "DeductionsSP_OutputVariable.OutputParameters", $DeductionsSP_OutputVariable.OutputParameters)</from>
+            <to variable="DeductionsService_OutputVariable"
+                part="IncomeOutputParameters"/>
+          </copy>
+        </assign>
+      </else>
+    </if>
+    <reply name="ReplyOutput" variable="DeductionsService_OutputVariable"
+           partnerLink="HavenDeductionsService"
+           portType="ns1:DeductionsServiceABCSImpl"
+           operation="DeductionsService"/>
+  </sequence>
+</process>

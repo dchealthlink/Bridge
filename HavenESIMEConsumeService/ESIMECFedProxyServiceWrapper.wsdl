@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+    
+     targetNamespace="http://gov.hhs.cms.hix.dsh.ee.esi_mec.ext"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:WL5G3N2="http://gov.hhs.cms.hix.dsh.ee.esi_mec.ext"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+    >
+    <plnk:partnerLinkType name="Invoke_ESIMECService">
+        <plnk:role name="CalculateOPMPremiumPortType" portType="WL5G3N2:CalculateOPMPremiumPortType"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://gov.hhs.cms.hix.dsh.ee.esi_mec.ext" location="ESIMECFedProxyService.wsdl"/>
+</wsdl:definitions>

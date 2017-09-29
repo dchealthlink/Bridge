@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:ext="http://aptc.dsh.cms.gov/extension/1.0"
+            xmlns:hcore="http://hix.cms.gov/0.1/hix-core"
+            xmlns:hee="http://hix.cms.gov/0.1/hix-ee"
+            xmlns:i="http://niem.gov/niem/appinfo/2.0"
+            xmlns:nc="http://niem.gov/niem/niem-core/2.0"
+            xmlns:niem-xsd="http://niem.gov/niem/proxy/xsd/2.0"
+            xmlns:s="http://niem.gov/niem/structures/2.0"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            attributeFormDefault="qualified" elementFormDefault="qualified"
+            targetNamespace="http://aptc.dsh.cms.gov/extension/1.0" version="1">
+  <xsd:import namespace="http://hix.cms.gov/0.1/hix-ee"
+              schemaLocation="hix_ee.xsd"/>
+  <xsd:import namespace="http://niem.gov/niem/niem-core/2.0"
+              schemaLocation="niem_core.xsd"/>
+  <xsd:import namespace="http://hix.cms.gov/0.1/hix-core"
+              schemaLocation="hix_core.xsd"/>
+  <xsd:import namespace="http://niem.gov/niem/proxy/xsd/2.0"
+              schemaLocation="xsd.xsd"/>
+  <xsd:import namespace="http://niem.gov/niem/appinfo/2.1"
+              schemaLocation="appinfo_1.xsd"/>
+  <xsd:import namespace="http://niem.gov/niem/structures/2.0"
+              schemaLocation="structures.xsd"/>
+  <xsd:import namespace="http://niem.gov/niem/appinfo/2.0"
+              schemaLocation="appinfo.xsd"/>
+  <xsd:simpleType name="SLCSPPremiumSimpleType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:decimal">
+      <xsd:fractionDigits value="2"/>
+      <xsd:totalDigits value="19"/>
+      <xsd:minInclusive value="1"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="APTCRestrictionSimpleType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for Amount restriction</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:decimal">
+      <xsd:fractionDigits value="2"/>
+      <xsd:totalDigits value="19"/>
+      <xsd:minInclusive value="0"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:annotation>
+    <xsd:appinfo>
+      <i:ConformantIndicator>true</i:ConformantIndicator>
+    </xsd:appinfo>
+    <xsd:documentation source="">An extension schema with components needed for
+                                 computing the maximum advanced payment of the
+                                 premium tax credit with IRS.</xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType abstract="false" mixed="false" name="APTCRequestPayloadType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for Premium Tax Credit Request
+                                   Detail</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="s:ComplexObjectType">
+        <xsd:sequence>
+          <xsd:element name="RequestNumber" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="1" ref="hcore:RequestID"/>
+          <xsd:element maxOccurs="1" minOccurs="1" ref="hcore:Income"/>
+          <xsd:element maxOccurs="1" minOccurs="1" ref="ext:SLCSPPremium"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="RequestIDSimpleType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for request ID restriction</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:integer">
+      <xsd:maxInclusive value="999999999"/>
+      <xsd:minInclusive value="1"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="AmountRestrictionSimpleType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:decimal">
+      <xsd:fractionDigits value="2"/>
+      <xsd:totalDigits value="19"/>
+      <xsd:minInclusive value="0"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TaxYearRestrictionSimpleType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for year restriction</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:gYear">
+      <xsd:maxInclusive value="9999"/>
+      <xsd:minInclusive value="2014"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="FederalPovertyLevelRestrictionSimpleType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for Federal Poverty Level
+                                   restriction</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:decimal">
+      <xsd:fractionDigits value="2"/>
+      <xsd:totalDigits value="7"/>
+      <xsd:minInclusive value="0"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:element abstract="false" name="SLCSPPremium"
+               type="hee:InsurancePremiumType">
+    <xsd:annotation>
+      <xsd:documentation source="">A premium associated with the second lower
+                                   cost silver plan.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:complexType abstract="false" mixed="false"
+                   name="APTCResponsePayloadType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for Premium Tax Credit Response
+                                   Detail</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="s:ComplexObjectType">
+        <xsd:choice>
+          <xsd:element name="RequestNumber" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" ref="ext:IRSResponse"/>
+          <xsd:element maxOccurs="unbounded" minOccurs="1"
+                       ref="ext:ErrorMessageDetail"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element abstract="false" name="IRSResponse" type="ext:IRSResponseType">
+    <xsd:annotation>
+      <xsd:documentation source="">Response received from IRS</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:complexType abstract="false" mixed="false" name="IRSResponseType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for Response received from IRS</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="s:ComplexObjectType">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="1" ref="hcore:RequestID"/>
+          <!--  <xsd:element name="HavenID" type="xsd:string"/>
+          <xsd:element name="RequestNumber" type="xsd:string"/> -->
+          <xsd:element maxOccurs="1" minOccurs="0" ref="hee:APTC"/>
+          <xsd:element maxOccurs="1" minOccurs="1" ref="ext:SystemCode"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element abstract="false" name="SystemCode" type="nc:TextType">
+    <xsd:annotation>
+      <xsd:documentation source="">Identifies which system performed the
+                                   calculation (IRS or Hub) for Advance Premium
+                                   Tax Credit. If IRS is down, Hub is prepared
+                                   to perform the calculation for Advance
+                                   Premium Tax Credit.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element abstract="false" name="ErrorMessageDetail"
+               type="ext:ErrorMessageType">
+    <xsd:annotation>
+      <xsd:documentation source="">A error message description will be sent back
+                                   to the originator if the request cannot be
+                                   completed because of errors</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:complexType abstract="false" mixed="false" name="ErrorMessageType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for A error message description
+                                   will be sent back to the originator if the
+                                   request cannot be completed because of errors</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="s:ComplexObjectType">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="1"
+                       ref="hcore:ResponseMetadata"/>
+          <xsd:element maxOccurs="1" minOccurs="0" ref="ext:XPathContent"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element abstract="false" name="XPathContent" type="niem-xsd:string">
+    <xsd:annotation>
+      <xsd:documentation source="">XPath of the specific element/attribute
+                                   within the XMLl request/response data.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+</xsd:schema>

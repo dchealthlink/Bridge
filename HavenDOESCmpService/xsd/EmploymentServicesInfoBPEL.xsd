@@ -1,0 +1,237 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+        targetNamespace="http://xmlns.oracle.com/DCASLocalHub/EmploymentServicesInfo/EmploymentServicesInfoBPEL"
+        xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="process">
+      <complexType>
+         <sequence>
+            <element name="input" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="processResponse">
+      <complexType>
+         <sequence>
+            <element name="ServiceStatusType" nillable="false" minOccurs="0">
+               <complexType>
+                  <sequence>
+                     <element name="Code" type="string" nillable="false"
+                              minOccurs="0"/>
+                     <element name="Type" type="string" nillable="false"
+                              minOccurs="0"/>
+                     <element name="Description" type="string" nillable="false"
+                              minOccurs="0">
+                        <annotation>
+                           <documentation>Free-form text field to provide
+                                          clarification on the status code. This
+                                          field is not intended to be parsed
+                                          systematically. For systematic
+                                          parsing, use statusCode.</documentation>
+                        </annotation>
+                     </element>
+                     <element name="System" type="string" nillable="false"
+                              minOccurs="0">
+                        <annotation>
+                           <documentation>The system that is reporting status.</documentation>
+                        </annotation>
+                     </element>
+                     <element name="StatusDateTime" type="dateTime"
+                              nillable="false" minOccurs="0">
+                        <annotation>
+                           <documentation>The date and time of this status
+                                          message in GMT.</documentation>
+                        </annotation>
+                     </element>
+                     <element name="Retryable" type="string" nillable="true"
+                              minOccurs="0">
+                        <annotation>
+                           <documentation>Indicates whether or not the
+                                          invocation can be retried without side
+                                          effects. Valid values are: "true" and
+                                          "false". This field is also nillable
+                                          in cases where the response is
+                                          successful.</documentation>
+                        </annotation>
+                     </element>
+                     <element name="ContextKey" nillable="false" minOccurs="0">
+                        <annotation>
+                           <documentation>Used to associate this status with a
+                                          specific key. Examples of a business
+                                          key: PO Number, customer transaction
+                                          ID, etc.</documentation>
+                        </annotation>
+                        <complexType>
+                           <sequence>
+                              <element name="ContextKeyLabel" type="string"
+                                       nillable="false" minOccurs="0"/>
+                              <element name="ContextKeyValue" type="string"
+                                       nillable="false" minOccurs="0"/>
+                           </sequence>
+                        </complexType>
+                     </element>
+                     <element name="RawStatus" type="string" nillable="true"
+                              minOccurs="0">
+                        <annotation>
+                           <documentation>An element used to communicate the raw
+                                          or native provider system status. This
+                                          element may contain unparseable CDATA,
+                                          such as XML or stack traces that
+                                          contain unparseable characters.</documentation>
+                        </annotation>
+                     </element>
+                     <element name="TransactionId" type="string" nillable="true"
+                              minOccurs="0">
+                        <annotation>
+                           <documentation>A globally unique identifier
+                                          (recommend a GUID) for this message.</documentation>
+                        </annotation>
+                     </element>
+                  </sequence>
+                  <anyAttribute namespace="##other" processContents="lax"/>
+               </complexType>
+            </element>
+            <element name="EmploymentServicesData">
+               <complexType>
+                  <sequence>
+                     <element name="BenefitWeeksRemain" type="integer"
+                              nillable="true">
+                        <annotation>
+                           <documentation>The number of available benefit weeks .</documentation>
+                        </annotation>
+                     </element>
+                     <element name="BenefitsToDate" type="decimal"
+                              nillable="true">
+                        <annotation>
+                           <documentation>Benefit allowance paid to date.</documentation>
+                        </annotation>
+                     </element>
+                     <element name="ClaimantID" nillable="false">
+                        <annotation>
+                           <documentation>Applicant ClaimantID.</documentation>
+                        </annotation>
+                        <simpleType>
+                           <restriction base="string">
+                              <minLength value="1"/>
+                              <maxLength value="50"/>
+                           </restriction>
+                        </simpleType>
+                     </element>
+                     <element name="ApplicantState" nillable="true">
+                        <annotation>
+                           <documentation>state.</documentation>
+                        </annotation>
+                        <simpleType>
+                           <restriction base="string">
+                              <minLength value="0"/>
+                              <maxLength value="200"/>
+                           </restriction>
+                        </simpleType>
+                     </element>
+                     <element name="ApplicantFirstName" nillable="false">
+                        <annotation>
+                           <documentation>Applicant First Name.</documentation>
+                        </annotation>
+                        <simpleType>
+                           <restriction base="string">
+                              <minLength value="1"/>
+                              <maxLength value="200"/>
+                           </restriction>
+                        </simpleType>
+                     </element>
+                     <element name="ApplicantLastName" nillable="false">
+                        <annotation>
+                           <documentation>Applicant Last Name.</documentation>
+                        </annotation>
+                        <simpleType>
+                           <restriction base="string">
+                              <minLength value="1"/>
+                              <maxLength value="200"/>
+                           </restriction>
+                        </simpleType>
+                     </element>
+                     <element name="LastEmployer" nillable="false">
+                        <annotation>
+                           <documentation>Applicant Employer.</documentation>
+                        </annotation>
+                        <simpleType>
+                           <restriction base="string">
+                              <minLength value="1"/>
+                              <maxLength value="200"/>
+                           </restriction>
+                        </simpleType>
+                     </element>
+                     <element name="LastEmployerEIN" nillable="false">
+                        <annotation>
+                           <documentation>Applicant Employer employer
+                                          identification number.</documentation>
+                        </annotation>
+                        <simpleType>
+                           <restriction base="string">
+                              <minLength value="1"/>
+                              <maxLength value="50"/>
+                           </restriction>
+                        </simpleType>
+                     </element>
+                     <element name="LastEmploymentWages" type="decimal"
+                              nillable="false">
+                        <annotation>
+                           <documentation>Applicant Employment Wage.</documentation>
+                        </annotation>
+                     </element>
+                     <element name="LastPaymentDate" type="date"
+                              nillable="false">
+                        <annotation>
+                           <documentation>Last Payment Date</documentation>
+                        </annotation>
+                     </element>
+                     <element name="LengthLastEmployed" type="integer"
+                              nillable="false">
+                        <annotation>
+                           <documentation>How long has the applicant been
+                                          employed with Employer.</documentation>
+                        </annotation>
+                     </element>
+                     <element name="MaxBenefitAllowance" type="decimal"
+                              nillable="true">
+                        <annotation>
+                           <documentation>Maximum allowance available to the
+                                          recipient.</documentation>
+                        </annotation>
+                     </element>
+                     <element name="PartialPaymentAmount" type="decimal"
+                              nillable="true">
+                        <annotation>
+                           <documentation>The amount of benefit payment
+                                          reduction.</documentation>
+                        </annotation>
+                     </element>
+                     <element name="PaymentAmount" type="decimal"
+                              nillable="true">
+                        <annotation>
+                           <documentation>The amount of each scheduled benefit
+                                          payment.</documentation>
+                        </annotation>
+                     </element>
+                     <element name="BenefitsFrequency" type="integer"
+                              nillable="true" minOccurs="0">
+                        <annotation>
+                           <documentation>Frequency of benefits payments.</documentation>
+                        </annotation>
+                     </element>
+                     <element name="PaymentsFrequency" type="integer"
+                              nillable="true" minOccurs="0">
+                        <annotation>
+                           <documentation>The frequency of payments to the
+                                          recipient.</documentation>
+                        </annotation>
+                     </element>
+                     <element name="IsEmployed" type="boolean" nillable="true"
+                              minOccurs="0"/>
+                  </sequence>
+               </complexType>
+            </element>
+            <element name="RequestNumber" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+</schema>

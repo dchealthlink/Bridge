@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="deductions">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="deduction" maxOccurs="unbounded" minOccurs="0">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element type="xs:string" name="evidenceID"/>
+                     <xs:element type="xs:string" name="deduction_typeCode"/>
+                     <xs:element type="xs:string" name="income_type"/>
+                     <xs:element type="xs:string" name="amount"/>
+                     <xs:element type="xs:string" name="ded_frequencyCode"/>
+                     <xs:element type="xs:string" name="frequency"/>
+                     <xs:element type="xs:string" name="start_date"/>
+                     <xs:element type="xs:string" name="end_date"/>
+                     <xs:element type="xs:string"
+                                 name="ded_caseParticipantRoleID"/>
+                     <xs:element type="xs:string" name="ded_ParticipantRoleID"/>
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+</xs:schema>

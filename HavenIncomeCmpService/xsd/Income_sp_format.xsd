@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="incomes">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="income" maxOccurs="unbounded" minOccurs="0">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element name="start_date" type="xs:int"/>
+                     <xs:element name="end_date" type="xs:string"/>
+                     <xs:element name="inc_incomeTypeCode" type="xs:string"/>
+                     <xs:element name="income_type" type="xs:string"/>
+                     <xs:element name="amount" type="xs:int"/>
+                     <xs:element name="inc_frequencyCode" type="xs:string"/>
+                     <xs:element name="frequency" type="xs:string"/>
+                     <xs:element name="inc_caseParticipantRoleID"
+                                 type="xs:int"/>
+                     <xs:element name="inc_ParticipantRoleID" type="xs:int"/>
+                     <xs:element name="inc_taxformType" type="xs:string"/>
+                     <xs:element name="inc_state" type="xs:string"/>
+                     <xs:element name="inc_street2" type="xs:string"/>
+                     <xs:element name="inc_zipCode" type="xs:string"/>
+                     <xs:element name="inc_employer" type="xs:string"/>
+                     <xs:element name="inc_source" type="xs:string"/>
+                     <xs:element name="inc_city" type="xs:string"/>
+                     <xs:element name="inc_street1" type="xs:string"/>
+                     <xs:element name="inc_zipCodePlusFour" type="xs:string"/>
+                     <xs:element name="inc_employerName" type="xs:string"/>
+                     <xs:element name="inc_seasonalIncomeInd" type="xs:string"/>
+                     <xs:element name="inc_suiteNum" type="xs:string"/>
+                     <xs:element name="inc_incomeID" type="xs:string"/>
+                     <xs:element name="inc_taxExemptAmount" type="xs:int"/>
+                     <xs:element name="inc_comments" type="xs:string"/>
+                     <xs:element name="evidenceID" type="xs:string"/>
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+</xs:schema>

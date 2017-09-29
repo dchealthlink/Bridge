@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://CRMIntegrationACAPi/terms/1.0"
+           targetNamespace="http://CRMIntegrationACAPi/terms/1.0"
+           elementFormDefault="qualified" version="1.0">
+   <xs:element name="FaultHandling">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="ResponseCode" type="xs:string"/>
+            <xs:element name="ResponseSummary" type="xs:string"/>
+            <xs:element name="ResponseDetails" type="xs:string"/>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+</xs:schema>

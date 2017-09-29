@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:Q1="http://aptc.dsh.cms.gov/extension/1.0"
+            xmlns:Q2="http://niem.gov/niem/niem-core/2.0"
+            xmlns:ext="http://aptc.dsh.cms.gov/extension/1.0"
+            xmlns:hcore="http://hix.cms.gov/0.1/hix-core"
+            xmlns:i="http://niem.gov/niem/appinfo/2.0"
+            xmlns:nc="http://niem.gov/niem/niem-core/2.0"
+            xmlns:niem-xsd="http://niem.gov/niem/proxy/xsd/2.0"
+            xmlns:s="http://niem.gov/niem/structures/2.0"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            attributeFormDefault="qualified" elementFormDefault="qualified"
+            targetNamespace="http://hix.cms.gov/0.1/hix-core" version='"1"'>
+  <xsd:import namespace="http://niem.gov/niem/niem-core/2.0"
+              schemaLocation="niem_core.xsd"/>
+  <xsd:import namespace="http://aptc.dsh.cms.gov/extension/1.0"
+              schemaLocation="ExtensionModel.xsd"/>
+  <xsd:import namespace="http://niem.gov/niem/proxy/xsd/2.0"
+              schemaLocation="xsd.xsd"/>
+  <xsd:import namespace="http://niem.gov/niem/appinfo/2.1"
+              schemaLocation="appinfo_1.xsd"/>
+  <xsd:import namespace="http://niem.gov/niem/structures/2.0"
+              schemaLocation="structures.xsd"/>
+  <xsd:import namespace="http://niem.gov/niem/appinfo/2.0"
+              schemaLocation="appinfo.xsd"/>
+  <xsd:element abstract="false" name="RequestID" type="ext:RequestIDSimpleType">
+    <xsd:annotation>
+      <xsd:documentation source="">An identifier for a request.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+   
+   
+ 
+  <xsd:element abstract="false" name="Income" type="hcore:IncomeType">
+    <xsd:annotation>
+      <xsd:documentation source="">An income received, usually on a regular
+                                   basis.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:complexType abstract="false" mixed="false" name="IncomeType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for information related to money
+                                   received, usually on a regular basis.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="s:ComplexObjectType">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="1" ref="hcore:IncomeAmount"/>
+          <xsd:element maxOccurs="1" minOccurs="1" ref="hcore:IncomeDate"/>
+          <xsd:element maxOccurs="1" minOccurs="1"
+                       ref="hcore:IncomeFederalPovertyLevelPercent"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element abstract="false" name="IncomeAmount"
+               type="ext:AmountRestrictionSimpleType">
+    <xsd:annotation>
+      <xsd:documentation source="">An amount of money (in dollars) earned.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element abstract="false" name="IncomeDate"
+               type="ext:TaxYearRestrictionSimpleType">
+    <xsd:annotation>
+      <xsd:documentation source="">A date that an income was received.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element abstract="false" name="IncomeFederalPovertyLevelPercent"
+               type="ext:FederalPovertyLevelRestrictionSimpleType">
+    <xsd:annotation>
+      <xsd:documentation source="">A percent of the federal poverty level that
+                                   this income represents.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element abstract="false" name="ResponseMetadata" nillable="false"
+               type="hcore:ResponseMetadataType">
+    <xsd:annotation>
+      <xsd:documentation source="">A Metadata about a response.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:complexType abstract="false" mixed="false" name="ResponseMetadataType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="MetadataType"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+        <i:AppliesTo i:name="Object"
+                     i:namespace="http://niem.gov/niem/structures/2.0"/>
+        <i:AppliesTo i:name="Association"
+                     i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for metadata about a response.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="s:MetadataType">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="1" ref="hcore:ResponseCode"/>
+          
+          <xsd:element maxOccurs="1" minOccurs="1"
+                       ref="hcore:ResponseDescriptionText"/>
+          <xsd:element maxOccurs="1" minOccurs="0"
+                       ref="hcore:TDSResponseDescriptionText"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element abstract="false" name="ResponseCode" nillable="false"
+               substitutionGroup="hcore:Response" type="Q2:TextType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Response"
+                i:namespace="http://hix.cms.gov/0.1/hix-core"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A coded response.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element abstract="true" name="Response" nillable="false">
+    <xsd:annotation>
+      <xsd:documentation source="">A data concept for a response made to a
+                                   request.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element abstract="false" name="ResponseDescriptionText" nillable="false"
+               substitutionGroup="hcore:Response" type="Q2:TextType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Response"
+                i:namespace="http://hix.cms.gov/0.1/hix-core"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A description of a response.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element abstract="false" name="TDSResponseDescriptionText"
+               nillable="false" substitutionGroup="hcore:Response"
+               type="Q2:TextType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Response"
+                i:namespace="http://hix.cms.gov/0.1/hix-core"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A description of a response from a data
+                                   source designated as trusted (a trusted data
+                                   source or TDS) by the Centers for Medicare &amp;
+                                   Medicaid Services. [CDM]</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:annotation>
+    <xsd:appinfo>
+      <i:ConformantIndicator>true</i:ConformantIndicator>
+    </xsd:appinfo>
+    <xsd:documentation source="">Package Containing</xsd:documentation>
+  </xsd:annotation>
+</xsd:schema>

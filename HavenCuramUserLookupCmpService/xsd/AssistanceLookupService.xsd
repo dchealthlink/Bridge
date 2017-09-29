@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+            vc:minVersion="1.1"
+            xmlns="http://xmlns.oracle.com/dcas/esb/assistancelookup/service/xsd/v1"
+            targetNamespace="http://xmlns.oracle.com/dcas/esb/assistancelookup/service/xsd/v1"
+            elementFormDefault="qualified">
+   <xsd:element name="assistance_lookup_resquest"
+                type="assistanceLookupRequestType"/>
+   <xsd:element name="assistance_lookup_response"
+                type="assistanceLookupResponseType"/>
+   <xsd:complexType name="assistanceLookupRequestType">
+      <xsd:sequence>
+         <xsd:element name="first_name" type="xsd:string" minOccurs="0"
+                      maxOccurs="1" nillable="false"/>
+         <xsd:element name="last_name" type="xsd:string" minOccurs="0"
+                      maxOccurs="1" nillable="false"/>
+         <xsd:element name="date_of_birth" type="SimpleDateType" minOccurs="0"
+                      maxOccurs="1" nillable="false"/>
+         <xsd:element name="ssn" type="xsd:string" minOccurs="0" maxOccurs="1"
+                      nillable="false"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="assistanceLookupResponseType">
+      <xsd:sequence>
+         <xsd:element name="user_details" type="assistanceUserDetailsType"
+                      minOccurs="0" maxOccurs="unbounded"/>
+         <xsd:element name="response_code"
+                      type="assistanceLookupResponseCodeType"/>
+         <xsd:element name="response_text" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="assistanceUserDetailsType">
+      <xsd:sequence>
+         <xsd:element name="user_id" type="xsd:string" minOccurs="0"
+                      maxOccurs="1"/>
+         <xsd:element name="integrated_case_id" type="xsd:string" minOccurs="0"
+                      maxOccurs="1"/>
+         <xsd:element name="app_case_ref_id" type="xsd:string" minOccurs="0"
+                      maxOccurs="1"/>
+         <xsd:element name="AppCreatedOn" type="xsd:string" minOccurs="0"
+                      maxOccurs="1"/>
+         <xsd:element name="motivationType" type="xsd:string" minOccurs="0"
+                      maxOccurs="1"/>
+         <xsd:element name="user_SSN" type="xsd:string" minOccurs="0"
+                      maxOccurs="1"/>
+         <xsd:element name="user_FirstName" type="xsd:string" minOccurs="0"
+                      maxOccurs="1"/>
+         <xsd:element name="user_LastName" type="xsd:string" minOccurs="0"
+                      maxOccurs="1"/>
+         <xsd:element name="user_DOB" type="xsd:string" minOccurs="0"
+                      maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="assistanceLookupResponseCodeType">
+      <xsd:restriction base="xsd:anyURI">
+         <xsd:enumeration value="urn:openhbx:terms:v1:assistance_lookup_response#SINGLE_USER"/>
+         <xsd:enumeration value="urn:openhbx:terms:v1:assistance_lookup_response#MULTIPLE_USER"/>
+         <xsd:enumeration value="urn:openhbx:terms:v1:assistance_lookup_response#NO_DATA_FOUND"/>
+         <xsd:enumeration value="urn:openhbx:terms:v1:assistance_lookup_response#FAILURE"/>
+         <xsd:enumeration value="urn:openhbx:terms:v1:assistance_lookup_response#INVALID_INFORMATION"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="SimpleDateType">
+      <xsd:annotation>
+         <xsd:documentation>A simple date format: CCYYMMDD, e.g. 20140601</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:pattern value="([1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+</xsd:schema>

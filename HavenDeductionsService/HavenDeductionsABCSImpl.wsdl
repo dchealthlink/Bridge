@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="HavenIncomeABCSImpl"
+                  targetNamespace="http://xmlns.oracle.com/Test/DeductionsService/DeductionsServiceABCSImpl"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:client="http://xmlns.oracle.com/Test/DeductionsService/DeductionsServiceABCSImpl"
+                  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                  xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/DeductionsService"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/DeductionsService"
+                 schemaLocation="xsd/HavenDeductions.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="DeductionsServiceRequestMessage">
+      <wsdl:part name="IncomeInputParameters" element="db:DeductionsInput"/>
+   </wsdl:message>
+   <wsdl:message name="DeductionsServiceResponseMessage">
+      <wsdl:part name="IncomeOutputParameters" element="db:deductions"/>
+   </wsdl:message>
+   <wsdl:portType name="DeductionsServiceABCSImpl">
+      <wsdl:operation name="DeductionsService">
+         <wsdl:input message="client:DeductionsServiceRequestMessage"/>
+         <wsdl:output message="client:DeductionsServiceResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="DeductionsServiceABCSImpl">
+      <plnk:role name="DeductionsServiceABCSImplProvider"
+                 portType="client:DeductionsServiceABCSImpl"/>
+   </plnk:partnerLinkType>
+   <wsdl:binding name="DeductionsServiceABCSImplSOAP11Binding"
+                 type="client:DeductionsServiceABCSImpl">
+      <soap:binding style="document"
+                    transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="DeductionsService">
+         <soap:operation style="document"
+                         soapAction="http://xmlns.oracle.com/Test/DeductionsService/DeductionsServiceABCSImpl/DeductionsService"/>
+         <wsdl:input>
+            <soap:body use="literal" parts="IncomeInputParameters"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" parts="IncomeOutputParameters"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+</wsdl:definitions>

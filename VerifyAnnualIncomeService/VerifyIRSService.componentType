@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<componentType xmlns="http://xmlns.oracle.com/sca/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ui="http://xmlns.oracle.com/soa/designer/">
+   <service name="ConsumeIRSReq" ui:wsdlLocation="ConsumeIRSReq.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/jms/SOA_APP/VerifyAnnualIncomeService/ConsumeIRSReq#wsdl.interface(Consume_Message_ptt)"/>
+   </service>
+   <reference name="InvokeIRSService" ui:wsdlLocation="AnnualHouseholdIncomeFedProxyServiceWrapper.wsdl">
+      <interface.wsdl interface="http://ifsv.dsh.cms.gov/exchange/1.0#wsdl.interface(VerifyAnnualHouseholdIncomePortType)"/>
+   </reference>
+   <reference name="PublishIRSResponse" ui:wsdlLocation="PublishIRSResponse.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/jms/SOA_APP/VerifyAnnualIncomeService/PublishIRSResponse#wsdl.interface(Produce_Message_ptt)"/>
+   </reference>
+</componentType>

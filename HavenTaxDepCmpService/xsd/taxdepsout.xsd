@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://xmlns.haven.dc.govcom/haven/taxdepdetailsout"
+           xmlns:etf="http://xmlns.haven.dc.govcom/haven/taxdepdetailsout"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+   <xs:element name="tax_dep_Response">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element type="xs:string" name="ResponseCode"/>
+            <xs:element type="xs:string" name="ResponseText"/>
+            <xs:element name="tax_dep_details">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element name="tfs_evidenceID" type="xs:string"/>
+                     <xs:element name="tfs_taxFilingStatus" type="xs:string"/>
+                     <xs:element name="First_Name" type="xs:string"/>
+                     <xs:element name="Last_Name" type="xs:string"/>
+                     <xs:element name="Dob" type="xs:string"/>
+                     <xs:element name="tfs_taxFilingTogether" type="xs:string"/>
+                     <xs:element name="tfs_isClaimedAsDeOfExtPerson"
+                                 type="xs:string"/>
+                     <xs:element name="tfs_startDate" type="xs:string"/>
+                     <xs:element name="tfs_endDate" type="xs:string"/>
+                     <xs:element name="tfs_caseParticipantRoleID"
+                                 type="xs:string"/>
+                     <xs:element name="tfs_ParticipantRoleID" type="xs:string"/>
+                     <xs:element name="tfs_comments" type="xs:string"/>
+                     <xs:element name="tax_dependents">
+                        <xs:complexType>
+                           <xs:sequence>
+                              <xs:element name="tax_dependent"
+                                          maxOccurs="unbounded" type="xs:int"/>
+                           </xs:sequence>
+                        </xs:complexType>
+                     </xs:element>
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+</xs:schema>

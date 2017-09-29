@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<componentType xmlns="http://xmlns.oracle.com/sca/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ui="http://xmlns.oracle.com/soa/designer/">
+   <service name="havenfilerconsentabcsimpl_client" ui:wsdlLocation="HavenFilerConsentABCSImpl.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/Test/HavenFilerConsentCmpService/HavenFilerConsentABCSImpl#wsdl.interface(HavenFilerConsentABCSImpl)"/>
+   </service>
+   <reference name="FilerConsentSP" ui:wsdlLocation="FilerConsentSP.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/Test/HavenFilerConsentCmpService/FilerConsentSP#wsdl.interface(FilerConsentSP_ptt)"/>
+   </reference>
+</componentType>

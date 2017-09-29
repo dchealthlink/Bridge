@@ -1,0 +1,93 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>85</line>
+      <col/>
+      <file>APTCBpelService.bpel</file>
+      <name>APTCBpelService.bpel</name>
+      <fix>You have stumbled onto a BPEL 2.0 validator bug. Please send us a test case to fix this problem.</fix>
+      <msg>Validator error on &lt;bpel:copy> while running rule "CopyValidator.CheckCompatibleCopy.40" - exception "java.lang.ClassCastException: oracle.xml.parser.schema.XSDComplexType cannot be cast to oracle.xml.parser.schema.XSDSimpleType" near (OracleModelQueryImpl.java:1252).</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>89</line>
+      <col/>
+      <file>APTCBpelService.bpel</file>
+      <name>APTCBpelService.bpel</name>
+      <fix>You have stumbled onto a BPEL 2.0 validator bug. Please send us a test case to fix this problem.</fix>
+      <msg>Validator error on &lt;bpel:copy> while running rule "CopyValidator.CheckCompatibleCopy.40" - exception "java.lang.ClassCastException: oracle.xml.parser.schema.XSDComplexType cannot be cast to oracle.xml.parser.schema.XSDSimpleType" near (OracleModelQueryImpl.java:1252).</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>93</line>
+      <col/>
+      <file>APTCBpelService.bpel</file>
+      <name>APTCBpelService.bpel</name>
+      <fix>You have stumbled onto a BPEL 2.0 validator bug. Please send us a test case to fix this problem.</fix>
+      <msg>Validator error on &lt;bpel:copy> while running rule "CopyValidator.CheckCompatibleCopy.40" - exception "java.lang.ClassCastException: oracle.xml.parser.schema.XSDComplexType cannot be cast to oracle.xml.parser.schema.XSDSimpleType" near (OracleModelQueryImpl.java:1252).</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>122</line>
+      <col/>
+      <file>APTCBpelService.bpel</file>
+      <name>APTCBpelService.bpel</name>
+      <fix>You have stumbled onto a BPEL 2.0 validator bug. Please send us a test case to fix this problem.</fix>
+      <msg>Validator error on &lt;bpel:copy> while running rule "CopyValidator.CheckCompatibleCopy.40" - exception "java.lang.ClassCastException: oracle.xml.parser.schema.XSDComplexType cannot be cast to oracle.xml.parser.schema.XSDSimpleType" near (OracleModelQueryImpl.java:1252).</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>126</line>
+      <col/>
+      <file>APTCBpelService.bpel</file>
+      <name>APTCBpelService.bpel</name>
+      <fix>You have stumbled onto a BPEL 2.0 validator bug. Please send us a test case to fix this problem.</fix>
+      <msg>Validator error on &lt;bpel:copy> while running rule "CopyValidator.CheckCompatibleCopy.40" - exception "java.lang.ClassCastException: oracle.xml.parser.schema.XSDComplexType cannot be cast to oracle.xml.parser.schema.XSDSimpleType" near (OracleModelQueryImpl.java:1252).</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>130</line>
+      <col/>
+      <file>APTCBpelService.bpel</file>
+      <name>APTCBpelService.bpel</name>
+      <fix>You have stumbled onto a BPEL 2.0 validator bug. Please send us a test case to fix this problem.</fix>
+      <msg>Validator error on &lt;bpel:copy> while running rule "CopyValidator.CheckCompatibleCopy.40" - exception "java.lang.ClassCastException: oracle.xml.parser.schema.XSDComplexType cannot be cast to oracle.xml.parser.schema.XSDSimpleType" near (OracleModelQueryImpl.java:1252).</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>186</line>
+      <col/>
+      <file>APTCBpelService.bpel</file>
+      <name>APTCBpelService.bpel</name>
+      <fix>You have stumbled onto a BPEL 2.0 validator bug. Please send us a test case to fix this problem.</fix>
+      <msg>Validator error on &lt;bpel:copy> while running rule "CopyValidator.CheckCompatibleCopy.40" - exception "java.lang.ClassCastException: oracle.xml.parser.schema.XSDComplexType cannot be cast to oracle.xml.parser.schema.XSDSimpleType" near (OracleModelQueryImpl.java:1252).</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>190</line>
+      <col/>
+      <file>APTCBpelService.bpel</file>
+      <name>APTCBpelService.bpel</name>
+      <fix>You have stumbled onto a BPEL 2.0 validator bug. Please send us a test case to fix this problem.</fix>
+      <msg>Validator error on &lt;bpel:copy> while running rule "CopyValidator.CheckCompatibleCopy.40" - exception "java.lang.ClassCastException: oracle.xml.parser.schema.XSDComplexType cannot be cast to oracle.xml.parser.schema.XSDSimpleType" near (OracleModelQueryImpl.java:1252).</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>194</line>
+      <col/>
+      <file>APTCBpelService.bpel</file>
+      <name>APTCBpelService.bpel</name>
+      <fix>You have stumbled onto a BPEL 2.0 validator bug. Please send us a test case to fix this problem.</fix>
+      <msg>Validator error on &lt;bpel:copy> while running rule "CopyValidator.CheckCompatibleCopy.40" - exception "java.lang.ClassCastException: oracle.xml.parser.schema.XSDComplexType cannot be cast to oracle.xml.parser.schema.XSDSimpleType" near (OracleModelQueryImpl.java:1252).</msg>
+   </Fault>
+</Faults>

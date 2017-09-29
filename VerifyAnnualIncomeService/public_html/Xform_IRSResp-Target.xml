@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<imp1:IFSVResponse xmlns:imp1="http://ifsv.dsh.cms.gov/exchange/1.0">
+   <ns0:IRSResponse xmlns:ns0="http://ifsv.dsh.cms.gov/extension/1.0">
+      <ns2:RequestID xmlns:ns2="http://hix.cms.gov/0.1/hix-core">string1</ns2:RequestID>
+      <ns0:Household/>
+   </ns0:IRSResponse>
+   <ns0:ErrorMessage xmlns:ns0="http://ifsv.dsh.cms.gov/extension/1.0"/>
+   <imp1:HavenID>HavenID2</imp1:HavenID>
+   <imp1:RequestNumber>RequestNumber3</imp1:RequestNumber>
+</imp1:IFSVResponse>

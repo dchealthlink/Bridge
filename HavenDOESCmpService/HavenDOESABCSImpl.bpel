@@ -1,0 +1,307 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed Oct 26 15:06:47 EDT 2016
+  Author:  burujukati
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="HavenDOESABCSImpl"
+               targetNamespace="http://xmlns.oracle.com/Test/HavenDOESCmpService/HavenDOESABCSImpl"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Test/HavenDOESCmpService/HavenDOESABCSImpl"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/jms/Test/HavenDOESCmpService/ConsumeMessageFromJMS"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:ns2="http://xmlns.oracle.com/DCASLocalHub/EmploymentServicesInfo/EmploymentServicesInfoBPEL"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/jms/Test/HavenDOESCmpService/ProduceMessage"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns4="http://xmlns.dhs.dc.gov/DCAS/ESB/Local/EmployementService/V1/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns5="http://xmlns.oracle.com/ias/pcbpel/NotificationService">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="http://schemas.oracle.com/bpel/extension"
+          location="RuntimeFault.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <partnerLinks>
+    <partnerLink name="ConsumeMessageFromJMS"
+                 partnerLinkType="ns1:Consume_Message_plt"
+                 myRole="Consume_Message_role"/>
+    <partnerLink name="InvokeDOES"
+                 partnerLinkType="ns2:EmploymentServicesInfoBPEL"
+                 partnerRole="EmploymentServicesInfoBPELProvider"/>
+    <partnerLink name="ProduceMessage" partnerLinkType="ns3:Produce_Message_plt"
+                 partnerRole="Produce_Message_role"/>
+  </partnerLinks>
+  <variables>
+    <variable name="Consume_Message_InputVariable"
+              messageType="ns1:Consume_Message_msg"/>
+    <variable name="InvokeDOES_InputVariable"
+              messageType="ns2:EmploymentServicesInfoBPELRequestMessage"/>
+    <variable name="InvokeDOES_OutputVariable"
+              messageType="ns2:EmploymentServicesInfoBPELResponseMessage"/>
+    <variable name="ProduceResponse_InputVariable"
+              messageType="ns3:Produce_Message_msg"/>
+    <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
+  </variables>
+  <faultHandlers>
+    <catch faultName="bpelx:remoteFault" faultVariable="FaultVar"
+           faultMessageType="bpelx:RuntimeFaultMessage">
+      <sequence name="Sequence1">
+        <assign name="Assign2">
+          <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.code</to>
+          </copy>
+          <copy>
+            <from>'DOESService'</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+        </assign>
+        <assign name="AssignRemote">
+          <copy>
+            <from>$Consume_Message_InputVariable.body/ns4:RequestNumber</from>
+            <to>$ProduceResponse_InputVariable.body/ns2:RequestNumber</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$ProduceResponse_InputVariable.body/ns2:ServiceStatusType/ns2:Code</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$ProduceResponse_InputVariable.body/ns2:ServiceStatusType/ns2:Description</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$ProduceResponse_InputVariable.body/ns2:ServiceStatusType/ns2:Type</to>
+          </copy>
+        </assign>
+        <assign name="TransformRemote">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Transformation_1.xsl", $ProduceResponse_InputVariable.body)</from>
+            <to variable="ProduceResponse_InputVariable" part="body"/>
+          </copy>
+        </assign>
+        <invoke name="ProduceResponse"
+                partnerLink="ProduceMessage"
+                portType="ns3:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="ProduceResponse_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+    </catch>
+    <catch faultName="bpelx:bindingFault" faultVariable="FaultVar"
+           faultMessageType="bpelx:RuntimeFaultMessage">
+      <sequence name="Sequence2">
+        <assign name="Assign1">
+          <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.code</to>
+          </copy>
+          <copy>
+            <from>'DOESService'</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+        </assign>
+        <assign name="AssignBinding">
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$ProduceResponse_InputVariable.body/ns2:ServiceStatusType/ns2:Code</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$ProduceResponse_InputVariable.body/ns2:ServiceStatusType/ns2:Description</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$ProduceResponse_InputVariable.body/ns2:ServiceStatusType/ns2:Type</to>
+          </copy>
+          <copy>
+            <from>$Consume_Message_InputVariable.body/ns4:RequestNumber</from>
+            <to>$ProduceResponse_InputVariable.body/ns2:RequestNumber</to>
+          </copy>
+        </assign>
+        <assign name="Transform2Binding">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Transformation_2.xsl", $ProduceResponse_InputVariable.body)</from>
+            <to variable="ProduceResponse_InputVariable" part="body"/>
+          </copy>
+        </assign>
+        <invoke name="ProduceResponse"
+                partnerLink="ProduceMessage"
+                portType="ns3:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="ProduceResponse_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+    </catch>
+    <catchAll>
+      <sequence name="Sequence3">
+        <assign name="Assign3">
+          <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.code</to>
+          </copy>
+          <copy>
+            <from>'DOESService'</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+        </assign>
+        <assign name="Assigncatchall">
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$ProduceResponse_InputVariable.body/ns2:ServiceStatusType/ns2:Code</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$ProduceResponse_InputVariable.body/ns2:ServiceStatusType/ns2:Description</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$ProduceResponse_InputVariable.body/ns2:ServiceStatusType/ns2:Type</to>
+          </copy>
+          <copy>
+            <from>$Consume_Message_InputVariable.body/ns4:RequestNumber</from>
+            <to>$ProduceResponse_InputVariable.body/ns2:RequestNumber</to>
+          </copy>
+        </assign>
+        <assign name="Transformcatchall">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Transformation_3.xsl", $ProduceResponse_InputVariable.body)</from>
+            <to variable="ProduceResponse_InputVariable" part="body"/>
+          </copy>
+        </assign>
+        <invoke name="ProduceResponse"
+                partnerLink="ProduceMessage"
+                portType="ns3:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="ProduceResponse_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <sequence name="main">
+    <receive name="ReceiveRequest" createInstance="yes"
+             partnerLink="ConsumeMessageFromJMS"
+             portType="ns1:Consume_Message_ptt" operation="Consume_Message"
+             variable="Consume_Message_InputVariable"/>
+    <assign name="HavenToDOES">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"/>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("xsl/Request.xsl", $Consume_Message_InputVariable.body)</from>
+        <to variable="InvokeDOES_InputVariable" part="payload"/>
+      </copy>
+    </assign>
+   <!-- <validate name="Validate" variables="Consume_Message_InputVariable"/> -->
+   <invoke name="InvokeDOES"
+            partnerLink="InvokeDOES" portType="ns2:EmploymentServicesInfoBPEL"
+            operation="process" inputVariable="InvokeDOES_InputVariable"
+            outputVariable="InvokeDOES_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+   <!-- <if name="If1">
+      <documentation/>
+      <condition>$Consume_Message_InputVariable.body/ns4:SSN='111222333'</condition>
+      <assign name="SSN1">
+        <bpelx:annotation>
+          <bpelx:pattern patternName="bpelx:transformation"/>
+        </bpelx:annotation>
+        <copy>
+          <from>ora:doXSLTransformForDoc("xsl/SSN1.xsl", $InvokeDOES_OutputVariable.payload, "Consume_Message_InputVariable.body", $Consume_Message_InputVariable.body)</from>
+          <to variable="ProduceResponse_InputVariable" part="body"/>
+        </copy>
+      </assign>
+      <elseif>
+        <documentation/>
+        <condition>$Consume_Message_InputVariable.body/ns4:SSN='111222334'</condition>
+        <assign name="SSN2">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/SSN2.xsl", $Consume_Message_InputVariable.body, "InvokeDOES_OutputVariable.payload", $InvokeDOES_OutputVariable.payload)</from>
+            <to variable="ProduceResponse_InputVariable" part="body"/>
+          </copy>
+        </assign>
+      </elseif>
+      <elseif>
+        <documentation/>
+        <condition>$Consume_Message_InputVariable.body/ns4:SSN='111222335'</condition>
+        <assign name="SSN3">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/SSN3.xsl", $Consume_Message_InputVariable.body, "InvokeDOES_OutputVariable.payload", $InvokeDOES_OutputVariable.payload)</from>
+            <to variable="ProduceResponse_InputVariable" part="body"/>
+          </copy>
+        </assign>
+      </elseif>
+      <else>
+        <documentation/>
+        <assign name="SSN4">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/SSN4.xsl", $Consume_Message_InputVariable.body, "InvokeDOES_OutputVariable.payload", $InvokeDOES_OutputVariable.payload)</from>
+            <to variable="ProduceResponse_InputVariable" part="body"/>
+          </copy>
+        </assign>
+      </else>
+    </if> -->
+    <assign name="DOESToHaven">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"/>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("xsl/Response.xsl", $Consume_Message_InputVariable.body, "InvokeDOES_OutputVariable.payload", $InvokeDOES_OutputVariable.payload)</from>
+        <to variable="ProduceResponse_InputVariable" part="body"/>
+      </copy>
+    </assign>
+    <invoke name="ProduceResponse"
+            partnerLink="ProduceMessage" portType="ns3:Produce_Message_ptt"
+            operation="Produce_Message"
+            inputVariable="ProduceResponse_InputVariable"
+            bpelx:invokeAsDetail="no"/>
+  </sequence>
+</process>

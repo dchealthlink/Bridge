@@ -1,18 +1,27 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<wsdl:definitions name="ICReferenceCasePollSvc" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/DCAPP/CuramEAIntegrationSvc/ICReferenceCasePollSvc" xmlns:ns1="http://schemas.oracle.com/bpel/extension" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/DCAPP/CuramEAIntegrationSvc/ICReferenceCasePollSvc" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/ICReferenceCasePollSvc">
+<wsdl:definitions name="ICReferenceCasePollSvc"
+                  targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/DCAPP/CuramEAIntegrationSvc/ICReferenceCasePollSvc"
+                  xmlns:ns1="http://schemas.oracle.com/bpel/extension"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/DCAPP/CuramEAIntegrationSvc/ICReferenceCasePollSvc"
+                  xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+                  xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/ICReferenceCasePollSvc">
    <plt:partnerLinkType name="ICReferenceCasePollSvc_plt">
       <plt:role name="ICReferenceCasePollSvc_role">
          <plt:portType name="tns:ICReferenceCasePollSvc_ptt"/>
       </plt:role>
    </plt:partnerLinkType>
-   <wsdl:import namespace="http://schemas.oracle.com/bpel/extension" location="RuntimeFault.wsdl"/>
+   <wsdl:import namespace="http://schemas.oracle.com/bpel/extension"
+                location="RuntimeFault.wsdl"/>
    <wsdl:types>
       <schema xmlns="http://www.w3.org/2001/XMLSchema">
-         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/ICReferenceCasePollSvc" schemaLocation="xsd/ICReferenceCasePollSvc_table.xsd"/>
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/ICReferenceCasePollSvc"
+                 schemaLocation="xsd/ICReferenceCasePollSvc_table.xsd"/>
       </schema>
    </wsdl:types>
    <wsdl:message name="DchxeaiccaserefCollection_msg">
-      <wsdl:part name="DchxeaiccaserefCollection" element="top:DchxeaiccaserefCollection"/>
+      <wsdl:part name="DchxeaiccaserefCollection"
+                 element="top:DchxeaiccaserefCollection"/>
    </wsdl:message>
    <wsdl:portType name="ICReferenceCasePollSvc_ptt">
       <wsdl:operation name="receive">

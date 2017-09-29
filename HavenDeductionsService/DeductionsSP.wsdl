@@ -1,0 +1,40 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<?binding.jca DeductionsSP_db.jca?>
+<wsdl:definitions
+     name="DeductionsSP"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenDeductionsService/DeductionsSP"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenDeductionsService/DeductionsSP"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:ns1="http://schemas.oracle.com/bpel/extension"
+     xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/DeductionsSP"
+    >
+    <plt:partnerLinkType name="DeductionsSP_plt">
+        <plt:role name="DeductionsSP_role">
+            <plt:portType name="tns:DeductionsSP_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:import namespace="http://schemas.oracle.com/bpel/extension" location="RuntimeFault.wsdl"/>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenDeductionsService/DeductionsSP"
+             xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/DeductionsSP">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/DeductionsSP" schemaLocation="xsd/DeductionsSP_sp.xsd"/>
+        </schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:include schemaLocation="xsd/sp_out_format.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="args_in_msg">
+        <wsdl:part name="InputParameters" element="db:InputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="args_out_msg">
+        <wsdl:part name="OutputParameters" element="db:OutputParameters"/>
+    </wsdl:message>
+    <wsdl:portType name="DeductionsSP_ptt">
+        <wsdl:operation name="DeductionsSP">
+            <wsdl:input message="tns:args_in_msg"/>
+            <wsdl:output message="tns:args_out_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

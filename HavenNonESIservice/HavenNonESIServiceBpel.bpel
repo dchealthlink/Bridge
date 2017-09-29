@@ -1,0 +1,275 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Thu Oct 13 14:56:29 EDT 2016
+  Author:  burujukati
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="HavenNonESIServiceBpel"
+               targetNamespace="http://xmlns.oracle.com/Test/HavenNonESIservice/HavenNonESIServiceBpel"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Test/HavenNonESIservice/HavenNonESIServiceBpel"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/jms/Test/HavenNonESIservice/ReceiveRequestFromHaven"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/jms/Test/HavenNonESIservice/ProduceResponseToHaven"
+         xmlns:ns3="http://vnem.ee.sim.dsh.cms.hhs.gov"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns5="http://niem.gov/niem/niem-core/2.0/ESB/V1"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns4="http://vnem.ee.sim.dsh.cms.hhs.gov/ESB/V1"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="http://schemas.oracle.com/bpel/extension"
+          location="RuntimeFault.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <partnerLinks>
+    <partnerLink name="ReceiveRequestFromHaven"
+                 partnerLinkType="ns1:Consume_Message_plt"
+                 myRole="Consume_Message_role"/>
+    <partnerLink name="ProduceResponseToHaven"
+                 partnerLinkType="ns2:Produce_Message_plt"
+                 partnerRole="Produce_Message_role"/>
+    <partnerLink name="InvokeFedHub" partnerLinkType="ns3:InvokeFedHub"
+                 partnerRole="VerifyNonEsiMecPortType"/>
+  </partnerLinks>
+  <variables>
+    <variable name="ReceiveRequest_InputVariable"
+              messageType="ns1:Consume_Message_msg"/>
+    <variable name="InvokeFedHub_InputVariable"
+              messageType="ns3:VerifyNonEsiMecRequest"/>
+    <variable name="InvokeFedHub_OutputVariable"
+              messageType="ns3:VerifyNonEsiMecResponse"/>
+    <variable name="ProduceResponse_InputVariable"
+              messageType="ns2:Produce_Message_msg"/>
+    <variable name="Title" type="xsd:string"/>
+    <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
+    <variable name="ProduceResponse_Produce_Message_InputVariable"
+              messageType="ns2:Produce_Message_msg"/>
+  </variables>
+  <faultHandlers>
+    <catch faultName="bpelx:remoteFault" faultVariable="FaultVar"
+           faultMessageType="bpelx:RuntimeFaultMessage">
+      <sequence name="Sequence2">
+        <assign name="AssignRemote">
+          <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.code</to>
+          </copy>
+          <copy>
+            <from>'NONESIService'</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+        </assign>
+        <assign name="Assign">
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$ProduceResponse_InputVariable.body/ns4:ResponseMetadata/ns4:ResponseCode</to>
+          </copy>
+          <copy>
+            <from>$ReceiveRequest_InputVariable.body/ns4:RequestNumber</from>
+            <to>$ProduceResponse_InputVariable.body/ns4:RequestNumber</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$ProduceResponse_InputVariable.body/ns4:ResponseMetadata/ns4:ResponseDescriptionText</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$ProduceResponse_InputVariable.body/ns4:ResponseMetadata/ns4:TDSResponseDescriptionText</to>
+          </copy>
+        </assign>
+        <assign name="Transform2">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Transformation_2.xsl", $ProduceResponse_InputVariable.body)</from>
+            <to variable="ProduceResponse_InputVariable" part="body"/>
+          </copy>
+        </assign>
+        <invoke name="InvokePublishResponse"
+                partnerLink="ProduceResponseToHaven"
+                portType="ns2:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="ProduceResponse_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+    </catch>
+    <catch faultName="bpelx:bindingFault" faultVariable="FaultVar"
+           faultMessageType="bpelx:RuntimeFaultMessage">
+      <sequence name="Sequence1">
+        <assign name="AssignBinding">
+          <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.code</to>
+          </copy>
+          <copy>
+            <from>'NONESIService'</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+        </assign>
+        <assign name="Assign">
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$ProduceResponse_InputVariable.body/ns4:ResponseMetadata/ns4:ResponseCode</to>
+          </copy>
+          <copy>
+            <from>$ReceiveRequest_InputVariable.body/ns4:RequestNumber</from>
+            <to>$ProduceResponse_InputVariable.body/ns4:RequestNumber</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$ProduceResponse_InputVariable.body/ns4:ResponseMetadata/ns4:ResponseDescriptionText</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$ProduceResponse_InputVariable.body/ns4:ResponseMetadata/ns4:TDSResponseDescriptionText</to>
+          </copy>
+        </assign>
+        <assign name="Transform1">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Transformation_1.xsl", $ProduceResponse_InputVariable.body)</from>
+            <to variable="ProduceResponse_InputVariable" part="body"/>
+          </copy>
+        </assign>
+        <invoke name="InvokePublishResponse"
+                partnerLink="ProduceResponseToHaven"
+                portType="ns2:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="ProduceResponse_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+    </catch>
+    <catchAll>
+      <sequence name="Sequence3">
+        <assign name="AssignCatchall">
+          <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.code</to>
+          </copy>
+          <copy>
+            <from>'NONESIService'</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+        </assign>
+        <assign name="Assign">
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$ProduceResponse_InputVariable.body/ns4:ResponseMetadata/ns4:ResponseCode</to>
+          </copy>
+          <copy>
+            <from>$ReceiveRequest_InputVariable.body/ns4:RequestNumber</from>
+            <to>$ProduceResponse_InputVariable.body/ns4:RequestNumber</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$ProduceResponse_InputVariable.body/ns4:ResponseMetadata/ns4:ResponseDescriptionText</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$ProduceResponse_InputVariable.body/ns4:ResponseMetadata/ns4:TDSResponseDescriptionText</to>
+          </copy>
+        </assign>
+        <assign name="Transform3">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Transformation_3.xsl", $ProduceResponse_InputVariable.body)</from>
+            <to variable="ProduceResponse_InputVariable" part="body"/>
+          </copy>
+        </assign>
+        <invoke name="InvokePublishResponse"
+                partnerLink="ProduceResponseToHaven"
+                portType="ns2:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="ProduceResponse_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <sequence name="main">
+    <receive name="ReceiveRequest" createInstance="yes"
+             partnerLink="ReceiveRequestFromHaven"
+             portType="ns1:Consume_Message_ptt" operation="Consume_Message"
+             variable="ReceiveRequest_InputVariable"/>
+    <assign name="AssignTitle">
+      <copy>
+        <from>concat($ReceiveRequest_InputVariable.body/ns4:IndividualRequest/ns4:Applicant/ns4:PersonName/ns4:PersonGivenName,' ',$ReceiveRequest_InputVariable.body/ns4:IndividualRequest/ns4:Applicant/ns4:PersonName/ns4:PersonSurName)</from>
+        <to>$Title</to>
+      </copy>
+    </assign>
+    <extensionActivity>
+      <bpelx:exec name="Java_Embedding" language="java">
+        <![CDATA[/*Write your java code below e.g. 
+	System.out.println("Hello, World");
+*/
+String title = "Person Name :"+(String)getVariableData("Title");        
+setCompositeInstanceTitle(title);]]>
+      </bpelx:exec>
+    </extensionActivity>
+    <assign name="HavenReqToFedReq">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"/>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("xsl/Request.xsl", $ReceiveRequest_InputVariable.body)</from>
+        <to variable="InvokeFedHub_InputVariable" part="body"/>
+      </copy>
+    </assign>
+    <invoke name="InvokeFedHub"
+            partnerLink="InvokeFedHub" portType="ns3:VerifyNonEsiMecPortType"
+            operation="VerifyNonEsiMec"
+            inputVariable="InvokeFedHub_InputVariable"
+            outputVariable="InvokeFedHub_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <assign name="FedResToHaveRes">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"/>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("xsl/Response3.xsl", $InvokeFedHub_OutputVariable.body, "ReceiveRequest_InputVariable.body", $ReceiveRequest_InputVariable.body)</from>
+        <to variable="ProduceResponse_InputVariable" part="body"/>
+      </copy>
+    </assign>
+    <invoke name="ProduceResponse"
+            partnerLink="ProduceResponseToHaven"
+            portType="ns2:Produce_Message_ptt" operation="Produce_Message"
+            inputVariable="ProduceResponse_InputVariable"
+            bpelx:invokeAsDetail="no"/>
+  </sequence>
+</process>

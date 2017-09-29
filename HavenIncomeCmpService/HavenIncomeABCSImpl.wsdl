@@ -1,0 +1,63 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions name="HavenIncomeABCSImpl"
+                  targetNamespace="http://xmlns.oracle.com/Test/HavenIncomeCmpService/HavenIncomeABCSImpl"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:client="http://xmlns.oracle.com/Test/HavenIncomeCmpService/HavenIncomeABCSImpl"
+                  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                  xmlns:ns1="http://schemas.oracle.com/bpel/extension"
+                  xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeReqService"
+                  xmlns:db1="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeRespService"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="HavenIncomeABCSImpl">
+        <plnk:role name="HavenIncomeABCSImplProvider"
+                   portType="client:HavenIncomeABCSImpl"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://schemas.oracle.com/bpel/extension"
+                 location="RuntimeFault.wsdl"/>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                xmlns:client="http://xmlns.oracle.com/Test/HavenIncomeCmpService/HavenIncomeABCSImpl"
+                xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                xmlns:ns1="http://schemas.oracle.com/bpel/extension"
+                xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeReqService"
+                 xmlns:db1="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeRespService"
+                xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeReqService"
+                    schemaLocation="xsd/HavenIncomeInput.xsd"/>
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeRespService"
+                    schemaLocation="xsd/HavenIncomeOutput.xsd"/>
+        </schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:include schemaLocation="xsd/Income_sp_format.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="HavenIncomeRequestMessage">
+        <wsdl:part name="IncomeInputParameters"
+                   element="db:IncomeInputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="HavenIncomeResponseMessage">
+        <wsdl:part name="IncomeOutputParameters" element="db1:incomes"/>
+    </wsdl:message>
+    <wsdl:portType name="HavenIncomeABCSImpl">
+        <wsdl:operation name="IncomeService">
+            <wsdl:input message="client:HavenIncomeRequestMessage"/>
+            <wsdl:output message="client:HavenIncomeResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="HavenIncomeABCSImplSOAP11Binding"
+                  type="client:HavenIncomeABCSImpl">
+        <soap:binding style="document"
+                      transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="IncomeService">
+            <soap:operation style="document"
+                            soapAction="http://xmlns.oracle.com/Test/HavenIncomeCmpService/HavenIncomeABCSImpl/IncomeService"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="IncomeInputParameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="IncomeOutputParameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

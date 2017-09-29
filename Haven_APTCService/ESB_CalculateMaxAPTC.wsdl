@@ -1,0 +1,34 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions name="ESB_CalculateMaxAPTC"
+                  targetNamespace="http://xmlns.oracle.com/FEDServices/ESB_CalculateMaxAPTC/ESB_CalculateMaxAPTC"
+                  xmlns:ns2="http://schemas.oracle.com/bpel/extension"
+                  xmlns:ns1="http://aptc.dsh.cms.gov/exchange/1.0"
+                  xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+                  xmlns:client="http://xmlns.oracle.com/FEDServices/ESB_CalculateMaxAPTC/ESB_CalculateMaxAPTC"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <plnk:partnerLinkType name="ESB_CalculateMaxAPTC">
+        <plnk:role name="ESB_CalculateMaxAPTCProvider">
+            <plnk:portType name="client:ESB_CalculateMaxAPTC"/>
+        </plnk:role>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://schemas.oracle.com/bpel/extension"
+                 location="RuntimeFault.wsdl"/>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://aptc.dsh.cms.gov/exchange/1.0"
+                    schemaLocation="xsd/ExchangeModel.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="ESB_CalculateMaxAPTCRequestMessage">
+        <wsdl:part name="payload" element="ns1:APTCRequest"/>
+    </wsdl:message>
+    <wsdl:message name="ESB_CalculateMaxAPTCResponseMessage">
+        <wsdl:part name="payload" element="ns1:APTCResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="ESB_CalculateMaxAPTC">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:ESB_CalculateMaxAPTCRequestMessage"/>
+            <wsdl:output message="client:ESB_CalculateMaxAPTCResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

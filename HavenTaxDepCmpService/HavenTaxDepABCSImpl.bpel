@@ -1,0 +1,135 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed Sep 27 22:48:35 EDT 2017
+  Author:  burujukati
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="HavenTaxDepABCSImpl"
+               targetNamespace="http://xmlns.oracle.com/Test/HavenTaxDepCmpService/HavenTaxDepABCSImpl"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Test/HavenTaxDepCmpService/HavenTaxDepABCSImpl"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/Test/HavenTaxDepCmpService/TaxDepsdb"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/sp/TaxDepsdb"
+         xmlns:ns2="http://xmlns.haven.dc.govcom/haven/taxdepdetailsin"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns4="http://xmlns.haven.dc.govcom/haven/taxdepdetailsout">
+  <import location="xsd/TaxDependentSP_sp.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="http://xmlns.oracle.com/Test/HavenTaxDepCmpService/HavenTaxDepABCSImpl" location="HavenTaxDepABCSImpl.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="haventaxdepabcsimpl_client" partnerLinkType="client:HavenTaxDepABCSImpl" myRole="HavenTaxDepABCSImplProvider"/>
+    <partnerLink name="TaxDepsdb" partnerLinkType="ns1:TaxDepsdb_plt"
+                 partnerRole="TaxDepsdb_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="TaxDeps_Input" messageType="ns1:args_in_msg"/>
+    <variable name="TaxDeps_Output" messageType="ns1:args_out_msg"/>
+    <variable name="Format_SP" element="tax_dep_details"/>
+    <variable name="receiveInput_TaxDependents_InputVariable"
+              messageType="client:HavenTaxDepABCSImplRequestMessage"/>
+    <variable name="replyOutput_TaxDependents_OutputVariable"
+              messageType="client:HavenTaxDepABCSImplResponseMessage"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in HavenTaxDepABCSImpl.wsdl) -->
+    <receive name="receiveInput" partnerLink="haventaxdepabcsimpl_client" portType="client:HavenTaxDepABCSImpl"
+             operation="TaxDependents"
+             variable="receiveInput_TaxDependents_InputVariable" createInstance="yes"/>
+    <assign name="TaxDepsInput">
+      <copy>
+        <from>$receiveInput_TaxDependents_InputVariable.payload/ns2:I_CONCERNROLEID</from>
+        <to>$TaxDeps_Input.InputParameters/ns3:I_CONCERNROLEID</to>
+      </copy>
+    </assign>
+    <invoke name="InvokeTaxDeps"
+            partnerLink="TaxDepsdb" portType="ns1:TaxDepsdb_ptt"
+            operation="TaxDepsdb" inputVariable="TaxDeps_Input" outputVariable="TaxDeps_Output"
+            bpelx:invokeAsDetail="no"/>
+    <if name="If1">
+      <documentation/>
+      <condition>$TaxDeps_Output.OutputParameters/ns3:O_RESPONSE_CODE="DATA_FOUND"</condition>
+      <sequence>
+        <assign name="TaxDepsOut">
+          <copy>
+            <from>oraext:parseEscapedXML($TaxDeps_Output.OutputParameters/ns3:O_USER_DETAILS_CLOB)</from>
+            <to>$Format_SP</to>
+          </copy>
+        </assign>
+        <assign name="Transform1">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Xform_TaxDepsResp.xsl", $TaxDeps_Output.OutputParameters, "Format_SP", $Format_SP)</from>
+            <to variable="replyOutput_TaxDependents_OutputVariable"
+                part="payload"/>
+          </copy>
+        </assign>
+      </sequence>
+      <else>
+        <assign name="Transform2">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Xform_NoData.xsl", $TaxDeps_Output.OutputParameters, "Format_SP", $Format_SP)</from>
+            <to variable="replyOutput_TaxDependents_OutputVariable"
+                part="payload"/>
+          </copy>
+        </assign>
+      </else>
+    </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="haventaxdepabcsimpl_client" portType="client:HavenTaxDepABCSImpl"
+           operation="TaxDependents"
+           variable="replyOutput_TaxDependents_OutputVariable"/>
+  </sequence>
+</process>

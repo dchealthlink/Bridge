@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:tns="http://xmlns.dhs.dc.gov/DCAS/ESB/Local/EmployementService/V1/"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:ss="http://xmlns.dhs.dc.gov/DCAS/ESB/Local/Common/V1/"
+           targetNamespace="http://xmlns.dhs.dc.gov/DCAS/ESB/Local/EmployementService/V1/"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+ <xs:import namespace="http://xmlns.dhs.dc.gov/DCAS/ESB/Local/Common/V1/"
+            schemaLocation="LocalServiceStatus_v1.xsd"/>
+ <xs:element name="GetEmploymentData" type="tns:EmploymentServicesInputType"/>
+ <xs:element name="GetEmploymentDataResponse"
+             type="tns:EmploymentServicesDataResponseType"/>
+ <xs:complexType name="EmploymentServicesInputType">
+  <xs:sequence>
+   <xs:element name="SSN" nillable="false">
+    <xs:annotation>
+     <xs:documentation>Social Security Number of Applicant.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+     <xs:restriction base="xs:token">
+      <xs:pattern value="[0-9]{3}[0-9]{2}[0-9]{4}"/>
+     </xs:restriction>
+    </xs:simpleType>
+   </xs:element>
+   <xs:element name="RequestNumber" type="xs:string"/>
+  </xs:sequence>
+ </xs:complexType>
+ <xs:complexType name="EmploymentServicesDataType">
+  <xs:sequence>
+   <xs:element name="BenefitWeeksRemain" type="xs:integer" nillable="true">
+    <xs:annotation>
+     <xs:documentation>The number of available benefit weeks .</xs:documentation>
+    </xs:annotation>
+   </xs:element>
+   <xs:element name="BenefitsToDate" type="xs:decimal" nillable="true">
+    <xs:annotation>
+     <xs:documentation>Benefit allowance paid to date.</xs:documentation>
+    </xs:annotation>
+   </xs:element>
+   <xs:element name="ClaimantID" nillable="true">
+    <xs:annotation>
+     <xs:documentation>Applicant ClaimantID.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+     <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="50"/>
+     </xs:restriction>
+    </xs:simpleType>
+   </xs:element>
+   <xs:element name="EmploymentState" nillable="true">
+    <xs:annotation>
+     <xs:documentation>state.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+     <xs:restriction base="xs:string">
+      <xs:minLength value="0"/>
+      <xs:maxLength value="200"/>
+     </xs:restriction>
+    </xs:simpleType>
+   </xs:element>
+   <xs:element name="ApplicantFirstName" nillable="true">
+    <xs:annotation>
+     <xs:documentation>Applicant First Name.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+     <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="200"/>
+     </xs:restriction>
+    </xs:simpleType>
+   </xs:element>
+   <xs:element name="ApplicantLastName" nillable="true">
+    <xs:annotation>
+     <xs:documentation>Applicant Last Name.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+     <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="200"/>
+     </xs:restriction>
+    </xs:simpleType>
+   </xs:element>
+   <xs:element name="LastEmployer" nillable="true">
+    <xs:annotation>
+     <xs:documentation>Applicant Employer.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+     <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="200"/>
+     </xs:restriction>
+    </xs:simpleType>
+   </xs:element>
+   <xs:element name="LastEmployerEIN" nillable="true">
+    <xs:annotation>
+     <xs:documentation>Applicant Employer employer identification number.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+     <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="50"/>
+     </xs:restriction>
+    </xs:simpleType>
+   </xs:element>
+   <xs:element name="LastEmploymentWages" type="xs:decimal" nillable="true">
+    <xs:annotation>
+     <xs:documentation>Applicant Employment Wage.</xs:documentation>
+    </xs:annotation>
+   </xs:element>
+   <xs:element name="LastPaymentDate" type="xs:date" nillable="true">
+    <xs:annotation>
+     <xs:documentation>Last Payment Date</xs:documentation>
+    </xs:annotation>
+   </xs:element>
+   <xs:element name="LengthLastEmployed" type="xs:integer" nillable="true">
+    <xs:annotation>
+     <xs:documentation>How long has the applicant been employed with Employer.</xs:documentation>
+    </xs:annotation>
+   </xs:element>
+   <xs:element name="MaxBenefitAllowance" type="xs:decimal" nillable="true">
+    <xs:annotation>
+     <xs:documentation>Maximum allowance available to the recipient.</xs:documentation>
+    </xs:annotation>
+   </xs:element>
+   <xs:element name="PartialPaymentAmount" type="xs:decimal" nillable="true">
+    <xs:annotation>
+     <xs:documentation>The amount of benefit payment reduction.</xs:documentation>
+    </xs:annotation>
+   </xs:element>
+   <xs:element name="PaymentAmount" type="xs:decimal" nillable="true">
+    <xs:annotation>
+     <xs:documentation>The amount of each scheduled benefit payment.</xs:documentation>
+    </xs:annotation>
+   </xs:element>
+   <xs:element name="BenefitsFrequency" type="xs:integer" nillable="true">
+    <xs:annotation>
+     <xs:documentation>Frequency of benefits payments.</xs:documentation>
+    </xs:annotation>
+   </xs:element>
+   <xs:element name="PaymentsFrequency" type="xs:integer" nillable="true">
+    <xs:annotation>
+     <xs:documentation>The frequency of payments to the recipient.</xs:documentation>
+    </xs:annotation>
+   </xs:element>
+   <xs:element name="IsEmployed" type="xs:boolean" nillable="true"
+               minOccurs="0"/>
+  </xs:sequence>
+ </xs:complexType>
+ <xs:complexType name="EmploymentServicesDataResponseType">
+  <xs:sequence>
+   <xs:element name="ServiceStatus" type="ss:ServiceStatusType"/>
+   <xs:element name="EmploymentServicesData"
+               type="tns:EmploymentServicesDataType"/>
+  </xs:sequence>
+ </xs:complexType>
+</xs:schema>

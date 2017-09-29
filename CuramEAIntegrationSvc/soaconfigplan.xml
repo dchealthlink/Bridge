@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="CuramEAIntegrationSvc">
+      <import>
+         <searchReplace>
+            <search/>
+            <replace/>
+         </searchReplace>
+      </import>
+      <service name="ICReferenceCasePollSvc">
+         <property name="jca.retry.count">
+            <replace>2147483647</replace>
+         </property>
+         <property name="jca.retry.interval">
+            <replace>1</replace>
+         </property>
+         <property name="jca.retry.backoff">
+            <replace>2</replace>
+         </property>
+         <property name="jca.retry.maxInterval">
+            <replace>120</replace>
+         </property>
+         <binding type="jca">
+            <property name="singleton">
+               <replace>true</replace>
+            </property>
+         </binding>
+      </service>
+      <property name="productVersion">
+         <replace>11.1.1.7.0</replace>
+      </property>
+      <component name="CuramEAIntegrationSvc">
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <reference name="ICRefNumPublishSvc">
+         <binding type="jca"/>
+      </reference>
+      <reference name="Invoke_ErrorHandler_Service">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://xmlns.oracle.com/DCAS_DEV5/ErrorHandlingDCASCmpService/ErrorHandlingDCASABCSImpl#wsdl.endpoint(errorhandlingdcasabcsimpl_client_ep/ErrorHandlingDCASABCSImpl_pt)</replace>
+            </attribute>
+            <attribute name="location">
+               <searchReplace>
+                  <search>oramds:/apps/DCAS/ESB/ErrorHandling/WSDL/ErrorHandling.wsdl</search>
+                  <replace>https://esb-preprd.dchealthlink.com:4433/soa-infra/services/Common/ErrorHandlingDCASCmpService/errorhandlingdcasabcsimpl_client_ep?WSDL</replace>
+               </searchReplace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+            <property name="oracle.webservices.local.optimization">
+               <replace>false</replace>
+            </property>
+            <property name="csf-key">
+               <replace>soa.system.user</replace>
+            </property>
+         </binding>
+      </reference>
+   </composite>
+   <wsdlAndSchema name="ICReferenceCasePollSvc.wsdl|ICReferenceCasePollSvc_db.jca|ICRefNumPublishSvc.wsdl|ICRefNumPublishSvc_jms.jca|RuntimeFault.wsdl|xsd/ICIDreferenceNumber.xsd|xsd/ICReferenceCasePollSvc_table.xsd">
+      <searchReplace>
+         <search/>
+         <replace/>
+      </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

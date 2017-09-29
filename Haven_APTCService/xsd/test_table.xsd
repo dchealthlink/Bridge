@@ -1,0 +1,30 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/test" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/test" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="AnnualContributionCollection" type="AnnualContributionCollection"/>
+   <xs:complexType name="AnnualContributionCollection">
+      <xs:sequence>
+         <xs:element name="AnnualContribution" type="AnnualContribution" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="AnnualContribution">
+      <xs:sequence>
+         <xs:element name="annualContributionId" type="xs:int"/>
+         <xs:element name="fplYear" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="startFpl" type="xs:short" minOccurs="0"/>
+         <xs:element name="endFpl" type="xs:short" minOccurs="0"/>
+         <xs:element name="var1" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="var2" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="var3" type="xs:decimal" minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="testSelectInputParameters" type="testSelect"/>
+   <xs:complexType name="testSelect">
+      <xs:sequence/>
+   </xs:complexType>
+</xs:schema>

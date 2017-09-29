@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<APTCResponse ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]" xmlns:ns1="http://niem.gov/niem/structures/2.0" xmlns="http://aptc.dsh.cms.gov/exchange/1.0">
+   <IRSResponse ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]" xmlns="http://aptc.dsh.cms.gov/extension/1.0">
+      <RequestID xmlns="http://hix.cms.gov/0.1/hix-core">5</RequestID>
+      <APTC ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]" xmlns="http://hix.cms.gov/0.1/hix-ee">
+         <APTCMaximumAmount>0.0</APTCMaximumAmount>
+         <APTCRemainingBHCAmount>0.0</APTCRemainingBHCAmount>
+      </APTC>
+      <SystemCode ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]">string4</SystemCode>
+   </IRSResponse>
+   <ErrorMessageDetail ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]" xmlns="http://aptc.dsh.cms.gov/extension/1.0">
+      <ResponseMetadata ns1:id="\]\]" xmlns="http://hix.cms.gov/0.1/hix-core">
+         <ResponseCode ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]">string5</ResponseCode>
+         <HavenID>HavenID6</HavenID>
+         <RequestNumber>RequestNumber7</RequestNumber>
+         <ResponseDescriptionText ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]">string8</ResponseDescriptionText>
+         <TDSResponseDescriptionText ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]">string9</TDSResponseDescriptionText>
+      </ResponseMetadata>
+      <XPathContent ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]">string10</XPathContent>
+   </ErrorMessageDetail>
+   <ErrorMessageDetail ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]" xmlns="http://aptc.dsh.cms.gov/extension/1.0">
+      <ResponseMetadata ns1:id="\]\]" xmlns="http://hix.cms.gov/0.1/hix-core">
+         <ResponseCode ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]">string11</ResponseCode>
+         <HavenID>HavenID12</HavenID>
+         <RequestNumber>RequestNumber13</RequestNumber>
+         <ResponseDescriptionText ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]">string14</ResponseDescriptionText>
+         <TDSResponseDescriptionText ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]">string15</TDSResponseDescriptionText>
+      </ResponseMetadata>
+      <XPathContent ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]">string16</XPathContent>
+   </ErrorMessageDetail>
+   <ErrorMessageDetail ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]" xmlns="http://aptc.dsh.cms.gov/extension/1.0">
+      <ResponseMetadata ns1:id="\]\]" xmlns="http://hix.cms.gov/0.1/hix-core">
+         <ResponseCode ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]">string17</ResponseCode>
+         <HavenID>HavenID18</HavenID>
+         <RequestNumber>RequestNumber19</RequestNumber>
+         <ResponseDescriptionText ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]">string20</ResponseDescriptionText>
+         <TDSResponseDescriptionText ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]">'''string21' and 'test'</TDSResponseDescriptionText>
+      </ResponseMetadata>
+      <XPathContent ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]">string22</XPathContent>
+   </ErrorMessageDetail>
+</APTCResponse>

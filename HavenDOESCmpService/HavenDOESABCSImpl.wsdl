@@ -1,0 +1,34 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="EmployementServiceLocalABCSImpl"
+     targetNamespace="http://xmlns.oracle.com/LocalHub/EmployementLocalCmpService/EmployementServiceLocalABCSImpl"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="http://xmlns.oracle.com/LocalHub/EmployementLocalCmpService/EmployementServiceLocalABCSImpl"
+     xmlns:ns2="http://schemas.oracle.com/bpel/extension"
+     xmlns:ns1="http://xmlns.dhs.dc.gov/DCAS/ESB/Local/EmployementService/V1/"
+     xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+    >
+    <plnk:partnerLinkType name="EmployementServiceLocalABCSImpl">
+        <plnk:role name="EmployementServiceLocalABCSImplProvider">
+            <plnk:portType name="client:EmployementServiceLocalABCSImpl"/>
+        </plnk:role>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://schemas.oracle.com/bpel/extension" location="RuntimeFault.wsdl"/>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.dhs.dc.gov/DCAS/ESB/Local/EmployementService/V1/" schemaLocation="xsd/LocalEmploymentServicesData_v1.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="EmployementServiceLocalABCSImplRequestMessage">
+        <wsdl:part name="payload" element="ns1:GetEmploymentData"/>
+    </wsdl:message>
+    <wsdl:message name="EmployementServiceLocalABCSImplResponseMessage">
+        <wsdl:part name="payload" element="ns1:GetEmploymentDataResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="EmployementServiceLocalABCSImpl">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:EmployementServiceLocalABCSImplRequestMessage"/>
+            <wsdl:output message="client:EmployementServiceLocalABCSImplResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

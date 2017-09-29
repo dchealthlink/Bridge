@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<IFSVRequest xmlns="http://ifsv.dsh.cms.gov/exchange/1.0">
+   <RequestID xmlns="http://hix.cms.gov/0.1/hix-core">string4</RequestID>
+   <HavenID xmlns="http://ifsv.dsh.cms.gov/extension/1.0">HavenID5</HavenID>
+   <RequestNumber xmlns="http://ifsv.dsh.cms.gov/extension/1.0">RequestNumber6</RequestNumber>
+   <IFSVApplicant xmlns="http://ifsv.dsh.cms.gov/extension/1.0">
+      <Person>
+         <PersonName xmlns="http://niem.gov/niem/niem-core/2.0">
+            <PersonGivenName>string7</PersonGivenName>
+            <PersonSurName>string8</PersonSurName>
+         </PersonName>
+         <PersonSSNIdentification xmlns="http://niem.gov/niem/niem-core/2.0">
+            <IdentificationID>string9</IdentificationID>
+         </PersonSSNIdentification>
+      </Person>
+      <TaxFilerCategoryCode>PRIMARY</TaxFilerCategoryCode>
+   </IFSVApplicant>
+   <IFSVApplicant xmlns="http://ifsv.dsh.cms.gov/extension/1.0">
+      <Person>
+         <PersonName xmlns="http://niem.gov/niem/niem-core/2.0">
+            <PersonGivenName>string10</PersonGivenName>
+            <PersonSurName>string11</PersonSurName>
+         </PersonName>
+         <PersonSSNIdentification xmlns="http://niem.gov/niem/niem-core/2.0">
+            <IdentificationID>string12</IdentificationID>
+         </PersonSSNIdentification>
+      </Person>
+      <TaxFilerCategoryCode>SPOUSE</TaxFilerCategoryCode>
+   </IFSVApplicant>
+   <IFSVApplicant xmlns="http://ifsv.dsh.cms.gov/extension/1.0">
+      <Person>
+         <PersonName xmlns="http://niem.gov/niem/niem-core/2.0">
+            <PersonGivenName>string13</PersonGivenName>
+            <PersonSurName>string14</PersonSurName>
+         </PersonName>
+         <PersonSSNIdentification xmlns="http://niem.gov/niem/niem-core/2.0">
+            <IdentificationID>string15</IdentificationID>
+         </PersonSSNIdentification>
+      </Person>
+      <TaxFilerCategoryCode>DEPENDENT</TaxFilerCategoryCode>
+   </IFSVApplicant>
+</IFSVRequest>

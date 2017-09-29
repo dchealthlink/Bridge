@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://vci.dsh.cms.gov/exchange/1.0"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:WL5G3N1="http://vci.dsh.cms.gov/exchange/1.0">
+    <wsp:Policy wsu:Id="wss_username_token_service_policy"
+                xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                xmlns="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <sp:SupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <wsp:Policy>
+                <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                    <wsp:Policy>
+                        <sp:WssUsernameToken10/>
+                    </wsp:Policy>
+                </sp:UsernameToken>
+            </wsp:Policy>
+        </sp:SupportingTokens>
+    </wsp:Policy>
+    <wsdl:types>
+        <xsd:schema xmlns:WL5G3N3="http://schemas.xmlsoap.org/wsdl/soap12/"
+                    xmlns:exch="http://vci.dsh.cms.gov/exchange/1.0"
+                    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://vci.dsh.cms.gov/exchange/1.0"
+                        schemaLocation="xsd/ExchangeModel.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="VerifyCurrentIncomeRequest">
+        <wsdl:part name="body" element="WL5G3N1:CurrentIncomeRequest"/>
+    </wsdl:message>
+    <wsdl:message name="VerifyCurrentIncomeResponse">
+        <wsdl:part name="body" element="WL5G3N1:CurrentIncomeResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="VerifyCurrentIncomePortType">
+        <wsdl:operation name="currentIncome">
+            <wsdl:input message="WL5G3N1:VerifyCurrentIncomeRequest"/>
+            <wsdl:output message="WL5G3N1:VerifyCurrentIncomeResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="VerifyCurrentIncomeSoapBinding"
+                  type="WL5G3N1:VerifyCurrentIncomePortType">
+        <WL5G3N2:binding style="document"
+                         transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsp:PolicyReference URI="#wss_username_token_service_policy"
+                             wsdl:required="false"
+                             xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+        <wsdl:operation name="currentIncome">
+            <WL5G3N2:operation soapActionRequired="false"/>
+            <wsdl:input>
+                <WL5G3N2:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <WL5G3N2:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

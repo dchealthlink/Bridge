@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:i="http://niem.gov/niem/appinfo/2.0"
+            xmlns:nc="http://niem.gov/niem/niem-core/2.0"
+            xmlns:niem-xsd="http://niem.gov/niem/proxy/xsd/2.0"
+            xmlns:s="http://niem.gov/niem/structures/2.0"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            attributeFormDefault="qualified" elementFormDefault="qualified"
+            targetNamespace="http://niem.gov/niem/niem-core/2.0" version="1">
+  <xsd:import namespace="http://niem.gov/niem/proxy/xsd/2.0"
+              schemaLocation="xsd.xsd"/>
+  <xsd:import namespace="http://niem.gov/niem/appinfo/2.1"
+              schemaLocation="appinfo_1.xsd"/>
+  <xsd:import namespace="http://niem.gov/niem/structures/2.0"
+              schemaLocation="structures.xsd"/>
+  <xsd:import namespace="http://niem.gov/niem/appinfo/2.0"
+              schemaLocation="appinfo.xsd"/>
+  <xsd:annotation>
+    <xsd:appinfo>
+      <i:ConformantIndicator>true</i:ConformantIndicator>
+    </xsd:appinfo>
+    <xsd:documentation source="">NIEM Core includes both Universal (U) and
+                                 Common (C) components. The identities for U and
+                                 C components in Core are maintained with
+                                 metadata.</xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType abstract="false" mixed="false" name="DateType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for a calendar date.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="s:ComplexObjectType">
+        <xsd:sequence>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" ref="nc:Year"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element abstract="false" name="Year" nillable="true"
+               substitutionGroup="nc:DateRepresentation" type="niem-xsd:gYear">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="DateRepresentation"
+                i:namespace="http://niem.gov/niem/niem-core/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A year.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element abstract="true" name="DateRepresentation" nillable="false">
+    <xsd:annotation>
+      <xsd:documentation source="">A data concept for a A representation of a
+                                   date.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:complexType abstract="false" mixed="false" name="AmountType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for an amount of money.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="niem-xsd:decimal"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType abstract="false" mixed="false" name="PercentageType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for a ratio, proper fraction, or
+                                   percentage, with permissible decimal values
+                                   ranging from 0 to 1 inclusive.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="nc:PercentageSimpleType">
+        <xsd:attributeGroup ref="s:SimpleObjectAttributeGroup"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="PercentageSimpleType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for a ratio, proper fraction, or
+                                   percentage, with permissible decimal values
+                                   ranging from 0 to 1 inclusive.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:decimal">
+      <xsd:maxInclusive value="1"/>
+      <xsd:minInclusive value="0"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType abstract="false" mixed="false" name="NumericType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for a number value.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="niem-xsd:decimal"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType abstract="false" mixed="false" name="DateRangeType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for a period of time.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="s:ComplexObjectType">
+        <xsd:sequence>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" ref="nc:StartDate"/>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" ref="nc:EndDate"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element abstract="false" name="StartDate" nillable="true"
+               type="nc:DateType">
+    <xsd:annotation>
+      <xsd:documentation source="">A date on which something begins.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element abstract="false" name="EndDate" nillable="true"
+               type="nc:DateType">
+    <xsd:annotation>
+      <xsd:documentation source="">An end date.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:complexType abstract="false" mixed="false" name="ProperNameTextType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for a word or phrase by which a
+                                   person or thing is known, referred, or
+                                   addressed.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="nc:TextType"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType abstract="false" mixed="false" name="TextType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for a character string.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="niem-xsd:string"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType abstract="false" mixed="false" name="QuantityType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for a count or tally.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="nc:NumericType"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType abstract="false" mixed="false" name="PersonNameTextType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <i:Base i:name="Object"
+                i:namespace="http://niem.gov/niem/structures/2.0"/>
+      </xsd:appinfo>
+      <xsd:documentation source="">A data type for a name by which a person is
+                                   known, referred, or addressed.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="nc:ProperNameTextType"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

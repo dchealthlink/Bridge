@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/ns:composite/ns:reference[@name='InvokeDOES']</loc>
+      <line>33</line>
+      <col>60</col>
+      <file>/Users/rahulchitturi/jdeveloper/mywork/Haven/HavenDOESCmpService/composite.xml</file>
+      <name>/Users/rahulchitturi/jdeveloper/mywork/Haven/HavenDOESCmpService/composite.xml</name>
+      <fix/>
+      <msg>Failed to Find Binding "InvokeDOES":"{http://xmlns.oracle.com/DCASLocalHub/EmploymentServicesInfo/EmploymentServicesInfoBPEL}EmploymentServicesInfoBPEL_pt" in WSDL Manager</msg>
+   </Fault>
+</Faults>

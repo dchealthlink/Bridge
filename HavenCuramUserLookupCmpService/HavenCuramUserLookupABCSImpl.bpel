@@ -1,0 +1,184 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed Jul 19 11:37:45 EDT 2017
+  Author:  prasanthmanda
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="HavenCuramUserLookupABCSImpl"
+               targetNamespace="http://xmlns.oracle.com/Haven/HavenCuramUserLookupCmpService/HavenCuramUserLookupABCSImpl"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Haven/HavenCuramUserLookupCmpService/HavenCuramUserLookupABCSImpl"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenCuramUserLookupCmpService/HavenCuramUserLookupService"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/sp/HavenCuramUserLookupService"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns2="http://xmlns.oracle.com/dcas/esb/assistancelookup/service/xsd/v1"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+  <import namespace="http://schemas.oracle.com/bpel/extension"
+          location="RuntimeFault.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <import location="xsd/sp_out_format.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="http://xmlns.oracle.com/Haven/HavenCuramUserLookupCmpService/HavenCuramUserLookupABCSImpl" location="HavenCuramUserLookupABCSImpl.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="havencuramuserlookupabcsimpl_client" partnerLinkType="client:HavenCuramUserLookupABCSImpl" myRole="HavenCuramUserLookupABCSImplProvider"/>
+    <partnerLink name="HavenCuramUserLookupService"
+                 partnerLinkType="ns1:HavenCuramUserLookupService_plt"
+                 partnerRole="HavenCuramUserLookupService_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:HavenCuramUserLookupABCSImplRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:HavenCuramUserLookupABCSImplResponseMessage"/>
+    <variable name="UserLookupInput" messageType="ns1:args_in_msg"/>
+    <variable name="UserLookupOutput" messageType="ns1:args_out_msg"/>
+    <variable name="FormatUsersSPOutput" element="users_ID_IC_info"/>
+  </variables>
+  <faultHandlers>
+    <catchAll>
+      <sequence name="Error">
+        <assign name="Error">
+          <copy>
+            <from>'urn:openhbx:terms:v1:assistance_lookup_response#FAILURE'</from>
+            <to>$outputVariable.payload/ns2:response_code</to>
+          </copy>
+          <copy>
+            <from>'SYSTEM_FAILURE'</from>
+            <to>$outputVariable.payload/ns2:response_text</to>
+          </copy>
+        </assign>
+        <reply name="replyOutput" variable="outputVariable"
+               partnerLink="havencuramuserlookupabcsimpl_client"
+               portType="client:HavenCuramUserLookupABCSImpl"
+               operation="process"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in HavenCuramUserLookupABCSImpl.wsdl) -->
+    <receive name="receiveInput" partnerLink="havencuramuserlookupabcsimpl_client" portType="client:HavenCuramUserLookupABCSImpl" operation="process" variable="inputVariable" createInstance="yes"/>
+    <!--<validate name="ValidateReq" variables="inputVariable"/>-->
+    <if name="FilterInput">
+      <documentation>
+        <![CDATA[Check Either SSN OR DOB]]>
+      </documentation>
+      <condition>$inputVariable.payload/ns2:date_of_birth != '' or $inputVariable.payload/ns2:ssn !=''</condition>
+      <sequence> 
+        <!-- <assign name="UserLookupInput">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/UserLookupInput.xsl", $inputVariable.payload)</from>
+            <to variable="UserLookupInput" part="InputParameters"/>
+          </copy>
+        </assign>  -->
+        <assign name="USER_LOOKUP">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/User_Lookup.xsl", $inputVariable.payload)</from>
+            <to variable="UserLookupInput" part="InputParameters"/>
+          </copy>
+        </assign>
+        <invoke name="InvokeUserLookup"
+                partnerLink="HavenCuramUserLookupService"
+                portType="ns1:HavenCuramUserLookupService_ptt"
+                operation="HavenCuramUserLookupService"
+                inputVariable="UserLookupInput"
+                outputVariable="UserLookupOutput" bpelx:invokeAsDetail="no"/>
+        <if name="SpOutputClobNotNull">
+          <documentation>
+            <![CDATA[SpOutputClobNotnull]]>
+          </documentation>
+          <condition>$UserLookupOutput.OutputParameters/ns3:O_RESPONSE_CODE != 'NO_DATA_FOUND'</condition>
+          <sequence name="Sequence1">
+            <assign name="FormatSPUserOutput">
+              <copy>
+                <from>oraext:parseEscapedXML($UserLookupOutput.OutputParameters/ns3:O_USER_DETAILS_CLOB)</from>
+                <to>$FormatUsersSPOutput</to>
+              </copy>
+            </assign>
+          </sequence>
+        </if>
+        <!--<assign name="HavenCuramLookupToEA">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/HavenCuramLookupToEA.xsl", $UserLookupOutput.OutputParameters, "FormatUsersSPOutput", $FormatUsersSPOutput)</from>
+            <to variable="outputVariable" part="payload"/>
+          </copy>
+        </assign>-->
+        <assign name="HavenCuramLookupResp">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/HavenCuramLookupResp.xsl", $UserLookupOutput.OutputParameters, "FormatUsersSPOutput", $FormatUsersSPOutput)</from>
+            <to variable="outputVariable" part="payload"/>
+          </copy>
+        </assign>
+      </sequence>
+      <else>
+        <assign name="InvalidInput">
+          <copy>
+            <from>'urn:openhbx:terms:v1:assistance_lookup_response#INVALID_INFORMATION'</from>
+            <to>$outputVariable.payload/ns2:response_code</to>
+          </copy>
+          <copy>
+            <from>'Please correct and resend the request'</from>
+            <to>$outputVariable.payload/ns2:response_text</to>
+          </copy>
+        </assign>
+      </else>
+    </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="havencuramuserlookupabcsimpl_client" portType="client:HavenCuramUserLookupABCSImpl" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

@@ -3,7 +3,7 @@
                 wsdlLocation="GetPDCInfo.wsdl"
                 xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
    <connection-factory location="eis/DB/curamtohaven"
-                       UIConnectionName="CuramUAT" adapterRef=""/>
+                       UIConnectionName="ConnectureUAT" adapterRef=""/>
    <endpoint-interaction portType="GetPDCInfo_ptt" operation="GetPDCInfo">
       <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
          <property name="ProcedureName" value="GET_PDC_INFO_BY_ICID"/>

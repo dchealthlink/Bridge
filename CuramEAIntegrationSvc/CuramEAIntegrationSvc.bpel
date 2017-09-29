@@ -38,7 +38,9 @@
          xmlns:ns8="http://xmlns.oracle.com/DCAS/edi/dchealthlink.com/SyncIntegratedCases/v1"
          xmlns:ns10="http://xmlns.oracle.com/pcbpel/adapter/jms/SOA_APP/CuramEAIntegrationSvc/Publish_HavenICID"
          xmlns:ns11="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSynExternalFamilyABCSImpl"
-         xmlns:ns12="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal">
+         xmlns:ns12="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal"
+         xmlns:ns13="http://xmlns.oracle.com/pcbpel/adapter/jms/Haven/CuramEAIntegrationSvc/Publish_HavenDEV"
+         xmlns:ns14="http://xmlns.oracle.com/pcbpel/adapter/jms/Haven/CuramEAIntegrationSvc/FaultHandling">
   <!-- 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       PARTNERLINKS                                                      
@@ -60,14 +62,13 @@
     <partnerLink name="ICRefNumPublishSvc"
                  partnerLinkType="ns3:Produce_Message_plt"
                  partnerRole="Produce_Message_role"/>
-    <partnerLink name="Invoke_ErrorHandler_Service"
-                 partnerLinkType="ns5:ErrorHandlingDCASABCSImpl"
-                 partnerRole="ErrorHandlingDCASABCSImplProvider"/>
     <partnerLink name="Publish_HavenICID"
                  partnerLinkType="ns10:Produce_Message_plt"
                  partnerRole="Produce_Message_role"/>
     <partnerLink name="CheckPDC" partnerLinkType="ns12:HavenSyncExternal"
                  partnerRole="HavenSyncExternalProvider"/>
+    <partnerLink name="FaultHandling" partnerLinkType="ns14:Produce_Message_plt"
+                 partnerRole="Produce_Message_role"/>
   </partnerLinks>
   <!-- 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,184 +84,89 @@
     <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
     <variable name="Invoke_ICIDNumPublish_Produce_Message_InputVariable"
               messageType="ns3:Produce_Message_msg"/>
-    <variable name="Invoke_Error_Handler_process_InputVariable"
-              messageType="ns5:ErrorHandlingDCASABCSImplRequestMessage"/>
     <variable name="Invoke_PublishHavenICID_InputVariable"
               messageType="ns10:Produce_Message_msg"/>
     <variable name="Invoke_CheckPDC_process_InputVariable"
               messageType="ns12:HavenSyncExternalRequestMessage"/>
     <variable name="Invoke_CheckPDC_process_OutputVariable"
               messageType="ns12:HavenSyncExternalResponseMessage"/>
+    <variable name="FaultHandling_Produce_Message_InputVariable"
+              messageType="ns14:Produce_Message_msg"/>
   </variables>
   <faultHandlers>
     <catch faultName="bpelx:remoteFault" faultVariable="FaultVar"
            faultMessageType="bpelx:RuntimeFaultMessage">
-      <sequence name="Sequence2">
-        <assign name="Assign_RemoteFaultData"
-                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
-          <copy>
-            <from>xp20:current-dateTime()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Footer/ns6:TimeStamp</to>
-          </copy>
-          <copy>
-            <from>oraext:get-content-as-string($Recive_IC_PollData.DchxeaiccaserefCollection)</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:InputMsg</to>
-          </copy>
-          <copy>
-            <from>ora:generateGUID()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:GUID</to>
-          </copy>
-          <copy>
-            <from>'ESB_01'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SenderID</to>
-          </copy>
-          <copy>
-            <from>'ESB'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SenderName</to>
-          </copy>
-          <copy>
-            <from>ora:getComponentName()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:ServiceName</to>
-          </copy>
-          <copy>
-            <from>ora:getCompositeName()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:CompositeName</to>
-          </copy>
-          <copy>
-            <from>ora:getComponentName()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:Component</to>
-          </copy>
-          <copy>
-            <from>'ENAPP_01'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:TargetID</to>
-          </copy>
-          <copy>
-            <from>'DEV'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:EnvironmentName</to>
-          </copy>
-          <copy>
-            <from>'ENA_01'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SourceID</to>
-          </copy>
-          <copy>
-            <from>ora:getCompositeInstanceId()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:InstanceID</to>
-          </copy>
+      <sequence name="Sequence7">
+        <assign name="AssignRemoteFault">
           <copy>
             <from>$FaultVar.code</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorCode</to>
+            <to>$FaultHandling_Produce_Message_InputVariable.body/ns4:ResponseCode</to>
           </copy>
           <copy>
             <from>$FaultVar.summary</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorDesc</to>
+            <to>$FaultHandling_Produce_Message_InputVariable.body/ns4:ResponseSummary</to>
           </copy>
           <copy>
             <from>$FaultVar.detail</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorMsg</to>
-          </copy>
-          <copy>
-            <from>'1'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorSeverity</to>
-          </copy>
-          <copy>
-            <from>'REMOTE_01'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorType</to>
+            <to>$FaultHandling_Produce_Message_InputVariable.body/ns4:ResponseDetails</to>
           </copy>
         </assign>
-        <invoke name="Invoke_Error_Handler" bpelx:invokeAsDetail="no"
-                partnerLink="Invoke_ErrorHandler_Service"
-                portType="ns5:ErrorHandlingDCASABCSImpl" operation="process"
-                inputVariable="Invoke_Error_Handler_process_InputVariable"
-                xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
-                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+        <assign name="Xform_RemoteFault">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Xform_Remote.xsl", $FaultHandling_Produce_Message_InputVariable.body)</from>
+            <to variable="FaultHandling_Produce_Message_InputVariable"
+                part="body"/>
+          </copy>
+        </assign>
+        <invoke name="Invoke_FaultHandling"
+                partnerLink="FaultHandling"
+                portType="ns14:Produce_Message_ptt"
+                operation="Produce_Message"
+                inputVariable="FaultHandling_Produce_Message_InputVariable"
+                bpelx:invokeAsDetail="no"/>
       </sequence>
     </catch>
     <catch faultName="bpelx:bindingFault" faultVariable="FaultVar"
            faultMessageType="bpelx:RuntimeFaultMessage">
-      <sequence name="Sequence1">
-        <assign name="Assign_BindFaultData">
-          <copy>
-            <from>xp20:current-dateTime()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Footer/ns6:TimeStamp</to>
-          </copy>
-          <copy>
-            <from>oraext:get-content-as-string($Recive_IC_PollData.DchxeaiccaserefCollection)</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:InputMsg</to>
-          </copy>
-          <copy>
-            <from>ora:generateGUID()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:GUID</to>
-          </copy>
-          <copy>
-            <from>'ESB_01'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SenderID</to>
-          </copy>
-          <copy>
-            <from>'ESB'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SenderName</to>
-          </copy>
-          <copy>
-            <from>ora:getComponentName()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:ServiceName</to>
-          </copy>
-          <copy>
-            <from>ora:getCompositeName()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:CompositeName</to>
-          </copy>
-          <copy>
-            <from>ora:getComponentName()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:Component</to>
-          </copy>
-          <copy>
-            <from>'ENAPP_01'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:TargetID</to>
-          </copy>
-          <copy>
-            <from>'DEV'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:EnvironmentName</to>
-          </copy>
-          <copy>
-            <from>'ENA_01'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SourceID</to>
-          </copy>
-          <copy>
-            <from>ora:getCompositeInstanceId()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:InstanceID</to>
-          </copy>
+      <sequence name="Sequence6">
+        <assign name="AssignBindingFault">
           <copy>
             <from>$FaultVar.code</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorCode</to>
+            <to>$FaultHandling_Produce_Message_InputVariable.body/ns4:ResponseCode</to>
           </copy>
           <copy>
             <from>$FaultVar.summary</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorDesc</to>
+            <to>$FaultHandling_Produce_Message_InputVariable.body/ns4:ResponseSummary</to>
           </copy>
           <copy>
             <from>$FaultVar.detail</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorMsg</to>
-          </copy>
-          <copy>
-            <from>'1'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorSeverity</to>
-          </copy>
-          <copy>
-            <from>'BINDING_01'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorType</to>
+            <to>$FaultHandling_Produce_Message_InputVariable.body/ns4:ResponseDetails</to>
           </copy>
         </assign>
-        <invoke name="Invoke_Error_Handler" bpelx:invokeAsDetail="no"
-                partnerLink="Invoke_ErrorHandler_Service"
-                portType="ns5:ErrorHandlingDCASABCSImpl" operation="process"
-                inputVariable="Invoke_Error_Handler_process_InputVariable"/>
+        <assign name="Xform_BindingFault">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Xform_Binding.xsl", $FaultHandling_Produce_Message_InputVariable.body)</from>
+            <to variable="FaultHandling_Produce_Message_InputVariable"
+                part="body"/>
+          </copy>
+        </assign>
+        <invoke name="Invoke_FaultHandling"
+                partnerLink="FaultHandling"
+                portType="ns14:Produce_Message_ptt"
+                operation="Produce_Message"
+                inputVariable="FaultHandling_Produce_Message_InputVariable"
+                bpelx:invokeAsDetail="no"/>
       </sequence>
     </catch>
     <catchAll>
-      <sequence name="Sequence3">
-        <assign name="Assign_FaultDetails">
-          <copy>
-            <from>'CURAMEAINTEGRATIONSVC'</from>
-            <to>$FaultVar.code</to>
-          </copy>
+      <sequence name="Sequence5">
+        <assign name="AssignFault">
           <copy>
             <from>ora:getFaultAsString()</from>
             <to>$FaultVar.summary</to>
@@ -269,84 +175,41 @@
             <from>ora:getFaultName()</from>
             <to>$FaultVar.detail</to>
           </copy>
+          <copy>
+            <from>"ICIDFaultCode"</from>
+            <to>$FaultVar.code</to>
+          </copy>
         </assign>
-        <assign name="Assign_GenricFaultData"
-                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
-          <copy>
-            <from>xp20:current-dateTime()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Footer/ns6:TimeStamp</to>
-          </copy>
-          <copy>
-            <from>oraext:get-content-as-string($Recive_IC_PollData.DchxeaiccaserefCollection)</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:InputMsg</to>
-          </copy>
-          <copy>
-            <from>ora:generateGUID()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:GUID</to>
-          </copy>
-          <copy>
-            <from>'ESB_01'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SenderID</to>
-          </copy>
-          <copy>
-            <from>'ESB'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SenderName</to>
-          </copy>
-          <copy>
-            <from>ora:getComponentName()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:ServiceName</to>
-          </copy>
-          <copy>
-            <from>ora:getCompositeName()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:CompositeName</to>
-          </copy>
-          <copy>
-            <from>ora:getComponentName()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:Component</to>
-          </copy>
-          <copy>
-            <from>'ENAPP_01'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:TargetID</to>
-          </copy>
-          <copy>
-            <from>'DEV'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:EnvironmentName</to>
-          </copy>
-          <copy>
-            <from>'ENA_01'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:SourceID</to>
-          </copy>
-          <copy>
-            <from>ora:getCompositeInstanceId()</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:Header/ns6:InstanceID</to>
-          </copy>
+        <assign name="AssignGeneric">
           <copy>
             <from>$FaultVar.code</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorCode</to>
+            <to>$FaultHandling_Produce_Message_InputVariable.body/ns4:ResponseCode</to>
           </copy>
           <copy>
             <from>$FaultVar.summary</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorDesc</to>
+            <to>$FaultHandling_Produce_Message_InputVariable.body/ns4:ResponseSummary</to>
           </copy>
           <copy>
             <from>$FaultVar.detail</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorMsg</to>
-          </copy>
-          <copy>
-            <from>'1'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorSeverity</to>
-          </copy>
-          <copy>
-            <from>'GENRIC_01'</from>
-            <to>$Invoke_Error_Handler_process_InputVariable.payload/ns6:MessageBody/ns6:ErrorType</to>
+            <to>$FaultHandling_Produce_Message_InputVariable.body/ns4:ResponseDetails</to>
           </copy>
         </assign>
-        <invoke name="Invoke_Error_Handler" bpelx:invokeAsDetail="no"
-                partnerLink="Invoke_ErrorHandler_Service"
-                portType="ns5:ErrorHandlingDCASABCSImpl" operation="process"
-                inputVariable="Invoke_Error_Handler_process_InputVariable"
-                xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
-                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+        <assign name="Xform_RemoteFault">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Xform_CatchALL.xsl", $FaultHandling_Produce_Message_InputVariable.body)</from>
+            <to variable="FaultHandling_Produce_Message_InputVariable"
+                part="body"/>
+          </copy>
+        </assign>
+        <invoke name="Invoke_FaultHandling"
+                partnerLink="FaultHandling"
+                portType="ns14:Produce_Message_ptt"
+                operation="Produce_Message"
+                inputVariable="FaultHandling_Produce_Message_InputVariable"
+                bpelx:invokeAsDetail="no"/>
       </sequence>
     </catchAll>
   </faultHandlers>
@@ -403,7 +266,8 @@ setCompositeInstanceTitle(title);]]>
             <from>$Recive_IC_PollData.DchxeaiccaserefCollection/ns2:Dchxeaiccaseref/ns2:iccasereference</from>
             <to>$Invoke_PublishHavenICID_InputVariable.body/ns4:IntegratedCase_ID</to>
           </copy>
-        </assign>
+        </assign> 
+        
         <invoke name="Invoke_PublishHavenICID" partnerLink="Publish_HavenICID"
                 portType="ns10:Produce_Message_ptt" operation="Produce_Message"
                 inputVariable="Invoke_PublishHavenICID_InputVariable"

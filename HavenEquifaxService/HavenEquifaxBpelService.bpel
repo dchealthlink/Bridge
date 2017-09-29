@@ -1,0 +1,248 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri Nov 04 15:51:29 EDT 2016
+  Author:  rahulchitturi
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="HavenEquifaxBpelService"
+               targetNamespace="http://xmlns.oracle.com/SOA_APP/HavenEquifaxService/HavenEquifaxBpelService"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/SOA_APP/HavenEquifaxService/HavenEquifaxBpelService"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/jms/SOA_APP/HavenEquifaxService/ConsumeEquifaxReq"
+         xmlns:ns2="http://vci.dsh.cms.gov/exchange/1.0"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/jms/SOA_APP/HavenEquifaxService/PublishEquifaxResponse"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ns5="http://niem.gov/niem/niem-core/2.0"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ns4="http://vci.dsh.cms.gov/extension/1.0"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns6="http://hix.cms.gov/0.1/hix-core"
+         xmlns:ns7="http://niem.gov/niem/structures/2.0"
+         xmlns:ns11="http://niem.gov/niem/niem-core/2.0/ESB/V1"
+         xmlns:ns10="http://hix.cms.gov/0.1/hix-core/ESB/V1"
+         xmlns:ns9="http://vci.dsh.cms.gov/extension/1.0/ESB/V1"
+         xmlns:ns8="http://vci.dsh.cms.gov/exchange/1.0/ESB/V1">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="http://schemas.oracle.com/bpel/extension"
+          location="RuntimeFault.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <partnerLinks>
+    <partnerLink name="ConsumeEquifaxReq"
+                 partnerLinkType="ns1:Consume_Message_plt"
+                 myRole="Consume_Message_role"/>
+    <partnerLink name="InvokeFedEquifaxService"
+                 partnerLinkType="ns2:InvokeFedEquifaxService"
+                 partnerRole="VerifyCurrentIncomePortType"/>
+    <partnerLink name="PublishEquifaxResponse"
+                 partnerLinkType="ns3:Produce_Message_plt"
+                 partnerRole="Produce_Message_role"/>
+  </partnerLinks>
+  <variables>
+    <variable name="Consume_Message_InputVariable"
+              messageType="ns1:Consume_Message_msg"/>
+    <variable name="InvokeFedEquifaxSvc_InputVariable"
+              messageType="ns2:VerifyCurrentIncomeRequest"/>
+    <variable name="InvokeFedEquifaxSvc_OutputVariable"
+              messageType="ns2:VerifyCurrentIncomeResponse"/>
+    <variable name="InvokePublishEquifaxResp_InputVariable"
+              messageType="ns3:Produce_Message_msg"/>
+    <variable name="Title" type="xsd:string"/>
+    <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
+  </variables>
+  <faultHandlers>
+    <catch faultName="bpelx:remoteFault" faultVariable="FaultVar"
+           faultMessageType="bpelx:RuntimeFaultMessage">
+      <sequence name="Sequence3">
+        <assign name="AssignRemoteFault">
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$InvokePublishEquifaxResp_InputVariable.body/ns4:ResponseMetadata/ns6:ResponseCode</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$InvokePublishEquifaxResp_InputVariable.body/ns4:ResponseMetadata/ns6:ResponseDescriptionText</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$InvokePublishEquifaxResp_InputVariable.body/ns4:ResponseMetadata/ns6:TDSResponseDescriptionText</to>
+          </copy>
+          <copy>
+            <from>$Consume_Message_InputVariable.body/ns9:Person/ns11:RequestNumber</from>
+            <to>$InvokePublishEquifaxResp_InputVariable.body/ns2:RequestNumber</to>
+          </copy>
+        </assign>
+        <assign name="XformRemoteError">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/PublishErrorResp.xsl", $InvokePublishEquifaxResp_InputVariable.body)</from>
+            <to variable="InvokePublishEquifaxResp_InputVariable" part="body"/>
+          </copy>
+        </assign>
+        <invoke name="InvokePublishErrorResp" bpelx:invokeAsDetail="no"
+                partnerLink="PublishEquifaxResponse"
+                portType="ns3:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="InvokePublishEquifaxResp_InputVariable"/>
+      </sequence>
+    </catch>
+    <catch faultName="bpelx:bindingFault" faultVariable="FaultVar"
+           faultMessageType="bpelx:RuntimeFaultMessage">
+      <sequence name="Sequence1">
+        <assign name="AssignBindingFault">
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$InvokePublishEquifaxResp_InputVariable.body/ns4:ResponseMetadata/ns6:ResponseCode</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$InvokePublishEquifaxResp_InputVariable.body/ns4:ResponseMetadata/ns6:ResponseDescriptionText</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$InvokePublishEquifaxResp_InputVariable.body/ns4:ResponseMetadata/ns6:TDSResponseDescriptionText</to>
+          </copy>
+          <copy>
+            <from>$Consume_Message_InputVariable.body/ns9:Person/ns11:RequestNumber</from>
+            <to>$InvokePublishEquifaxResp_InputVariable.body/ns2:RequestNumber</to>
+          </copy>
+        </assign>
+        <assign name="XformBingingError">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/XformBindingError.xsl", $InvokePublishEquifaxResp_InputVariable.body)</from>
+            <to variable="InvokePublishEquifaxResp_InputVariable" part="body"/>
+          </copy>
+        </assign>
+        <invoke name="InvokePublishErrorResp"
+                partnerLink="PublishEquifaxResponse"
+                portType="ns3:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="InvokePublishEquifaxResp_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+    </catch>
+    <catchAll>
+      <sequence name="Sequence2">
+        <assign name="AssignFault">
+          <copy>
+            <from>"EquifaxFaultCode"</from>
+            <to>$FaultVar.code</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+        </assign>
+        <assign name="AssignGeneric">
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$InvokePublishEquifaxResp_InputVariable.body/ns4:ResponseMetadata/ns6:ResponseCode</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$InvokePublishEquifaxResp_InputVariable.body/ns4:ResponseMetadata/ns6:ResponseDescriptionText</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$InvokePublishEquifaxResp_InputVariable.body/ns4:ResponseMetadata/ns6:TDSResponseDescriptionText</to>
+          </copy>
+          <copy>
+            <from>$Consume_Message_InputVariable.body/ns9:Person/ns11:RequestNumber</from>
+            <to>$InvokePublishEquifaxResp_InputVariable.body/ns2:RequestNumber</to>
+          </copy>
+        </assign>
+        <assign name="XformGenericError">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/XformGenericError.xsl", $InvokePublishEquifaxResp_InputVariable.body)</from>
+            <to variable="InvokePublishEquifaxResp_InputVariable" part="body"/>
+          </copy>
+        </assign>
+        <invoke name="InvokePublishErrorResp"
+                partnerLink="PublishEquifaxResponse"
+                portType="ns3:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="InvokePublishEquifaxResp_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <sequence name="main">
+    <receive name="ReceiveInput" createInstance="yes"
+             partnerLink="ConsumeEquifaxReq"
+             portType="ns1:Consume_Message_ptt" operation="Consume_Message"
+             variable="Consume_Message_InputVariable"/>
+    <assign name="AssignTitle">
+      <copy>
+        <from>concat('SSN Identification :',$Consume_Message_InputVariable.body/ns9:Person/ns11:PersonSSNIdentification/ns11:IdentificationID)</from>
+        <to>$Title</to>
+      </copy>
+    </assign>
+    <extensionActivity>
+      <bpelx:exec name="Java_Embedding_Title" language="java">
+        <![CDATA[String title = "CurrentHouseholdIncome: "+(String)getVariableData("Title");      
+setCompositeInstanceTitle(title);]]>
+      </bpelx:exec>
+    </extensionActivity>
+    <assign name="XformReq">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"/>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("xsl/XformReq.xsl", $Consume_Message_InputVariable.body)</from>
+        <to variable="InvokeFedEquifaxSvc_InputVariable" part="body"/>
+      </copy>
+    </assign>
+    <invoke name="InvokeFedEquifaxSvc"
+            partnerLink="InvokeFedEquifaxService"
+            portType="ns2:VerifyCurrentIncomePortType"
+            operation="currentIncome"
+            inputVariable="InvokeFedEquifaxSvc_InputVariable"
+            outputVariable="InvokeFedEquifaxSvc_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <assign name="XformResp">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"/>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("xsl/XformEquifaxResp.xsl", $InvokeFedEquifaxSvc_OutputVariable.body, "Consume_Message_InputVariable.body", $Consume_Message_InputVariable.body)</from>
+        <to variable="InvokePublishEquifaxResp_InputVariable" part="body"/>
+      </copy>
+    </assign>
+    <invoke name="InvokePublishEquifaxResp"
+            partnerLink="PublishEquifaxResponse"
+            portType="ns3:Produce_Message_ptt" operation="Produce_Message"
+            inputVariable="InvokePublishEquifaxResp_InputVariable"
+            bpelx:invokeAsDetail="no"/>
+  </sequence>
+</process>

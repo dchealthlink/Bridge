@@ -1,0 +1,34 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions name="CurrentHouseholdIncomeFedABCSImpl"
+                  targetNamespace="http://xmlns.oracle.com/test/CurrentHouseholdIncomeFedCmpService/CurrentHouseholdIncomeFedABCSImpl"
+                  xmlns:ns2="http://schemas.oracle.com/bpel/extension"
+                  xmlns:ns1="http://vci.dsh.cms.gov/exchange/1.0"
+                  xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+                  xmlns:client="http://xmlns.oracle.com/test/CurrentHouseholdIncomeFedCmpService/CurrentHouseholdIncomeFedABCSImpl"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <plnk:partnerLinkType name="CurrentHouseholdIncomeFedABCSImpl">
+        <plnk:role name="CurrentHouseholdIncomeFedABCSImplProvider">
+            <plnk:portType name="client:CurrentHouseholdIncomeFedABCSImpl"/>
+        </plnk:role>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://schemas.oracle.com/bpel/extension"
+                 location="RuntimeFault.wsdl"/>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://vci.dsh.cms.gov/exchange/1.0"
+                    schemaLocation="xsd/ExchangeModel.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="CurrentHouseholdIncomeFedABCSImplRequestMessage">
+        <wsdl:part name="payload" element="ns1:CurrentIncomeRequest"/>
+    </wsdl:message>
+    <wsdl:message name="CurrentHouseholdIncomeFedABCSImplResponseMessage">
+        <wsdl:part name="payload" element="ns1:CurrentIncomeResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="CurrentHouseholdIncomeFedABCSImpl">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:CurrentHouseholdIncomeFedABCSImplRequestMessage"/>
+            <wsdl:output message="client:CurrentHouseholdIncomeFedABCSImplResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

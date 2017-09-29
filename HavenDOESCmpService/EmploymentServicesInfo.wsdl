@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="EmploymentServicesInfoBPEL"
+                  targetNamespace="http://xmlns.oracle.com/DCASLocalHub/EmploymentServicesInfo/EmploymentServicesInfoBPEL"
+                  xmlns:client="http://xmlns.oracle.com/DCASLocalHub/EmploymentServicesInfo/EmploymentServicesInfoBPEL"
+                  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation>https://soast04.in.dc.gov:8012/DCASProj2/proxy/EmploymentServicesInfo?wsdl</wsdl:documentation>
+  <plnk:partnerLinkType name="EmploymentServicesInfoBPEL">
+    <plnk:role name="EmploymentServicesInfoBPELProvider"
+               portType="client:EmploymentServicesInfoBPEL"/>
+  </plnk:partnerLinkType>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://xmlns.oracle.com/DCASLocalHub/EmploymentServicesInfo/EmploymentServicesInfoBPEL"
+              schemaLocation="xsd/EmploymentServicesInfoBPEL.xsd"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="EmploymentServicesInfoBPELRequestMessage">
+    <wsdl:part element="client:process" name="payload"/>
+  </wsdl:message>
+  <wsdl:message name="EmploymentServicesInfoBPELResponseMessage">
+    <wsdl:part element="client:processResponse" name="payload"/>
+  </wsdl:message>
+  <wsdl:portType name="EmploymentServicesInfoBPEL">
+    <wsdl:operation name="process">
+      <wsdl:input message="client:EmploymentServicesInfoBPELRequestMessage"/>
+      <wsdl:output message="client:EmploymentServicesInfoBPELResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EmploymentServicesInfoBPELBinding"
+                type="client:EmploymentServicesInfoBPEL">
+    <soap:binding style="document"
+                  transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="process">
+      <soap:operation soapAction="process" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+</wsdl:definitions>

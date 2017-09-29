@@ -1,18 +1,18 @@
 Java HotSpot(TM) 64-Bit Server VM warning: ignoring option PermSize=32m; support was removed in 8.0
 Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=256m; support was removed in 8.0
-Mar 23, 2017 11:58:38 AM oracle.security.jps.util.JpsUtil disableAudit
+Sep 29, 2017 10:21:13 AM oracle.security.jps.util.JpsUtil disableAudit
 INFO: JpsUtil: isAuditDisabled set to true
-Mar 23, 2017 11:58:38 AM oracle.security.jps.util.JpsUtil disableAudit
+Sep 29, 2017 10:21:13 AM oracle.security.jps.util.JpsUtil disableAudit
 INFO: JpsUtil: isAuditDisabled set to false
-Mar 23, 2017 11:58:39 AM oracle.mds
+Sep 29, 2017 10:21:14 AM oracle.mds
 NOTIFICATION: PManager instance is created without multitenancy support as JVM flag "oracle.multitenant.enabled" is not set to enable multitenancy support.
-Mar 23, 2017 11:58:40 AM oracle.security.jps.internal.config.xml.XmlConfigurationFactory initDefaultConfiguration
+Sep 29, 2017 10:21:14 AM oracle.security.jps.internal.config.xml.XmlConfigurationFactory initDefaultConfiguration
 SEVERE: java.io.FileNotFoundException: ./config/jps-config.xml (No such file or directory)
-Mar 23, 2017 11:58:40 AM oracle.mds
+Sep 29, 2017 10:21:14 AM oracle.mds
 NOTIFICATION: Auditing is disabled for component MDS.
-Mar 23, 2017 11:58:42 AM oracle.fabric.common.wsdl.SchemaManager isIncrementalBuildSupported
+Sep 29, 2017 10:21:15 AM oracle.fabric.common.wsdl.SchemaManager isIncrementalBuildSupported
 INFO: XMLSchema incremental build enabled.
-Mar 23, 2017 11:58:46 AM oracle.integration.platform.blocks.FabricConfigManager <clinit>
+Sep 29, 2017 10:21:19 AM oracle.integration.platform.blocks.FabricConfigManager <clinit>
 WARNING: JRF is unable to determine the current application server platform.
-Mar 23, 2017 11:58:46 AM oracle.integration.platform.blocks.WLSPlatformConfigurationProvider <clinit>
+Sep 29, 2017 10:21:19 AM oracle.integration.platform.blocks.WLSPlatformConfigurationProvider <clinit>
 WARNING: JRF is unable to determine the current application server platform.

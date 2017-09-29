@@ -1,0 +1,13 @@
+<adapter-config name="ConsumeEquifaxReq" adapter="JMS Adapter"
+                wsdlLocation="ConsumeEquifaxReq.wsdl"
+                xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  <connection-factory location="eis/wls/Queue" UIJmsProvider="THIRDPARTY"/>
+  <endpoint-activation portType="Consume_Message_ptt"
+                       operation="Consume_Message">
+    <activation-spec className="oracle.tip.adapter.jms.inbound.JmsConsumeActivationSpec">
+      <property name="DestinationName" value="jms/Equifax_RequestQueue_JMS"/>
+      <property name="UseMessageListener" value="false"/>
+      <property name="PayloadType" value="TextMessage"/>
+    </activation-spec>
+  </endpoint-activation>
+</adapter-config>

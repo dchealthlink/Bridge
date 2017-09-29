@@ -1,0 +1,57 @@
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/DeductionsService"
+        xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/DeductionsService"
+        elementFormDefault="qualified">
+   <element name="DeductionsInput">
+      <complexType>
+         <sequence>
+            <element name="I_CONCERNROLEID" type="decimal" db:index="1"
+                     db:type="NUMBER" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="deductions">
+      <complexType>
+         <sequence>
+            <element type="xsd:string" name="ResponseCode"/>
+            <element type="xsd:string" name="ResponseText"/>
+            <element name="deduction">
+               <complexType>
+                  <sequence>
+                     <element type="xsd:string" name="evidenceID"/>
+                     <element type="xsd:string" name="deduction_typeCode"/>
+                     <element type="xsd:string" name="income_type"/>
+                     <element type="xsd:string" name="amount"/>
+                     <element type="xsd:string" name="ded_frequencyCode"/>
+                     <element type="xsd:string" name="frequency"/>
+                     <element type="xsd:string" name="start_date"/>
+                     <element type="xsd:string" name="end_date"/>
+                     <element type="xsd:string"
+                              name="ded_caseParticipantRoleID"/>
+                     <element type="xsd:string" name="ded_ParticipantRoleID"/>
+                  </sequence>
+               </complexType>
+            </element>
+         </sequence>
+      </complexType>
+   </element>
+</schema>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

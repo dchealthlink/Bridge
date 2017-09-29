@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="HavenCuramUserLookupABCSImpl" targetNamespace="http://xmlns.oracle.com/Haven/HavenCuramUserLookupCmpService/HavenCuramUserLookupABCSImpl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/Haven/HavenCuramUserLookupCmpService/HavenCuramUserLookupABCSImpl" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns1="http://xmlns.oracle.com/dcas/esb/assistancelookup/service/xsd/v1" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/FiveYearBarService" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+   <plnk:partnerLinkType name="HavenCuramUserLookupABCSImpl">
+      <plnk:role name="HavenCuramUserLookupABCSImplProvider" portType="client:HavenCuramUserLookupABCSImpl"/>
+   </plnk:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/Haven/HavenCuramUserLookupCmpService/HavenCuramUserLookupABCSImpl" xmlns:ns1="http://xmlns.oracle.com/dcas/esb/assistancelookup/service/xsd/v1" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/FiveYearBarService" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+         <import namespace="http://xmlns.oracle.com/dcas/esb/assistancelookup/service/xsd/v1" schemaLocation="xsd/AssistanceLookupService.xsd"/>
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/FiveYearBarService" schemaLocation="xsd/FiveYearBarService_sp.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:include schemaLocation="xsd/sp_out_format.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="HavenCuramUserLookupABCSImplRequestMessage">
+      <wsdl:part name="payload" element="ns1:assistance_lookup_resquest"/>
+   </wsdl:message>
+   <wsdl:message name="HavenCuramUserLookupABCSImplResponseMessage">
+      <wsdl:part name="payload" element="ns1:assistance_lookup_response"/>
+   </wsdl:message>
+   <wsdl:message name="FiveYearBarRequestMessage">
+      <wsdl:part name="payload" element="db:InputParameters"/>
+   </wsdl:message>
+   <wsdl:message name="FiveYearBarResponseMessage">
+      <wsdl:part name="payload" element="db:OutputParameters"/>
+   </wsdl:message>
+   <wsdl:portType name="HavenCuramUserLookupABCSImpl">
+      <wsdl:operation name="CuramLookUp">
+         <wsdl:input message="client:HavenCuramUserLookupABCSImplRequestMessage"/>
+         <wsdl:output message="client:HavenCuramUserLookupABCSImplResponseMessage"/>
+      </wsdl:operation>
+      <wsdl:operation name="FiveYearBar">
+         <wsdl:input message="client:FiveYearBarRequestMessage"/>
+         <wsdl:output message="client:FiveYearBarResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

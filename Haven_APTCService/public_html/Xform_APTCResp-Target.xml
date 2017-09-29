@@ -1,0 +1,4 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<imp1:APTCResponse xmlns:imp1="http://aptc.dsh.cms.gov/exchange/1.0" xmlns:ns1="http://niem.gov/niem/structures/2.0" ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]">
+   <ns3:RequestNumber xmlns:ns3="http://aptc.dsh.cms.gov/extension/1.0">RequestNumber717</ns3:RequestNumber>
+</imp1:APTCResponse>

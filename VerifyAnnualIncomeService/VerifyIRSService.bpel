@@ -1,0 +1,247 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon Feb 27 13:24:35 EST 2017
+  Author:  rahulchitturi
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="VerifyIRSService"
+               targetNamespace="http://xmlns.oracle.com/SOA_APP/VerifyAnnualIncomeService/VerifyIRSService"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/SOA_APP/VerifyAnnualIncomeService/VerifyIRSService"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/jms/SOA_APP/VerifyAnnualIncomeService/ConsumeIRSReq"
+         xmlns:ns2="http://ifsv.dsh.cms.gov/exchange/1.0"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/jms/SOA_APP/VerifyAnnualIncomeService/PublishIRSResponse"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:ns4="http://hix.cms.gov/0.1/hix-core"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ns6="http://niem.gov/niem/niem-core/2.0"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:ns5="http://ifsv.dsh.cms.gov/extension/1.0"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns7="http://hix.cms.gov/0.1/hix-ee">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="http://schemas.oracle.com/bpel/extension"
+          location="RuntimeFault.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <partnerLinks>
+    <partnerLink name="ConsumeIRSReq" partnerLinkType="ns1:Consume_Message_plt"
+                 myRole="Consume_Message_role"/>
+    <partnerLink name="InvokeIRSService" partnerLinkType="ns2:InvokeIRSService"
+                 partnerRole="VerifyAnnualHouseholdIncomePortType"/>
+    <partnerLink name="PublishIRSResponse"
+                 partnerLinkType="ns3:Produce_Message_plt"
+                 partnerRole="Produce_Message_role"/>
+  </partnerLinks>
+  <variables>
+    <variable name="Consume_Message_InputVariable"
+              messageType="ns1:Consume_Message_msg"/>
+    <variable name="VerifyAnnualHouseholdIncome_InputVariable"
+              messageType="ns2:VerifyAnnualHouseholdIncomeRequest"/>
+    <variable name="VerifyAnnualHouseholdIncome_OutputVariable"
+              messageType="ns2:VerifyAnnualHouseholdIncomeResponse"/>
+    <variable name="Produce_Message_InputVariable"
+              messageType="ns3:Produce_Message_msg"/>
+    <variable name="Title" type="xsd:string"/>
+    <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
+  </variables>
+  <faultHandlers>
+    <catch faultName="bpelx:remoteFault" faultVariable="FaultVar"
+           faultMessageType="bpelx:RuntimeFaultMessage">
+      <sequence name="Sequence3">
+        <assign name="AssignRemoteFault">
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$Produce_Message_InputVariable.body/ns5:ErrorMessage/ns5:ErrorMessageDetail/ns4:ResponseMetadata/ns4:ResponseCode</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$Produce_Message_InputVariable.body/ns5:ErrorMessage/ns5:ErrorMessageDetail/ns4:ResponseMetadata/ns4:ResponseDescriptionText</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$Produce_Message_InputVariable.body/ns5:ErrorMessage/ns5:ErrorMessageDetail/ns4:ResponseMetadata/ns4:TDSResponseDescriptionText</to>
+          </copy>
+          <copy>
+            <from>$Consume_Message_InputVariable.body/ns5:RequestNumber</from>
+            <to>$Produce_Message_InputVariable.body/ns5:RequestNumber</to>
+          </copy>
+        </assign>
+        <assign name="Xform_RemoteFault">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/XformRemoteFault.xsl", $Produce_Message_InputVariable.body)</from>
+            <to variable="Produce_Message_InputVariable" part="body"/>
+          </copy>
+        </assign>
+        <invoke name="InvokeErrorResp"
+                partnerLink="PublishIRSResponse"
+                portType="ns3:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="Produce_Message_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+    </catch>
+    <catch faultName="bpelx:bindingFault" faultVariable="FaultVar"
+           faultMessageType="bpelx:RuntimeFaultMessage">
+      <sequence name="Sequence2">
+        <assign name="AssignBindingFault">
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$Produce_Message_InputVariable.body/ns5:ErrorMessage/ns5:ErrorMessageDetail/ns4:ResponseMetadata/ns4:ResponseCode</to>
+          </copy>
+          <copy>
+            <from>$Consume_Message_InputVariable.body/ns5:RequestNumber</from>
+            <to>$Produce_Message_InputVariable.body/ns5:RequestNumber</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$Produce_Message_InputVariable.body/ns5:ErrorMessage/ns5:ErrorMessageDetail/ns4:ResponseMetadata/ns4:ResponseDescriptionText</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$Produce_Message_InputVariable.body/ns5:ErrorMessage/ns5:ErrorMessageDetail/ns4:ResponseMetadata/ns4:TDSResponseDescriptionText</to>
+          </copy>
+        </assign>
+        <assign name="Xform_BindingFault">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/XformBindingFault.xsl", $Produce_Message_InputVariable.body)</from>
+            <to variable="Produce_Message_InputVariable" part="body"/>
+          </copy>
+        </assign>
+        <invoke name="InvokeErrorResp"
+                partnerLink="PublishIRSResponse"
+                portType="ns3:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="Produce_Message_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+    </catch>
+    <catchAll>
+      <sequence name="Sequence1">
+        <assign name="AssignFault">
+          <copy>
+            <from>"IRSFaultCode"</from>
+            <to>$FaultVar.code</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+        </assign>
+        <assign name="AssignGeneric">
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$Produce_Message_InputVariable.body/ns5:ErrorMessage/ns5:ErrorMessageDetail/ns4:ResponseMetadata/ns4:ResponseCode</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$Produce_Message_InputVariable.body/ns5:ErrorMessage/ns5:ErrorMessageDetail/ns4:ResponseMetadata/ns4:ResponseDescriptionText</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$Produce_Message_InputVariable.body/ns5:ErrorMessage/ns5:ErrorMessageDetail/ns4:ResponseMetadata/ns4:TDSResponseDescriptionText</to>
+          </copy>
+          <copy>
+            <from>$Consume_Message_InputVariable.body/ns5:RequestNumber</from>
+            <to>$Produce_Message_InputVariable.body/ns5:RequestNumber</to>
+          </copy>
+        </assign>
+        <assign name="Xform_RemoteFault">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/XformCatchALL.xsl", $Produce_Message_InputVariable.body)</from>
+            <to variable="Produce_Message_InputVariable" part="body"/>
+          </copy>
+        </assign>
+        <invoke name="InvokeErrorResp"
+                partnerLink="PublishIRSResponse"
+                portType="ns3:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="Produce_Message_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <sequence name="main">
+    <receive name="ReceiveRequest" createInstance="yes"
+             partnerLink="ConsumeIRSReq" portType="ns1:Consume_Message_ptt"
+             operation="Consume_Message"
+             variable="Consume_Message_InputVariable"/>
+    <assign name="AssignTitle">
+      <copy>
+        <from>concat($Consume_Message_InputVariable.body/ns5:IFSVApplicant/ns5:Person/ns6:PersonName/ns6:PersonGivenName,' ',$Consume_Message_InputVariable.body/ns5:IFSVApplicant/ns5:Person/ns6:PersonName/ns6:PersonSurName)</from>
+        <to>$Title</to>
+      </copy>
+    </assign>
+    <extensionActivity>
+      <bpelx:exec name="Java_EmbeddingTitle" language="java">
+        <![CDATA[/*Write your java code below e.g. 
+	System.out.println("Hello, World");
+*/
+String title = "Person Name :"+(String)getVariableData("Title");        
+setCompositeInstanceTitle(title);]]>
+      </bpelx:exec>
+    </extensionActivity>
+    <assign name="XformReq">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"/>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("xsl/Xform_IRSReq.xsl", $Consume_Message_InputVariable.body)</from>
+        <to variable="VerifyAnnualHouseholdIncome_InputVariable" part="body"/>
+      </copy>
+    </assign>
+    <invoke name="InvokeIRSRequest"
+            partnerLink="InvokeIRSService"
+            portType="ns2:VerifyAnnualHouseholdIncomePortType"
+            operation="VerifyAnnualHouseholdIncome"
+            inputVariable="VerifyAnnualHouseholdIncome_InputVariable"
+            outputVariable="VerifyAnnualHouseholdIncome_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <assign name="XformResp">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"/>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("xsl/Xform_IRSResp.xsl", $VerifyAnnualHouseholdIncome_OutputVariable.body, "Consume_Message_InputVariable.body", $Consume_Message_InputVariable.body)</from>
+        <to variable="Produce_Message_InputVariable" part="body"/>
+      </copy>
+    </assign>
+    <invoke name="InvokePublishResponse"
+            partnerLink="PublishIRSResponse"
+            portType="ns3:Produce_Message_ptt" operation="Produce_Message"
+            inputVariable="Produce_Message_InputVariable"
+            bpelx:invokeAsDetail="no"/>
+  </sequence>
+</process>

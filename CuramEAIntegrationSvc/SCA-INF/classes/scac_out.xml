@@ -3,7 +3,7 @@
    <Fault>
       <severity>warning</severity>
       <loc/>
-      <line>344</line>
+      <line>230</line>
       <col/>
       <file>CuramEAIntegrationSvc.bpel</file>
       <name>CuramEAIntegrationSvc.bpel</name>
@@ -13,7 +13,7 @@
    <Fault>
       <severity>warning</severity>
       <loc/>
-      <line>356</line>
+      <line>243</line>
       <col/>
       <file>CuramEAIntegrationSvc.bpel</file>
       <name>CuramEAIntegrationSvc.bpel</name>
@@ -23,7 +23,7 @@
    <Fault>
       <severity>warning</severity>
       <loc/>
-      <line>360</line>
+      <line>247</line>
       <col/>
       <file>CuramEAIntegrationSvc.bpel</file>
       <name>CuramEAIntegrationSvc.bpel</name>
@@ -33,7 +33,7 @@
    <Fault>
       <severity>warning</severity>
       <loc/>
-      <line>381</line>
+      <line>266</line>
       <col/>
       <file>CuramEAIntegrationSvc.bpel</file>
       <name>CuramEAIntegrationSvc.bpel</name>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<APTCResponse ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]" xmlns:ns1="http://niem.gov/niem/structures/2.0" xmlns="http://aptc.dsh.cms.gov/exchange/1.0">
+   <RequestNumber xmlns="http://aptc.dsh.cms.gov/extension/1.0">RequestNumber716</RequestNumber>
+</APTCResponse>

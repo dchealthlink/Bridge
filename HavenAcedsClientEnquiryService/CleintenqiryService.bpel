@@ -1,0 +1,292 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Nov 15 12:15:51 EST 2016
+  Author:  burujukati
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="CleintenqiryService"
+               targetNamespace="http://xmlns.oracle.com/Test/HavenAcedsClientEnquiryService/CleintenqiryService"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Test/HavenAcedsClientEnquiryService/CleintenqiryService"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/jms/Test/HavenAcedsClientEnquiryService/ConsumeClientEnquryRequest"
+         xmlns:ns2="http://namespace.softwareag.com/entirex/xml/mapping"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/jms/Test/HavenAcedsClientEnquiryService/ProduceResponse"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns4="urn:com.softwareag.entirex.xml.rt"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns5="http://xmlns.dhs.dc.gov/DCAS/ESB/ACDService/V1"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="http://schemas.oracle.com/bpel/extension"
+          location="RuntimeFault.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <partnerLinks>
+    <partnerLink name="ConsumeClientEnquryRequest"
+                 partnerLinkType="ns1:Consume_Message_plt"
+                 myRole="Consume_Message_role"/>
+    <partnerLink name="InvokeAceds" partnerLinkType="ns2:InvokeAceds"
+                 partnerRole="EISBATCHPort"/>
+    <partnerLink name="ProduceResponse"
+                 partnerLinkType="ns3:Produce_Message_plt"
+                 partnerRole="Produce_Message_role"/>
+  </partnerLinks>
+  <variables>
+    <variable name="Consume_Message_InputVariable"
+              messageType="ns1:Consume_Message_msg"/>
+    <variable name="InvokeAceds_DHSDQ500_InputVariable"
+              messageType="ns2:DHSDQ500SoapIn"/>
+    <variable name="InvokeAceds_DHSDQ500_OutputVariable"
+              messageType="ns2:DHSDQ500SoapOut"/>
+    <variable name="ProduceResponse_InputVariable"
+              messageType="ns3:Produce_Message_msg"/>
+    <variable name="Title" type="xsd:string"/>
+    <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
+  </variables>
+  <faultHandlers>
+  <catch faultName="bpelx:remoteFault" faultVariable="FaultVar"
+           faultMessageType="bpelx:RuntimeFaultMessage">
+      <sequence name="Sequence2">
+        <assign name="AssignRemote">
+        <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.code</to>
+          </copy>
+          <copy>
+            <from>'ClientEnquiry'</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+          </assign>
+        <assign name="Assign1">
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$ProduceResponse_InputVariable.body/ns5:ACEDS_CONDITION-CODE</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$ProduceResponse_InputVariable.body/ns5:ACEDS_CONDITION-DESC</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$ProduceResponse_InputVariable.body/ns5:ACEDS_CONDITION-DESC</to>
+          </copy>
+          <copy>
+            <from>$Consume_Message_InputVariable.body/ns5:RequestNumber</from>
+            <to>$ProduceResponse_InputVariable.body/ns5:RequestNumber</to>
+          </copy>
+        </assign>
+        <assign name="Transform1">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Transformation_1.xsl", $ProduceResponse_InputVariable.body)</from>
+            <to variable="ProduceResponse_InputVariable" part="body"/>
+          </copy>
+        </assign>
+        <invoke name="Invoke1"
+                partnerLink="ProduceResponse"
+                portType="ns3:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="ProduceResponse_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+          </catch>
+          <catch faultName="bpelx:bindingFault" faultVariable="FaultVar"
+           faultMessageType="bpelx:RuntimeFaultMessage">
+      <sequence name="Sequence1">
+        <assign name="AssignBinding">
+        <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.code</to>
+          </copy>
+          <copy>
+            <from>'ClientEnquiry'</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+        </assign>
+        <assign name="Assign2">
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$ProduceResponse_InputVariable.body/ns5:ACEDS_CONDITION-CODE</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$ProduceResponse_InputVariable.body/ns5:ACEDS_CONDITION-DESC</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$ProduceResponse_InputVariable.body/ns5:ACEDS_CONDITION-DESC</to>
+          </copy>
+          <copy>
+            <from>$Consume_Message_InputVariable.body/ns5:RequestNumber</from>
+            <to>$ProduceResponse_InputVariable.body/ns5:RequestNumber</to>
+          </copy>
+        </assign>
+        <assign name="Transform2">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Transformation_2.xsl", $ProduceResponse_InputVariable.body)</from>
+            <to variable="ProduceResponse_InputVariable" part="body"/>
+          </copy>
+        </assign>
+        <invoke name="Invoke2"
+                partnerLink="ProduceResponse"
+                portType="ns3:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="ProduceResponse_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+        </catch>
+        <catchAll>
+      <sequence name="Sequence3">
+        <assign name="AssignCatchall">
+        <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.code</to>
+          </copy>
+          <copy>
+            <from>'ClientEnquiry'</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+        </assign>
+        <assign name="Assign3">
+          <copy>
+            <from>$FaultVar.code</from>
+            <to>$ProduceResponse_InputVariable.body/ns5:ACEDS_CONDITION-CODE</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$ProduceResponse_InputVariable.body/ns5:ACEDS_CONDITION-DESC</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.detail</from>
+            <to>$ProduceResponse_InputVariable.body/ns5:ACEDS_CONDITION-DESC</to>
+          </copy>
+          <copy>
+            <from>$Consume_Message_InputVariable.body/ns5:RequestNumber</from>
+            <to>$ProduceResponse_InputVariable.body/ns5:RequestNumber</to>
+          </copy>
+        </assign>
+        <assign name="Transform3">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Transformation_3.xsl", $ProduceResponse_InputVariable.body)</from>
+            <to variable="ProduceResponse_InputVariable" part="body"/>
+          </copy>
+        </assign>
+        <invoke name="Invoke3"
+                partnerLink="ProduceResponse"
+                portType="ns3:Produce_Message_ptt" operation="Produce_Message"
+                inputVariable="ProduceResponse_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+        </catchAll>
+        
+           </faultHandlers>
+  <sequence name="main">
+    <receive name="ReceiveRequest" createInstance="yes"
+             partnerLink="ConsumeClientEnquryRequest"
+             portType="ns1:Consume_Message_ptt" operation="Consume_Message"
+             variable="Consume_Message_InputVariable"/>
+    <assign name="AssignTitle">
+      <copy>
+        <from>concat($Consume_Message_InputVariable.body/ns5:ACEDS_LAST-NAME-I,"",$Consume_Message_InputVariable.body/ns5:ACEDS_FIRST-NAME-I)</from>
+        <to>$Title</to>
+      </copy>
+    </assign>
+    <extensionActivity>
+      <bpelx:exec name="Java_Embedding" language="java">
+        <![CDATA[/*Write your java code below e.g. 
+	System.out.println("Hello, World");
+*/
+String title = "Person Name :"+(String)getVariableData("Title");        
+setCompositeInstanceTitle(title);]]>
+      </bpelx:exec>
+    </extensionActivity>
+    <assign name="HavenToAceds">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"/>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("xsl/Request.xsl", $Consume_Message_InputVariable.body)</from>
+        <to variable="InvokeAceds_DHSDQ500_InputVariable" part="parameters"/>
+      </copy>
+    </assign>
+    <assign name="AssignHeader">
+      <copy>
+        <from>dvm:lookupValue('oramds:/apps/DCAS/ESB/ACEDS/DVM_Header/EntireXHeader.dvm','ESB','exx-password','ACEDS','')</from>
+        <to>$InvokeAceds_DHSDQ500_InputVariable.requestHeader/exx-password</to>
+      </copy>
+      <copy>
+        <from>dvm:lookupValue('oramds:/apps/DCAS/ESB/ACEDS/DVM_Header/EntireXHeader.dvm','ESB','exx-rpc-password','ACEDS','')</from>
+        <to>$InvokeAceds_DHSDQ500_InputVariable.requestHeader/exx-rpc-password</to>
+      </copy>
+      <copy>
+        <from>dvm:lookupValue('oramds:/apps/DCAS/ESB/ACEDS/DVM_Header/EntireXHeader.dvm','ESB','exx-rpc-userID','ACEDS','')</from>
+        <to>$InvokeAceds_DHSDQ500_InputVariable.requestHeader/exx-rpc-userID</to>
+      </copy>
+      <copy>
+        <from>dvm:lookupValue('oramds:/apps/DCAS/ESB/ACEDS/DVM_Header/EntireXHeader.dvm','ESB','exx-userID','ACEDS','')</from>
+        <to>$InvokeAceds_DHSDQ500_InputVariable.requestHeader/exx-userID</to>
+      </copy>
+    </assign>
+    <invoke name="InvokeAceds"
+            partnerLink="InvokeAceds" portType="ns2:EISBATCHPort"
+            operation="DHSDQ500"
+            inputVariable="InvokeAceds_DHSDQ500_InputVariable"
+            outputVariable="InvokeAceds_DHSDQ500_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <assign name="AcedsToHaven">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"/>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("xsl/Response.xsl", $Consume_Message_InputVariable.body, "InvokeAceds_DHSDQ500_OutputVariable.parameters", $InvokeAceds_DHSDQ500_OutputVariable.parameters)</from>
+        <to variable="ProduceResponse_InputVariable" part="body"/>
+      </copy>
+    </assign>
+    <invoke name="ProduceResponse"
+            partnerLink="ProduceResponse" portType="ns3:Produce_Message_ptt"
+            operation="Produce_Message"
+            inputVariable="ProduceResponse_InputVariable"
+            bpelx:invokeAsDetail="no"/>
+  </sequence>
+</process>

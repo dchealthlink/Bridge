@@ -100,6 +100,8 @@
          <string v=".xsd"/>
          <string v=".exm"/>
          <string v=".xml"/>
+         <string v=".exm"/>
+         <string v=".xml"/>
       </list>
       <value n="internalEncoding" v="UTF8"/>
       <list n="Javac.commandline.optionlist">
@@ -271,8 +273,8 @@
       </list>
    </hash>
    <hash n="oracle.jdeveloper.model.J2eeSettings">
-      <value n="j2eeWebAppName" v="Test-HavenSynExternalFamilyVerificationCmpService-webapp"/>
-      <value n="j2eeWebContextRoot" v="Test-HavenSynExternalFamilyVerificationCmpService-context-root"/>
+      <value n="j2eeWebAppName" v="Haven-HavenSynExternalFamilyVerificationCmpService-webapp"/>
+      <value n="j2eeWebContextRoot" v="Haven-HavenSynExternalFamilyVerificationCmpService-context-root"/>
    </hash>
    <hash n="oracle.jdeveloper.model.PathsConfiguration">
       <hash n="javaContentSet">

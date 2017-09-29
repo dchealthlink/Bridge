@@ -1,0 +1,1732 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema targetNamespace="http://xmlns.dhs.dc.gov/DCAS/ESB/ACDService/V1"
+            xmlns:tns="http://xmlns.dhs.dc.gov/DCAS/ESB/ACDService/V1"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+  <xsd:element name="IncomeInquiryRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_REQUEST-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-CATEGORY">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="50" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_INCOME-TYPE">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="50" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_INCOME-SUBTYPE">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="50" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_INCOME-AMT">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="50" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_PAYMENT-FREQUENCY">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="50" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_START-MONTH">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="50" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_END-MONTH">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="50" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="IncomeInquiryResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_REQUEST-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-CATEGORY">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="50" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_INCOME-TYPE">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="50" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_INCOME-SUBTYPE">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="50" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_INCOME-AMT">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="50" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_PAYMENT-FREQUENCY">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="50" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_START-MONTH">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="50" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_END-MONTH">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="50" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CaseNoticeRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CASE-NUMBER" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ADDRESSE-LAST-NAME" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ADDRESSE-FIRST-NAME" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ADDRESSE-MIDDLE-NAME" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ADDRESSE-SUFFIX" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NOTICE-NUMBER" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NOTICE-TITLE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DATE-NOTICE-CREATED" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DATE-NOTICE-PRINTED" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_BENEFIT-MONTH" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NOTICE-LANGUAGE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CaseNoticeResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CASE-NUMBER" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ADDRESSE-LAST-NAME" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ADDRESSE-FIRST-NAME" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ADDRESSE-MIDDLE-NAME" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ADDRESSE-SUFFIX" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NOTICE-NUMBER" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NOTICE-TITLE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DATE-NOTICE-CREATED" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DATE-NOTICE-PRINTED" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_BENEFIT-MONTH" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NOTICE-LANGUAGE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CaseInquiryRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_AF-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_AF-PROGRAM-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_AF-PROGRAM-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_AF-PART-CODE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_AF-PART-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_AF-PART-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_AF-RELATIONSHIP" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RE-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RE-PROGRAM-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RE-PROGRAM-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RE-PART-CODE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RE-PART-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RE-PART-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RE-RELATIONSHIP" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GC-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GC-PROGRAM-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GC-PROGRAM-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GC-PART-CODE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GC-PART-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GC-PART-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GC-RELATIONSHIP" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GS-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GS-PROGRAM-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GS-PROGRAM-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GS-PART-CODE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GS-PART-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GS-PART-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GS-RELATIONSHIP" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FS-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FS-PROGRAM-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FS-PROGRAM-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FS-PART-CODE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FS-PART-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FS-PART-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FS-RELATIONSHIP" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_BU-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_BU-PROGRAM-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_BU-PROGRAM-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_BU-PART-CODE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_BU-PART-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_BU-PART-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_BU-RELATIONSHIP" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NM-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NM-PROGRAM-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NM-PROGRAM-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NM-PART-CODE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NM-PART-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NM-PART-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NM-RELATIONSHIP" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MG-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MG-PROGRAM-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MG-PROGRAM-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MG-PART-CODE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MG-PART-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MG-PART-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MG-RELATIONSHIP" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_HOUSE-NUMBER1" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_HOUSE-NUMBER2" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_STREET1" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_STREET2" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_QUAD" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CITY1" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_STATE1" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ZIPCODE1" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MAILING-STREET1" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MAILING-STREET2" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MAILING-CITY" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MAILING-STATE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MAILING-ZIPCODE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBERS">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="51" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CaseInquiryResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_AF-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_AF-PROGRAM-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_AF-PROGRAM-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_AF-PART-CODE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_AF-PART-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_AF-PART-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_AF-RELATIONSHIP" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RE-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RE-PROGRAM-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RE-PROGRAM-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RE-PART-CODE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RE-PART-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RE-PART-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RE-RELATIONSHIP" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GC-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GC-PROGRAM-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GC-PROGRAM-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GC-PART-CODE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GC-PART-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GC-PART-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GC-RELATIONSHIP" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GS-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GS-PROGRAM-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GS-PROGRAM-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GS-PART-CODE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GS-PART-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GS-PART-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_GS-RELATIONSHIP" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FS-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FS-PROGRAM-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FS-PROGRAM-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FS-PART-CODE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FS-PART-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FS-PART-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FS-RELATIONSHIP" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_BU-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_BU-PROGRAM-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_BU-PROGRAM-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_BU-PART-CODE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_BU-PART-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_BU-PART-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_BU-RELATIONSHIP" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NM-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NM-PROGRAM-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NM-PROGRAM-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NM-PART-CODE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NM-PART-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NM-PART-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NM-RELATIONSHIP" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MG-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MG-PROGRAM-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MG-PROGRAM-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MG-PART-CODE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MG-PART-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MG-PART-END-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MG-RELATIONSHIP" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_HOUSE-NUMBER1" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_HOUSE-NUMBER2" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_STREET1" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_STREET2" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_QUAD" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CITY1" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_STATE1" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ZIPCODE1" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MAILING-STREET1" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MAILING-STREET2" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MAILING-CITY" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MAILING-STATE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MAILING-ZIPCODE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBERS">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="51" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CaseClosureRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CASE-NUMBER" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_EFFECTIVE-DATE-OF-CLOSURE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_REASON-FOR-CLOSURE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CaseClosureResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CASE-NUMBER" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_EFFECTIVE-DATE-OF-CLOSURE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_REASON-FOR-CLOSURE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ReplacementMedicalAssistanceCardRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="25" minOccurs="0" name="string"
+                           nillable="true" type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_CONDITION-DESC">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="25" minOccurs="0" name="string"
+                           nillable="true" type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="25" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_PRINT-CARD-RESET">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="25" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ReplacementMedicalAssistanceCardResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="25" minOccurs="0" name="string"
+                           nillable="true" type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_CONDITION-DESC">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="25" minOccurs="0" name="string"
+                           nillable="true" type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="25" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_PRINT-CARD-RESET">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="25" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="IncomeVerificationRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_LAST-NAME" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FIRST-NAME" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MIDDLE-NAME" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SUFFIX" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DOB" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SEX" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SSN" nillable="true" minOccurs="0"
+                     maxOccurs="1" type="xsd:token"/>
+        <xsd:element name="ACEDS_INCOME-WA-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-WA-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SE-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SE-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-AL-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-AL-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-DV-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-DV-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-PE-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-PE-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-RO-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-RO-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SS-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SS-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-UB-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-UB-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-LS-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-LS-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-DI-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-DI-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-MA-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-MA-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SB-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SB-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-PW-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-PW-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-VER-FLAG" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="IncomeVerificationResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_LAST-NAME" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FIRST-NAME" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MIDDLE-NAME" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SUFFIX" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DOB" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SEX" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SSN" nillable="true" minOccurs="0"
+                     maxOccurs="1" type="xsd:token"/>
+        <xsd:element name="ACEDS_INCOME-WA-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-WA-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SE-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SE-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-AL-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-AL-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-DV-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-DV-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-PE-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-PE-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-RO-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-RO-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SS-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SS-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-UB-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-UB-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-LS-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-LS-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-DI-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-DI-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-MA-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-MA-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SB-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SB-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-PW-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-PW-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-VER-FLAG" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CreateCaseRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_PRIOR-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_APPLICATION-DATE" type="xsd:decimal"/>
+        <xsd:element name="ACEDS_APPLICATION-APPV-DATE" type="xsd:decimal"/>
+        <xsd:element name="ACEDS_DENIAL-DATE" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DENIAL-REASON" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_EXCESS-INCOME-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_PROGRAM-START-DATE" type="xsd:decimal"/>
+        <xsd:element name="ACEDS_STREET-1" type="xsd:string" nillable="true"/>
+        <xsd:element name="ACEDS_STREET-2" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CITY" type="xsd:string" nillable="true"/>
+        <xsd:element name="ACEDS_STATE" type="xsd:string" nillable="true"/>
+        <xsd:element name="ACEDS_ZIP" type="xsd:decimal" nillable="true"/>
+        <xsd:element name="ACEDS_NOTICE-LANG" type="xsd:string"/>
+        <xsd:element name="ACEDS_HH-SIZE" type="xsd:decimal"/>
+        <xsd:element name="ACEDS_NO-OF-CHILDREN" type="xsd:decimal"/>
+        <xsd:element name="ACEDS_HH-MEMBERS">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="25" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_NEW-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CreateCaseResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_PRIOR-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_APPLICATION-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_APPLICATION-APPV-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DENIAL-DATE" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DENIAL-REASON" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_EXCESS-INCOME-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_PROGRAM-START-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_STREET-1" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_STREET-2" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CITY" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_STATE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ZIP" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NOTICE-LANG" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_HH-SIZE" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_NO-OF-CHILDREN" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_HH-MEMBERS">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="25" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_NEW-CASE-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="UpdateCaseRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CASE-NUMBER" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_EFFECTIVE-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_STREET-1" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_STREET-2" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CITY" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_STATE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ZIP" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="UpdateCaseResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CASE-NUMBER" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_EFFECTIVE-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_STREET-1" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_STREET-2" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CITY" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_STATE" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ZIP" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="UpdateIncomeRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CASE-NUMBER" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_EFFECTIVE-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_UNEARNED-INCOME" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_EARNED-INCOME" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SELF-EMPLOY-INCOME" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="UpdateIncomeResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CASE-NUMBER" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_EFFECTIVE-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_UNEARNED-INCOME" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_EARNED-INCOME" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SELF-EMPLOY-INCOME" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ClientInquiryRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+       <xsd:element name="RequestNumber" type="xsd:string"/>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER-I" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_LAST-NAME-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FIRST-NAME-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MIDDLE-NAME-I" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SUFFIX-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DATE-OF-BIRTH-I" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SEX-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SSN-I" type="xsd:token" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-WA-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-WA-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SE-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SE-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-AL-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-AL-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-DV-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-DV-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-PE-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-PE-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-RO-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-RO-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SS-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SS-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-UB-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-UB-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-LS-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-LS-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-DI-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-DI-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-MA-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-MA-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SB-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SB-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-PW-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-PW-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-VER-FLAG" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-SHORT-ARRAY-OUT">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="50" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_CITIZENSHIP-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CITIZENSHIP-VERIF-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RACE-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ETHNIC-CLASS-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER-O" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MEDICAID-ARRAY">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ClientInquiryResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="RequestNumber" type="xsd:string"/>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER-I" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_LAST-NAME-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FIRST-NAME-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MIDDLE-NAME-I" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SUFFIX-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DATE-OF-BIRTH-I" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SEX-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SSN-I" type="xsd:token" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-WA-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-WA-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SE-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SE-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-AL-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-AL-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-DV-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-DV-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-PE-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-PE-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-RO-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-RO-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SS-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SS-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-UB-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-UB-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-LS-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-LS-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-DI-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-DI-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-MA-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-MA-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SB-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-SB-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-PW-AMT" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-PW-TYPE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_INCOME-VER-FLAG" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-SHORT-ARRAY-OUT">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="50" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_CITIZENSHIP-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CITIZENSHIP-VERIF-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RACE-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ETHNIC-CLASS-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER-O" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MEDICAID-ARRAY">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CreateClientRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_LAST-NAME-I" type="xsd:string"/>
+        <xsd:element name="ACEDS_FIRST-NAME-I" type="xsd:string"/>
+        <xsd:element name="ACEDS_MIDDLE-NAME-I" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SUFFIX-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DATE-OF-BIRTH-I" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SEX-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SSN-I" nillable="true" minOccurs="0"
+                     maxOccurs="1" type="xsd:token"/>
+        <xsd:element name="ACEDS_LAST-NAME-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FIRST-NAME-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MIDDLE-NAME-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SUFFIX-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DATE-OF-BIRTH-O" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SEX-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CITIZENSHIP-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CITIZENSHIP-VERIF-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RACE-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ETHNIC-CLASS-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SSN-O" nillable="true" minOccurs="0"
+                     maxOccurs="1" type="xsd:token"></xsd:element>
+        <xsd:element name="ACEDS_CLIENT-NUMBER-O" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MEDICAID-ELIG-DATE-O">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_MEDICAID-INELIG-DATE-O">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_PROGRAM-CODE-O">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CreateClientResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_LAST-NAME-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FIRST-NAME-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MIDDLE-NAME-I" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SUFFIX-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DATE-OF-BIRTH-I" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SEX-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SSN-I" nillable="true" minOccurs="0"
+                     maxOccurs="1" type="xsd:token"/>
+        <xsd:element name="ACEDS_LAST-NAME-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FIRST-NAME-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MIDDLE-NAME-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SUFFIX-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DATE-OF-BIRTH-O" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SEX-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CITIZENSHIP-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CITIZENSHIP-VERIF-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RACE-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ETHNIC-CLASS-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SSN-O" nillable="true" minOccurs="0"
+                     maxOccurs="1" type="xsd:token"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER-O" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MEDICAID-ELIG-DATE-O">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_MEDICAID-INELIG-DATE-O">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_PROGRAM-CODE-O">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="UpdateClientRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER-I" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_LAST-NAME-I" type="xsd:string" minOccurs="0"
+                     nillable="true"/>
+        <xsd:element name="ACEDS_FIRST-NAME-I" type="xsd:string" minOccurs="0"
+                     nillable="true"/>
+        <xsd:element name="ACEDS_MIDDLE-NAME-I" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SUFFIX-I" type="xsd:string" minOccurs="0"
+                     nillable="true"/>
+        <xsd:element name="ACEDS_DATE-OF-BIRTH-I" minOccurs="0"
+                     type="xsd:decimal"/>
+        <xsd:element name="ACEDS_SEX-I" type="xsd:string" minOccurs="0"
+                     nillable="true"/>
+        <xsd:element name="ACEDS_SSN-I" nillable="true" minOccurs="0"
+                     maxOccurs="1" type="xsd:token"/>
+        <xsd:element name="ACEDS_DATE-OF-RECORD-I" minOccurs="0"
+                     type="xsd:decimal"/>
+        <xsd:element name="ACEDS_MEDICAID-SUSP-IND" minOccurs="0"
+                     type="xsd:string"/>
+        <xsd:element name="ACEDS_MEDICAID-SUSP-START-DATE" minOccurs="0"
+                     type="xsd:decimal"/>
+        <xsd:element name="ACEDS_MEDICAID-SUSP-END-DATE" minOccurs="0"
+                     type="xsd:decimal"/>
+        <xsd:element name="ACEDS_MEDICAID-ELIG-DATE-I">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_MEDICAID-INELIG-DATE-I">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="1" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_PROGRAM-CODE-I">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="1" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_LAST-NAME-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FIRST-NAME-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MIDDLE-NAME-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SUFFIX-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DATE-OF-BIRTH-O" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SEX-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SSN-O" nillable="true" minOccurs="0"
+                     maxOccurs="1" type="xsd:token"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER-O" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MEDICAID-ELIG-DATE-O">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="0" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_MEDICAID-INELIG-DATE-O">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="0" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_PROGRAM-CODE-O">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="0" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="UpdateClientResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER-I" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_LAST-NAME-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FIRST-NAME-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MIDDLE-NAME-I" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SUFFIX-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DATE-OF-BIRTH-I" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SEX-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SSN-I" nillable="true" minOccurs="0"
+                     maxOccurs="1" type="xsd:token"/>
+        <xsd:element name="ACEDS_DATE-OF-RECORD-I" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MEDICAID-SUSP-IND" minOccurs="0"
+                     type="xsd:string"/>
+        <xsd:element name="ACEDS_MEDICAID-SUSP-START-DATE" minOccurs="0"
+                     type="xsd:decimal"/>
+        <xsd:element name="ACEDS_MEDICAID-SUSP-END-DATE" minOccurs="0"
+                     type="xsd:decimal"/>
+        <xsd:element name="ACEDS_MEDICAID-ELIG-DATE-I">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="0" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_MEDICAID-INELIG-DATE-I">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="0" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_PROGRAM-CODE-I">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="0" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_LAST-NAME-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FIRST-NAME-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MIDDLE-NAME-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SUFFIX-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DATE-OF-BIRTH-O" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SEX-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SSN-O" nillable="true" minOccurs="0"
+                     maxOccurs="1" type="xsd:token"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER-O" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MEDICAID-ELIG-DATE-O">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="0" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_MEDICAID-INELIG-DATE-O">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="0" name="decimal"
+                           type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ACEDS_PROGRAM-CODE-O">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="36" minOccurs="0" name="string"
+                           type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ResidencyVerificationRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER-I" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_LAST-NAME-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FIRST-NAME-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MIDDLE-NAME-I" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SUFFIX-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DATE-OF-BIRTH-I" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SEX-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SSN-I" nillable="true" minOccurs="0"
+                     maxOccurs="1" type="xsd:token"/>
+        <xsd:element name="ACEDS_CLIENT-SHORT-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CITIZENSHIP-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CITIZENSHIP-VERIF-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RACE-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ETHNIC-CLASS-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER-O" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RESIDENT-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ResidencyVerificationResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER-I" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_LAST-NAME-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_FIRST-NAME-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_MIDDLE-NAME-I" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SUFFIX-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_DATE-OF-BIRTH-I" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SEX-I" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_SSN-I" nillable="true" minOccurs="0"
+                     maxOccurs="1" type="xsd:token"/>
+        <xsd:element name="ACEDS_CLIENT-SHORT-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CITIZENSHIP-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CITIZENSHIP-VERIF-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RACE-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_ETHNIC-CLASS-O" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER-O" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_RESIDENT-O" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="AddClientRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CASE-NUMBER" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_EFFECTIVE-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="AddClientResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CASE-NUMBER" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_EFFECTIVE-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CloseClientRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CASE-NUMBER" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_EFFECTIVE-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CloseClientResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ACEDS_CONDITION-CODE" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CONDITION-DESC" type="xsd:string"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_USER-ID" type="xsd:string" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CASE-NUMBER" type="xsd:decimal" nillable="true"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_CLIENT-NUMBER" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ACEDS_EFFECTIVE-DATE" type="xsd:decimal"
+                     nillable="true" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

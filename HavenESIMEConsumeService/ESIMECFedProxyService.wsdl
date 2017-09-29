@@ -1,0 +1,64 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:WL5G3N3="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:WL5G3N2="http://gov.hhs.cms.hix.dsh.ee.esi_mec.ext"
+                  xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:WL5G3N1="http://vesim.dsh.cms.gov/exchange/1.0"
+                  targetNamespace="http://gov.hhs.cms.hix.dsh.ee.esi_mec.ext">
+  <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+              xmlns="http://schemas.xmlsoap.org/ws/2004/09/policy"
+              xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              wsu:Id="wss_username_token_service_policy">
+    <sp:SupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+      <wsp:Policy>
+        <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+          <wsp:Policy>
+            <sp:WssUsernameToken10/>
+          </wsp:Policy>
+        </sp:UsernameToken>
+      </wsp:Policy>
+    </sp:SupportingTokens>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema xmlns:WL5G3N4="http://schemas.xmlsoap.org/wsdl/soap12/"
+                xmlns:WL5G3N5="http://schemas.xmlsoap.org/wsdl/soap12/"
+                xmlns:esimec="http://vesim.dsh.cms.gov/exchange/1.0"
+                xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                xmlns:tns="http://gov.hhs.cms.hix.dsh.ee.esi_mec.ext"
+                xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="http://vesim.dsh.cms.gov/exchange/1.0">
+      <xsd:include schemaLocation="xsd/ExchangeModel.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="CalculateOPMPremiumRequest">
+    <wsdl:part name="body" element="WL5G3N1:ESIMECRequest"/>
+  </wsdl:message>
+  <wsdl:message name="CalculateOPMPremiumResponse">
+    <wsdl:part name="body" element="WL5G3N1:ESIMECResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="CalculateOPMPremiumPortType">
+    <wsdl:operation name="CalculateOPMPremium">
+      <wsdl:input message="WL5G3N2:CalculateOPMPremiumRequest"/>
+      <wsdl:output message="WL5G3N2:CalculateOPMPremiumResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CalculateOPMPremiumSoapBinding"
+                type="WL5G3N2:CalculateOPMPremiumPortType">
+    <WL5G3N3:binding style="document"
+                     transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                         URI="#wss_username_token_service_policy"
+                         wsdl:required="false"/>
+    <wsdl:operation name="CalculateOPMPremium">
+      <WL5G3N3:operation soapActionRequired="false"/>
+      <wsdl:input>
+        <WL5G3N3:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <WL5G3N3:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+</wsdl:definitions>
+

@@ -1,0 +1,72 @@
+<xs:schema xmlns:tns="http://xmlns.dhs.dc.gov/DCAS/ESB/Local/Common/V1/" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.dhs.dc.gov/DCAS/ESB/Local/Common/V1/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:simpleType name="StatusCodeType">
+<xs:restriction base="xs:string">
+<xs:annotation>
+<xs:documentation>A code that encapuslates the most important aspects of the status in a system-parseable format.  The recommended format is [SYSTEM]-[TYPE]-[NUMERIC].  Examples: PASS-ERROR-4, PASS-WARN-2.  Users of this framework may define their own Status code taxonomy for Status codes.  The status code taxonomy for OctoSoa is as follows:
+						[CODE]		[TYPE]						[DESCRIPTION]
+						0				SUCCESS				The operation was successful.
+						1				WARN 						The operation was successful with caveats. Please validate the system.
+						2				PARTIAL					The batch operation was successful, with some line-level failures. Please validate the system.
+						3				ERROR					The operation failed due to an intermittent problem, but may be retried at a later time.</xs:documentation>
+</xs:annotation>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="StatusTypeType">
+<xs:restriction base="xs:string">
+<xs:annotation>
+<xs:documentation>The type of status this is (i.e. the disposition of the operation).  It should be one of: SUCCESS, WARN, PARTIAL, ERROR</xs:documentation>
+</xs:annotation>
+</xs:restriction>
+</xs:simpleType>
+<xs:complexType name="ServiceStatusType">
+<xs:sequence>
+<xs:element name="Code" type="tns:StatusCodeType" nillable="false" minOccurs="1"/>
+<xs:element name="Type" type="tns:StatusTypeType" nillable="false" minOccurs="1"/>
+<xs:element name="Description" type="xs:string" nillable="false" minOccurs="1">
+<xs:annotation>
+<xs:documentation>Free-form text field to provide clarification on the status code.  This field is not intended to be parsed systematically.  For systematic parsing, use statusCode.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="System" type="xs:string" nillable="false" minOccurs="1">
+<xs:annotation>
+<xs:documentation>The system that is reporting status.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="StatusDateTime" type="xs:dateTime" nillable="false" minOccurs="1">
+<xs:annotation>
+<xs:documentation>The date and time of this status message in GMT.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Retryable" type="xs:string" nillable="true" minOccurs="0">
+<xs:annotation>
+<xs:documentation>Indicates whether or not the invocation can be retried without side effects.  Valid values are: "true" and "false".  This field is also nillable in cases where the response is successful.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ContextKey" type="tns:ContextKeyType" minOccurs="0">
+<xs:annotation>
+<xs:documentation>Used to associate this status with a specific key.  Examples of a business key: PO Number, customer transaction ID, etc.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="RawStatus" type="xs:string" nillable="true" minOccurs="0">
+<xs:annotation>
+<xs:documentation>An element used to communicate the raw or native provider system status.  This element may contain unparseable CDATA, such as XML or stack traces that contain unparseable characters.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="TransactionId" type="xs:string" nillable="true" minOccurs="0">
+<xs:annotation>
+<xs:documentation>A globally unique identifier (recommend a GUID) for this message.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+<xs:anyAttribute namespace="##other" processContents="lax"/>
+</xs:complexType>
+<xs:complexType name="ContextKeyType">
+<xs:annotation>
+<xs:documentation>Used to associate a status with a specific key.  Label is the name of the key, such as: PO Number, retailTransactionID, etc.  Value is the actual key itself.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="ContextKeyLabel" type="xs:string"/>
+<xs:element name="ContextKeyValue" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

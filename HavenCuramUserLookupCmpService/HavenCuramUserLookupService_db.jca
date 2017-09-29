@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<adapter-config name="HavenCuramUserLookupService" adapter="Database Adapter"
+                wsdlLocation="HavenCuramUserLookupService.wsdl"
+                xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+   <connection-factory location="eis/DB/curamtohaven"
+                       UIConnectionName="ConnectureUAT" adapterRef=""/>
+   <endpoint-interaction portType="HavenCuramUserLookupService_ptt"
+                         operation="HavenCuramUserLookupService">
+      <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+         <property name="ProcedureName" value="HAVEN_CURAM_ASSISTANCE_LOOKUP"/>
+         <property name="GetActiveUnitOfWork" value="false"/>
+      </interaction-spec>
+      <output/>
+   </endpoint-interaction>
+</adapter-config>

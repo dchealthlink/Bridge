@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<APTCRequest ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]" xmlns:ns1="http://niem.gov/niem/structures/2.0" xmlns="http://aptc.dsh.cms.gov/exchange/1.0">
+   <RequestNumber xmlns="http://aptc.dsh.cms.gov/extension/1.0">RequestNumber717</RequestNumber>
+   <RequestID xmlns="http://hix.cms.gov/0.1/hix-core">5</RequestID>
+   <Income ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]" xmlns="http://hix.cms.gov/0.1/hix-core">
+      <IncomeAmount>0.0</IncomeAmount>
+      <IncomeDate>6006</IncomeDate>
+      <IncomeFederalPovertyLevelPercent>0.0</IncomeFederalPovertyLevelPercent>
+   </Income>
+   <SLCSPPremium ns1:id="\]\]" ns1:metadata="\]\]" ns1:linkMetadata="\]\]" xmlns="http://aptc.dsh.cms.gov/extension/1.0">
+      <InsurancePremiumAmount xmlns="http://hix.cms.gov/0.1/hix-ee">1.0</InsurancePremiumAmount>
+   </SLCSPPremium>
+</APTCRequest>

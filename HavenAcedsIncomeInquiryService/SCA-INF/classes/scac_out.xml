@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/ns:composite/ns:reference[@name='ACEDS_IncomeInquiry']</loc>
+      <line>31</line>
+      <col>89</col>
+      <file>/Users/rahulchitturi/jdeveloper/mywork/SOA_APP/HavenAcedsIncomeInquiryService/composite.xml</file>
+      <name>/Users/rahulchitturi/jdeveloper/mywork/SOA_APP/HavenAcedsIncomeInquiryService/composite.xml</name>
+      <fix/>
+      <msg>Failed to Find Binding "ACEDS_IncomeInquiry":"{http://namespace.softwareag.com/entirex/xml/mapping}EISBATCHSOAP12Port" in WSDL Manager</msg>
+   </Fault>
+</Faults>

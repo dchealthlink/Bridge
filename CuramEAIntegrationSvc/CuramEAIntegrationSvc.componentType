@@ -6,13 +6,13 @@
    <reference name="ICRefNumPublishSvc" ui:wsdlLocation="ICRefNumPublishSvc.wsdl">
       <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/jms/DCAPP/CuramEAIntegrationSvc/ICRefNumPublishSvc#wsdl.interface(Produce_Message_ptt)"/>
    </reference>
-   <reference name="Invoke_ErrorHandler_Service" ui:wsdlLocation="http://dhsdcasesbsoaappdev01.dhs.dc.gov:8001/soa-infra/services/default/ErrorHandlingDCASCmpService/ErrorHandlingDCASABCSImpl.wsdl">
-      <interface.wsdl interface="http://xmlns.oracle.com/DCAS_DEV5/ErrorHandlingDCASCmpService/ErrorHandlingDCASABCSImpl#wsdl.interface(ErrorHandlingDCASABCSImpl)"/>
-   </reference>
    <reference name="Publish_HavenICID" ui:wsdlLocation="Publish_HavenICID.wsdl">
       <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/jms/SOA_APP/CuramEAIntegrationSvc/Publish_HavenICID#wsdl.interface(Produce_Message_ptt)"/>
    </reference>
    <reference name="CheckPDC" ui:wsdlLocation="http://dhsdcasesbsoaappuat01.dhs.dc.gov:8001/soa-infra/services/HAVEN/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal.wsdl">
       <interface.wsdl interface="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal#wsdl.interface(HavenSyncExternal)"/>
+   </reference>
+   <reference name="FaultHandling" ui:wsdlLocation="FaultHandling.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/jms/Haven/CuramEAIntegrationSvc/FaultHandling#wsdl.interface(Produce_Message_ptt)"/>
    </reference>
 </componentType>

@@ -1,0 +1,173 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon Sep 25 15:26:18 EDT 2017
+  Author:  burujukati
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="HavenIncomeABCSImpl"
+               targetNamespace="http://xmlns.oracle.com/Test/HavenIncomeCmpService/HavenIncomeABCSImpl"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Test/HavenIncomeCmpService/HavenIncomeABCSImpl"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/Test/HavenIncomeCmpService/GetIncomeSP"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/sp/GetIncomeSP"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeReqService"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeRespService">
+  <import location="xsd/Income_sp_format.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="http://schemas.oracle.com/bpel/extension"
+          location="RuntimeFault.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <import namespace="http://xmlns.oracle.com/Test/HavenIncomeCmpService/HavenIncomeABCSImpl" location="HavenIncomeABCSImpl.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="havenincomeabcsimpl_client" partnerLinkType="client:HavenIncomeABCSImpl" myRole="HavenIncomeABCSImplProvider"/>
+    <partnerLink name="GetIncomeSP" partnerLinkType="ns1:GetIncomeSP_plt"
+                 partnerRole="GetIncomeSP_role"/>
+  </partnerLinks>
+  <variables>
+    <variable name="IncomeService_InputVariable"
+              messageType="client:HavenIncomeRequestMessage"/>
+    <variable name="Invoke_GetIncomeSP_InputVariable"
+              messageType="ns1:args_in_msg"/>
+    <variable name="Invoke_GetIncomeSP_OutputVariable"
+              messageType="ns1:args_out_msg"/>
+    <variable name="IncomeService_OutputVariable"
+              messageType="client:HavenIncomeResponseMessage"/>
+    <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
+    <variable name="IncomeFormat" element="incomes"/>
+  </variables>
+  <faultHandlers>
+    <catchAll>
+      <sequence name="Sequence1">
+        <assign name="Assign3">
+          <copy>
+            <from>"IncomeFaultCode"</from>
+            <to>$FaultVar.code</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+        </assign>
+        <assign name="Assign4">
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$IncomeService_OutputVariable.IncomeOutputParameters/ns4:ResponseText</to>
+          </copy>
+          <copy>
+            <from>"FAILURE-500"</from>
+            <to>$IncomeService_OutputVariable.IncomeOutputParameters/ns4:ResponseCode</to>
+          </copy>
+        </assign>
+        <reply name="ReplyErrorResp" variable="IncomeService_OutputVariable"
+               partnerLink="havenincomeabcsimpl_client"
+               portType="client:HavenIncomeABCSImpl" operation="IncomeService"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in HavenIncomeABCSImpl.wsdl) -->
+    <!-- Generate reply to synchronous request -->
+    <receive name="ReceiveInput" createInstance="yes"
+             partnerLink="havenincomeabcsimpl_client"
+             portType="client:HavenIncomeABCSImpl" operation="IncomeService"
+             variable="IncomeService_InputVariable"/>
+    <assign name="Assign1">
+      <copy>
+        <from>$IncomeService_InputVariable.IncomeInputParameters/ns3:I_CONCERNROLEID</from>
+        <to>$Invoke_GetIncomeSP_InputVariable.InputParameters/ns2:I_CONCERNROLEID</to>
+      </copy>
+    </assign>
+    <invoke name="Invoke_IncomePull"
+            partnerLink="GetIncomeSP" portType="ns1:GetIncomeSP_ptt"
+            operation="GetIncomeSP"
+            inputVariable="Invoke_GetIncomeSP_InputVariable"
+            outputVariable="Invoke_GetIncomeSP_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <if name="If1">
+      <documentation/>
+      <condition>$Invoke_GetIncomeSP_OutputVariable.OutputParameters/ns2:O_RESPONSE_CODE="DATA_FOUND"</condition>
+      <sequence>
+        <assign name="Assign2">
+          <copy>
+            <from>oraext:parseEscapedXML($Invoke_GetIncomeSP_OutputVariable.OutputParameters/ns2:O_USER_DETAILS_CLOB)</from>
+            <to>$IncomeFormat</to>
+          </copy>
+        </assign>
+        <assign name="Transform1">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Xform_IncomeResp.xsl", $Invoke_GetIncomeSP_OutputVariable.OutputParameters, "IncomeFormat", $IncomeFormat)</from>
+            <to variable="IncomeService_OutputVariable"
+                part="IncomeOutputParameters"/>
+          </copy>
+        </assign>
+      </sequence>
+      <else>
+        <assign name="Transform2">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Xform_NoData.xsl", $Invoke_GetIncomeSP_OutputVariable.OutputParameters, "IncomeFormat", $IncomeFormat)</from>
+            <to variable="IncomeService_OutputVariable"
+                part="IncomeOutputParameters"/>
+          </copy>
+        </assign>
+      </else>
+    </if>
+    <reply name="ReplyOutput" variable="IncomeService_OutputVariable"
+           partnerLink="havenincomeabcsimpl_client"
+           portType="client:HavenIncomeABCSImpl" operation="IncomeService"/>
+  </sequence>
+</process>

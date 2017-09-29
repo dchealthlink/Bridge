@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+    
+     targetNamespace="http://vnem.ee.sim.dsh.cms.hhs.gov"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:WL5G3N1="http://vnem.ee.sim.dsh.cms.hhs.gov"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+    >
+    <plnk:partnerLinkType name="InvokeFedHub">
+        <plnk:role name="VerifyNonEsiMecPortType" portType="WL5G3N1:VerifyNonEsiMecPortType"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://vnem.ee.sim.dsh.cms.hhs.gov" location="VerifyNonESIFedProxyService.wsdl"/>
+</wsdl:definitions>

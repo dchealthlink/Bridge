@@ -1,0 +1,118 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri Sep 22 14:08:15 EDT 2017
+  Author:  burujukati
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="HavenFilerConsentABCSImpl"
+               targetNamespace="http://xmlns.oracle.com/Test/HavenFilerConsentCmpService/HavenFilerConsentABCSImpl"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Test/HavenFilerConsentCmpService/HavenFilerConsentABCSImpl"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/Test/HavenFilerConsentCmpService/FilerConsentSP"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/sp/FilerConsentSP"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns3="http://xmlns.haven.dc.govcom/haven/FilerConsentIn"
+         xmlns:ns4="http://xmlns.haven.dc.govcom/haven/FilerConsentsout">
+  <import location="xsd/Filer_sp_format.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="http://xmlns.oracle.com/Test/HavenFilerConsentCmpService/HavenFilerConsentABCSImpl" location="HavenFilerConsentABCSImpl.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="havenfilerconsentabcsimpl_client" partnerLinkType="client:HavenFilerConsentABCSImpl" myRole="HavenFilerConsentABCSImplProvider"/>
+    <partnerLink name="FilerConsentSP" partnerLinkType="ns1:FilerConsentSP_plt"
+                 partnerRole="FilerConsentSP_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable"
+              messageType="client:HavenFilerConsentABCSImplRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="FilerConsentSP_InputVariable"
+              messageType="ns1:args_in_msg"/>
+    <variable name="FilerConsentSP_OutputVariable"
+              messageType="ns1:args_out_msg"/>
+    <variable name="Filer_Format" element="FilersConsent"/>
+    <variable name="outputVariable"
+              messageType="client:HavenFilerConsentABCSImplResponseMessage"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in HavenFilerConsentABCSImpl.wsdl) -->
+    <receive name="receiveInput" partnerLink="havenfilerconsentabcsimpl_client" portType="client:HavenFilerConsentABCSImpl"
+             operation="FilerConsent" variable="inputVariable" createInstance="yes"/>
+    <assign name="FilerConsentSPInput">
+      <copy>
+        <from>$inputVariable.payload/ns3:IC_Input_List</from>
+        <to>$FilerConsentSP_InputVariable.InputParameters/ns2:I_IC_LIST</to>
+      </copy>
+    </assign>
+    <invoke name="InvokeFilerConsentSP"
+            partnerLink="FilerConsentSP" portType="ns1:FilerConsentSP_ptt"
+            operation="FilerConsentSP"
+            inputVariable="FilerConsentSP_InputVariable"
+            outputVariable="FilerConsentSP_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <assign name="Assign1">
+      <copy>
+        <from>oraext:parseEscapedXML($FilerConsentSP_OutputVariable.OutputParameters/ns2:O_USER_DETAILS_CLOB)</from>
+        <to>$Filer_Format</to>
+      </copy>
+    </assign>
+    <assign name="Transform1">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"/>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("xsl/Transformation_1.xsl", $FilerConsentSP_OutputVariable.OutputParameters, "Filer_Format", $Filer_Format)</from>
+        <to variable="outputVariable" part="payload"/>
+      </copy>
+    </assign>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="havenfilerconsentabcsimpl_client" portType="client:HavenFilerConsentABCSImpl"
+           operation="FilerConsent" variable="outputVariable"/>
+  </sequence>
+</process>

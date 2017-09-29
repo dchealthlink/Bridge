@@ -1,0 +1,24 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<schema targetNamespace="http://niem.gov/niem/structures/2.0" version="1"
+        xmlns:i="http://niem.gov/niem/appinfo/2.0"
+        xmlns:s="http://niem.gov/niem/structures/2.0"
+        xmlns="http://www.w3.org/2001/XMLSchema">
+    <import namespace="http://niem.gov/niem/appinfo/2.0"
+            schemaLocation="appinfo.xsd"/>
+    <annotation>
+        <appinfo>
+            <i:resource i:name="Object"/>
+        </appinfo>
+    </annotation>
+    <annotation>
+        <appinfo>
+            <i:resource i:name="Association"/>
+        </appinfo>
+    </annotation>
+    <element name="Augmentation" type="s:AugmentationType" abstract="true"/>
+    <element name="Metadata" type="s:MetadataType" abstract="true"/>
+    <complexType name="AugmentationType" abstract="true"></complexType>
+    <complexType name="ComplexObjectType" abstract="true"></complexType>
+    <complexType name="MetadataType" abstract="true"></complexType>
+    <complexType name="ReferenceType" final="#all"></complexType>
+</schema>

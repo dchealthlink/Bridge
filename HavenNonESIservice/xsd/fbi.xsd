@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema targetNamespace="http://niem.gov/niem/fbi/2.0/ESB/V1" version="1" xmlns:s="http://niem.gov/niem/structures/2.0/ESB/V1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:fbi="http://niem.gov/niem/fbi/2.0/ESB/V1" xmlns:i="http://niem.gov/niem/appinfo/2.0/ESB/V1">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <i:ConformantIndicator>true</i:ConformantIndicator>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="appinfo.xsd" namespace="http://niem.gov/niem/appinfo/2.0/ESB/V1"/>
+   <xsd:import schemaLocation="structures.xsd" namespace="http://niem.gov/niem/structures/2.0/ESB/V1"/>
+   <xsd:simpleType name="SEXCodeSimpleType">
+      <xsd:annotation>
+         <xsd:appinfo>
+            <i:Base i:namespace="http://niem.gov/niem/structures/2.0/ESB/V1" i:name="Object"/>
+         </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:token">
+         <xsd:enumeration value="F"/>
+         <xsd:enumeration value="M"/>
+         <xsd:enumeration value="U"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="SEXCodeType">
+      <xsd:annotation>
+         <xsd:appinfo>
+            <i:Base i:namespace="http://niem.gov/niem/structures/2.0/ESB/V1" i:name="Object"/>
+         </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:simpleContent>
+         <xsd:extension base="fbi:SEXCodeSimpleType"/>
+      </xsd:simpleContent>
+   </xsd:complexType>
+</xsd:schema>

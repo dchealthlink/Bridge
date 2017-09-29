@@ -1,0 +1,30 @@
+<wsdl:definitions
+     name="PublishResponse"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/jms/SOA_APP/HavenAcedsIncomeInquiryService/PublishResponse"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:imp1="http://xmlns.dhs.dc.gov/DCAS/ESB/ACDService/V1"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/jms/SOA_APP/HavenAcedsIncomeInquiryService/PublishResponse"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:ns1="http://schemas.oracle.com/bpel/extension"
+    >
+  <plt:partnerLinkType name="Produce_Message_plt" >
+    <plt:role name="Produce_Message_role" >
+      <plt:portType name="tns:Produce_Message_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:import namespace="http://schemas.oracle.com/bpel/extension" location="RuntimeFault.wsdl"/>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.dhs.dc.gov/DCAS/ESB/ACDService/V1" schemaLocation="xsd/ACDService.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="Produce_Message_msg">
+        <wsdl:part name="body" element="imp1:ClientInquiryResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="Produce_Message_ptt">
+        <wsdl:operation name="Produce_Message">
+            <wsdl:input message="tns:Produce_Message_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

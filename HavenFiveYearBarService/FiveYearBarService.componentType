@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<componentType xmlns="http://xmlns.oracle.com/sca/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ui="http://xmlns.oracle.com/soa/designer/">
+   <service name="fiveyearbarservice_client_ep" ui:wsdlLocation="FiveYearBarServiceWrapper.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenCuramUserLookupCmpService/FiveYearBarService#wsdl.interface(FiveYearBarService_ptt)"/>
+   </service>
+   <reference name="HavenFiveYearBarService" ui:wsdlLocation="HavenFiveYearBarService.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenFiveYearBarService/HavenFiveYearBarService#wsdl.interface(HavenFiveYearBarService_ptt)"/>
+   </reference>
+</componentType>

@@ -5,12 +5,12 @@
    <iconize/>
    <partnerlink_locations>
       <partnerlink name="curameaintegrationsvc_client" x="4" y="90" side="left"/>
-      <partnerlink name="ICRefNumPublishSvc" x="828" y="677" side="right"/>
-      <partnerlink name="Invoke_ErrorHandler_Service" x="828" y="17" side="right"/>
-      <partnerlink name="Publish_HavenICID" x="828" y="858" side="right"/>
-      <partnerlink name="CheckPDC" x="828" y="452" side="right"/>
+      <partnerlink name="FaultHandling" x="4" y="367" side="left"/>
+      <partnerlink name="ICRefNumPublishSvc" x="690" y="677" side="right"/>
+      <partnerlink name="Publish_HavenICID" x="690" y="858" side="right"/>
+      <partnerlink name="CheckPDC" x="690" y="452" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,0,959,637" show_swimlanes="true">
+   <graph_layout viewport="0,431,821,637" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="false"/>
       <layout_item collapsed="false" xpath="/process/faultHandlers/catch[1]" type="catch"/>
       <layout_item collapsed="false" xpath="/process/faultHandlers/catch[1]/sequence" type="sequence"/>
