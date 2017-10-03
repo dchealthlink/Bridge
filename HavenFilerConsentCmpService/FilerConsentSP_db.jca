@@ -1,10 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<adapter-config name="FilerConsentSP" adapter="Database Adapter" wsdlLocation="FilerConsentSP.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
-   <connection-factory location="eis/DB/curamtohaven" UIConnectionName="CuramUAT" adapterRef=""/>
-   <endpoint-interaction portType="FilerConsentSP_ptt" operation="FilerConsentSP">
+<adapter-config name="FilerConsentSP" adapter="Database Adapter"
+                wsdlLocation="FilerConsentSP.wsdl"
+                xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+   <connection-factory location="eis/DB/curamtohaven"
+                       UIConnectionName="CuramUAT" adapterRef=""/>
+   <endpoint-interaction portType="FilerConsentSP_ptt"
+                         operation="FilerConsentSP">
       <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
-         <property name="SchemaName" value="MAMATHA"/>
-         <property name="ProcedureName" value="FLRCONSENT_GIVEN_IC_LIST"/>
+         <property name="ProcedureName" value="FlrConsent_Given_IC"/>
          <property name="GetActiveUnitOfWork" value="false"/>
       </interaction-spec>
       <output/>

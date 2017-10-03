@@ -11,12 +11,12 @@
             <xs:element name="filer_consent">
                <xs:complexType>
                   <xs:sequence>
-                     <xs:element name="filer_IC" type="xs:int"/>
+                     <xs:element name="filer_IC" type="xs:string"/>
                      <xs:element name="caseworker" type="xs:string"/>
-                     <xs:element name="consentForIRSRenewals" type="xs:string"/>
-                     <xs:element name="yearsToRenewCoverage" type="xs:int"/>
-                     <xs:element name="startDate" type="xs:int"/>
-                     <xs:element name="endDate" type="xs:string"/>
+                     <xs:element name="consent_ForIRSRenewals" type="xs:string"/>
+                     <xs:element name="consent_yearsToRenewCoverage" type="xs:string"/>
+                     <xs:element name="consent_startDate" type="xs:string"/>
+                     <xs:element name="consent_endDate" type="xs:string"/>
                      <xs:element name="consentToTruthfulAnswers"
                                  type="xs:string"/>
                      <xs:element name="consenttToMedicaidReimbursement"
@@ -31,9 +31,9 @@
                      <xs:element name="eSignatureFirstName" type="xs:string"/>
                      <xs:element name="eSignatureMiddleName" type="xs:string"/>
                      <xs:element name="eSignatureLastName" type="xs:string"/>
-                     <xs:element name="caseParticipantRoleID" type="xs:int"/>
-                     <xs:element name="participantID" type="xs:int"/>
-                     <xs:element name="evidenceID" type="xs:int"/>
+                     <xs:element name="caseParticipantRoleID" type="xs:string"/>
+                     <xs:element name="participantID" type="xs:string"/>
+                     <xs:element name="evidenceID" type="xs:string"/>
                   </xs:sequence>
                </xs:complexType>
             </xs:element>

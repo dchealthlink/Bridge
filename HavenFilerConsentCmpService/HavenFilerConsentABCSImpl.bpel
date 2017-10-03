@@ -87,7 +87,7 @@
     <assign name="FilerConsentSPInput">
       <copy>
         <from>$inputVariable.payload/ns3:IC_Input_List</from>
-        <to>$FilerConsentSP_InputVariable.InputParameters/ns2:I_IC_LIST</to>
+        <to>$FilerConsentSP_InputVariable.InputParameters/ns2:i_IC</to>
       </copy>
     </assign>
     <invoke name="InvokeFilerConsentSP"
@@ -96,21 +96,38 @@
             inputVariable="FilerConsentSP_InputVariable"
             outputVariable="FilerConsentSP_OutputVariable"
             bpelx:invokeAsDetail="no"/>
-    <assign name="Assign1">
-      <copy>
-        <from>oraext:parseEscapedXML($FilerConsentSP_OutputVariable.OutputParameters/ns2:O_USER_DETAILS_CLOB)</from>
-        <to>$Filer_Format</to>
-      </copy>
-    </assign>
-    <assign name="Transform1">
-      <bpelx:annotation>
-        <bpelx:pattern patternName="bpelx:transformation"/>
-      </bpelx:annotation>
-      <copy>
-        <from>ora:doXSLTransformForDoc("xsl/Transformation_1.xsl", $FilerConsentSP_OutputVariable.OutputParameters, "Filer_Format", $Filer_Format)</from>
-        <to variable="outputVariable" part="payload"/>
-      </copy>
-    </assign>
+    <if name="If1">
+      <documentation/>
+      <condition>$FilerConsentSP_OutputVariable.OutputParameters/ns2:O_RESPONSE_CODE="DATA_FOUND"</condition>
+      <sequence>
+        <assign name="Assign1">
+          <copy>
+            <from>oraext:parseEscapedXML($FilerConsentSP_OutputVariable.OutputParameters/ns2:O_USER_DETAILS_CLOB)</from>
+            <to>$Filer_Format</to>
+          </copy>
+        </assign>
+        <assign name="Transform1">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Transformation_1.xsl", $FilerConsentSP_OutputVariable.OutputParameters, "Filer_Format", $Filer_Format)</from>
+            <to variable="outputVariable" part="payload"/>
+          </copy>
+        </assign>
+      </sequence>
+      <else>
+        <assign name="Transform2">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Transformation_2.xsl", $FilerConsentSP_OutputVariable.OutputParameters, "Filer_Format", $Filer_Format)</from>
+            <to variable="outputVariable" part="payload"/>
+          </copy>
+        </assign>
+      </else>
+    </if>
     <!-- Generate reply to synchronous request -->
     <reply name="replyOutput" partnerLink="havenfilerconsentabcsimpl_client" portType="client:HavenFilerConsentABCSImpl"
            operation="FilerConsent" variable="outputVariable"/>
