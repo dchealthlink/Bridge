@@ -38,6 +38,9 @@
               <xsd:element name="inc_taxExemptAmount" type="xsd:int"/>
               <xsd:element name="inc_comments" type="xsd:string"/>
               <xsd:element name="evidenceID" type="xsd:string"/>
+              <xsd:element name="inc_statuscode" type="xsd:string"/>
+              <xsd:element name="inc_receiveddate" type="xsd:string"/>
+              <xsd:element name="inc_correctionsetid" type="xsd:string"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>

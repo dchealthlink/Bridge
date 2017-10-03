@@ -18,6 +18,9 @@
                      <xs:element type="xs:string"
                                  name="ded_caseParticipantRoleID"/>
                      <xs:element type="xs:string" name="ded_ParticipantRoleID"/>
+                     <xs:element type="xs:string" name="dec_statuscode"/>
+                     <xs:element type="xs:string" name="dec_receiveddate"/>
+                     <xs:element type="xs:string" name="dec_correctionsetid"/>
                   </xs:sequence>
                </xs:complexType>
             </xs:element>

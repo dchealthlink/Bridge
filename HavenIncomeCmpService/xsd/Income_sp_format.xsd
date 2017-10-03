@@ -33,6 +33,9 @@
                      <xs:element name="inc_taxExemptAmount" type="xs:int"/>
                      <xs:element name="inc_comments" type="xs:string"/>
                      <xs:element name="evidenceID" type="xs:string"/>
+                     <xs:element name="inc_statuscode" type="xs:string"/>
+                     <xs:element name="inc_receiveddate" type="xs:string"/>
+                     <xs:element name="inc_correctionsetid" type="xs:string"/>
                   </xs:sequence>
                </xs:complexType>
             </xs:element>

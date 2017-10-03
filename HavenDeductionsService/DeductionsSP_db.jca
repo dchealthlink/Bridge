@@ -2,8 +2,8 @@
 <adapter-config name="DeductionsSP" adapter="Database Adapter"
                 wsdlLocation="DeductionsSP.wsdl"
                 xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
-  <connection-factory location="eis/DB/curamtohaven"
-                       UIConnectionName="CuramUAT" adapterRef=""/>
+  <connection-factory location="eis/DB/curamtohaven" UIConnectionName="CuramUAT"
+                      adapterRef=""/>
   <endpoint-interaction portType="DeductionsSP_ptt" operation="DeductionsSP">
     <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
       <property name="SchemaName" value="MAMATHA"/>
