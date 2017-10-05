@@ -30,9 +30,9 @@
                      <element type="xsd:string"
                               name="ded_caseParticipantRoleID"/>
                      <element type="xsd:string" name="ded_ParticipantRoleID"/>
-                     <element type="xsd:string" name="dec_statuscode"/>
-                     <element type="xsd:string" name="dec_receiveddate"/>
-                     <element type="xsd:string" name="dec_correctionsetid"/>
+                     <element type="xsd:string" name="statuscode"/>
+                     <element type="xsd:string" name="receiveddate"/>
+                     <element type="xsd:string" name="correctionsetid"/>
                   </sequence>
                </complexType>
             </element>
