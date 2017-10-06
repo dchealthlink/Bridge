@@ -5,8 +5,8 @@
       <loc>/ns:composite/ns:reference[@name='InvokeAceds']</loc>
       <line>39</line>
       <col>89</col>
-      <file>/Users/burujukati/jdeveloper/mywork/Test/HavenAcedsClientEnquiryService/composite.xml</file>
-      <name>/Users/burujukati/jdeveloper/mywork/Test/HavenAcedsClientEnquiryService/composite.xml</name>
+      <file>/Users/ram/Desktop/PreProd_Files/Bridge-master/HavenAcedsClientEnquiryService/composite.xml</file>
+      <name>/Users/ram/Desktop/PreProd_Files/Bridge-master/HavenAcedsClientEnquiryService/composite.xml</name>
       <fix/>
       <msg>Failed to Find Binding "InvokeAceds":"{http://namespace.softwareag.com/entirex/xml/mapping}EISBATCHSOAP12Port" in WSDL Manager</msg>
    </Fault>

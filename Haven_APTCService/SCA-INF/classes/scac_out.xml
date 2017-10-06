@@ -2,6 +2,16 @@
 <Faults>
    <Fault>
       <severity>warning</severity>
+      <loc>/ns:composite/ns:reference[@name='Invoke_FedAPTCProxyService']</loc>
+      <line>35</line>
+      <col>69</col>
+      <file>/Users/ram/Desktop/PreProd_Files/Bridge-master/Haven_APTCService/composite.xml</file>
+      <name>/Users/ram/Desktop/PreProd_Files/Bridge-master/Haven_APTCService/composite.xml</name>
+      <fix/>
+      <msg>Failed to Find Binding "Invoke_FedAPTCProxyService":"{http://aptc.dsh.cms.gov/exchange/1.0}CalculateAPTCPort" in WSDL Manager</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
       <loc/>
       <line>85</line>
       <col/>

@@ -5,8 +5,8 @@
       <loc>/ns:composite/ns:reference[@name='InvokeFedHub']</loc>
       <line>34</line>
       <col>65</col>
-      <file>/Users/rahulchitturi/jdeveloper/mywork/Haven/HavenNonESIservice/composite.xml</file>
-      <name>/Users/rahulchitturi/jdeveloper/mywork/Haven/HavenNonESIservice/composite.xml</name>
+      <file>/Users/ram/Desktop/PreProd_Files/Bridge-master/HavenNonESIservice/composite.xml</file>
+      <name>/Users/ram/Desktop/PreProd_Files/Bridge-master/HavenNonESIservice/composite.xml</name>
       <fix/>
       <msg>Failed to Find Binding "InvokeFedHub":"{http://vnem.ee.sim.dsh.cms.hhs.gov}VerifyNonEsiMecPort" in WSDL Manager</msg>
    </Fault>

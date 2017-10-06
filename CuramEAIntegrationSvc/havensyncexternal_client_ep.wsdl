@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="HavenSyncExternal" targetNamespace="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal" xmlns:ns1="http://xmlns.oracle.com/DCAS/edi/dchealthlink.com/SyncIntegratedCases/v1" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:client="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <plnk:partnerLinkType name="HavenSyncExternal">
+    <plnk:role name="HavenSyncExternalProvider" portType="client:HavenSyncExternal"/>
+  </plnk:partnerLinkType>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://xmlns.oracle.com/DCAS/edi/dchealthlink.com/SyncIntegratedCases/v1" schemaLocation="xsd/havensyncexternal_client_ep.xsd"/>
+    </schema>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <include schemaLocation="xsd/havensyncexternal_client_ep_1_2_3_4_5_6_7.xsd"/>
+    </schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:include schemaLocation="xsd/havensyncexternal_client_ep_1_2_3_4_5_6_7_8.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="HavenSyncExternalRequestMessage">
+    <wsdl:part name="payload" element="ns1:GetICIDIntegratedCaseRequest"/>
+  </wsdl:message>
+  <wsdl:message name="HavenSyncExternalResponseMessage">
+    <wsdl:part name="payload" element="integrated_cases"/>
+  </wsdl:message>
+  <wsdl:portType name="HavenSyncExternal">
+    <wsdl:operation name="process">
+      <wsdl:input message="client:HavenSyncExternalRequestMessage"/>
+      <wsdl:output message="client:HavenSyncExternalResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HavenSyncExternalBinding" type="client:HavenSyncExternal">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="process">
+      <soap:operation style="document" soapAction="process"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+</wsdl:definitions>

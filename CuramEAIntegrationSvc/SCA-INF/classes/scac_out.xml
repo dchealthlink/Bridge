@@ -2,6 +2,16 @@
 <Faults>
    <Fault>
       <severity>warning</severity>
+      <loc>/ns:composite/ns:reference[@name='CheckPDC']</loc>
+      <line>31</line>
+      <col>82</col>
+      <file>/Users/ram/Desktop/PreProd_Files/Bridge-master/CuramEAIntegrationSvc/composite.xml</file>
+      <name>/Users/ram/Desktop/PreProd_Files/Bridge-master/CuramEAIntegrationSvc/composite.xml</name>
+      <fix/>
+      <msg>Failed to Find Binding "CheckPDC":"{http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal}HavenSyncExternal_pt" in WSDL Manager</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
       <loc/>
       <line>230</line>
       <col/>

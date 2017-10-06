@@ -5,8 +5,8 @@
       <loc>/ns:composite/ns:reference[@name='InvokeIRSService']</loc>
       <line>37</line>
       <col>75</col>
-      <file>/Users/rahulchitturi/jdeveloper/mywork/Haven/VerifyAnnualIncomeService/composite.xml</file>
-      <name>/Users/rahulchitturi/jdeveloper/mywork/Haven/VerifyAnnualIncomeService/composite.xml</name>
+      <file>/Users/ram/Desktop/PreProd_Files/Bridge-master/VerifyAnnualIncomeService/composite.xml</file>
+      <name>/Users/ram/Desktop/PreProd_Files/Bridge-master/VerifyAnnualIncomeService/composite.xml</name>
       <fix/>
       <msg>Failed to Find Binding "InvokeIRSService":"{http://ifsv.dsh.cms.gov/exchange/1.0}verifyAnnualHouseholdIncomePort" in WSDL Manager</msg>
    </Fault>

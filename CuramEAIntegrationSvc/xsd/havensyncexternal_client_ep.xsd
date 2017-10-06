@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://xmlns.oracle.com/DCAS/edi/dchealthlink.com/SyncIntegratedCases/v1" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://xmlns.oracle.com/DCAS/edi/dchealthlink.com/SyncIntegratedCases/v1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://openhbx.org/api/terms/1.0">
+  <xs:import namespace="http://openhbx.org/api/terms/1.0" schemaLocation="havensyncexternal_client_ep_1.xsd"/>
+  <xsd:element name="GetIntegratedCaseRequest" type="GetIntegratedCaseRequestType"/>
+  <xsd:element name="GetICIDIntegratedCaseRequest" type="GetICIDIntegratedCaseRequestType"/>
+  <xsd:element name="GetDaterangeIntegratedCaseRequest" type="GetDaterangeIntegratedCaseRequestType"/>
+  <xsd:element name="ExternalFamilyVerificationsResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="ns1:external_verified_family"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="GetPersonInfoRequest" type="GetPersonInfoRequestType"/>
+  <xsd:element name="GetPersonInfoResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="ns1:individual"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GetIntegratedCaseRequestType">
+    <xsd:sequence>
+      <xsd:element name="RequestParameters" type="RequestParametersType" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="GetPersonInfoRequestType">
+    <xsd:sequence>
+      <xsd:element name="RequestapplicantInfo" type="RequestApplicantInfoType" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="RequestParametersType">
+    <xsd:sequence>
+      <xsd:element name="Enrollment_ID" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="RequestApplicantInfoType">
+    <xsd:sequence>
+      <xsd:element name="Person_ID" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="GetICIDIntegratedCaseRequestType">
+    <xsd:sequence>
+      <xsd:element name="ICIDParameters" type="ICIDParametersType" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ICIDParametersType">
+    <xsd:sequence>
+      <xsd:element name="IntegratedCasereference_ID" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="GetDaterangeIntegratedCaseRequestType">
+    <xsd:sequence>
+      <xsd:element name="DateTimeParameters" type="DateTimeParametersType" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DateTimeParametersType">
+    <xsd:sequence>
+      <xsd:element name="Coverage_type" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="StartDateTime" type="xsd:string"/>
+      <xsd:element name="EndDateTime" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

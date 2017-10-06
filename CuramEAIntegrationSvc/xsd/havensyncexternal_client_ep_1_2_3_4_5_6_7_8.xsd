@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="integratedcases">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="integratedcase">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="integrated_case_reference" type="xsd:string"/>
+              <xsd:element name="product_delivery_cases">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="product_delivery_case" maxOccurs="unbounded">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="product_delivery_case_reference" type="xsd:string"/>
+                          <xsd:element name="effectivedate" type="xsd:date"/>
+                          <xsd:element name="startdate" type="xsd:date"/>
+                          <xsd:element name="expectedenddate" type="xsd:date"/>
+                          <xsd:element name="concern_role_id" maxOccurs="unbounded" type="xsd:string"/>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

@@ -59,10 +59,4 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:service name="CalculateAPTCService">
-        <wsdl:port name="CalculateAPTCPort"
-                   binding="WL5G3N1:CalculateAPTCPortBinding">
-            <WL5G3N2:address location="http://dhsdcaswlesb001.dhs.dc.gov:8011/FedHub/CalculateMaxAPTC/FedProxyService"/>
-        </wsdl:port>
-    </wsdl:service>
 </wsdl:definitions>

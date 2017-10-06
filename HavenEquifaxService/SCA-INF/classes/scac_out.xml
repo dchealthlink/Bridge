@@ -5,8 +5,8 @@
       <loc>/ns:composite/ns:reference[@name='InvokeFedEquifaxService']</loc>
       <line>35</line>
       <col>81</col>
-      <file>/Users/rahulchitturi/jdeveloper/mywork/Haven/HavenEquifaxService/composite.xml</file>
-      <name>/Users/rahulchitturi/jdeveloper/mywork/Haven/HavenEquifaxService/composite.xml</name>
+      <file>/Users/ram/Desktop/PreProd_Files/Bridge-master/HavenEquifaxService/composite.xml</file>
+      <name>/Users/ram/Desktop/PreProd_Files/Bridge-master/HavenEquifaxService/composite.xml</name>
       <fix/>
       <msg>Failed to Find Binding "InvokeFedEquifaxService":"{http://vci.dsh.cms.gov/exchange/1.0}VerifyCurrentIncomePort" in WSDL Manager</msg>
    </Fault>

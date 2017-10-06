@@ -5,8 +5,8 @@
       <loc>/ns:composite/ns:reference[@name='InvokeFedHub']</loc>
       <line>38</line>
       <col>76</col>
-      <file>/Users/rahulchitturi/jdeveloper/mywork/Haven/HavenSSAService/composite.xml</file>
-      <name>/Users/rahulchitturi/jdeveloper/mywork/Haven/HavenSSAService/composite.xml</name>
+      <file>/Users/ram/Desktop/PreProd_Files/Bridge-master/HavenSSAService/composite.xml</file>
+      <name>/Users/ram/Desktop/PreProd_Files/Bridge-master/HavenSSAService/composite.xml</name>
       <fix/>
       <msg>Failed to Find Binding "InvokeFedHub":"{http://extn.ssac.ee.sim.dsh.cms.hhs.gov}SSACompositePort" in WSDL Manager</msg>
    </Fault>

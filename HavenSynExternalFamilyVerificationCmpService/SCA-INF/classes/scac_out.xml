@@ -2,6 +2,16 @@
 <Faults>
    <Fault>
       <severity>warning</severity>
+      <loc>/ns:composite/ns:reference[@name='Invoke_ErrorHandling']</loc>
+      <line>42</line>
+      <col>93</col>
+      <file>/Users/ram/Desktop/PreProd_Files/Bridge-master/HavenSynExternalFamilyVerificationCmpService/composite.xml</file>
+      <name>/Users/ram/Desktop/PreProd_Files/Bridge-master/HavenSynExternalFamilyVerificationCmpService/composite.xml</name>
+      <fix/>
+      <msg>Failed to Find Binding "Invoke_ErrorHandling":"{http://xmlns.oracle.com/DCAS_DEV5/ErrorHandlingDCASCmpService/ErrorHandlingDCASABCSImpl}ErrorHandlingDCASABCSImpl_pt" in WSDL Manager</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
       <loc/>
       <line/>
       <col/>

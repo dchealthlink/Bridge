@@ -5,7 +5,7 @@
    <import location="ICReferenceCasePollSvc.wsdl" importType="wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/DCAPP/CuramEAIntegrationSvc/ICReferenceCasePollSvc"/>
    <import location="ICRefNumPublishSvc.wsdl" importType="wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/jms/DCAPP/CuramEAIntegrationSvc/ICRefNumPublishSvc"/>
    <import namespace="http://xmlns.oracle.com/pcbpel/adapter/jms/SOA_APP/CuramEAIntegrationSvc/Publish_HavenICID" location="Publish_HavenICID.wsdl" importType="wsdl"/>
-   <import namespace="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal" location="http://dhsdcasesbsoaappuat01.dhs.dc.gov:8001/soa-infra/services/HAVEN/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal.wsdl" importType="wsdl"/>
+   <import namespace="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal" location="havensyncexternal_client_ep.wsdl" importType="wsdl"/>
    <import namespace="http://xmlns.oracle.com/pcbpel/adapter/jms/Haven/CuramEAIntegrationSvc/FaultHandling"
            location="FaultHandling.wsdl" importType="wsdl"/>
    <service name="ICReferenceCasePollSvc" ui:wsdlLocation="ICReferenceCasePollSvc.wsdl">
@@ -28,9 +28,9 @@
       <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/jms/DCAPP/CuramEAIntegrationSvc/ICRefNumPublishSvc#wsdl.interface(Produce_Message_ptt)"/>
       <binding.jca config="ICRefNumPublishSvc_jms.jca" portType="Produce_Message_ptt"/>
    </reference>
-   <reference name="CheckPDC" ui:wsdlLocation="http://dhsdcasesbsoaappuat01.dhs.dc.gov:8001/soa-infra/services/HAVEN/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal.wsdl">
+   <reference name="CheckPDC" ui:wsdlLocation="havensyncexternal_client_ep.wsdl">
       <interface.wsdl interface="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal#wsdl.interface(HavenSyncExternal)"/>
-      <binding.ws port="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal#wsdl.endpoint(havensyncexternal_client_ep/HavenSyncExternal_pt)" location="http://dhsdcasesbsoaappuat01.dhs.dc.gov:8001/soa-infra/services/HAVEN/HavenSynExternalFamilyVerificationCmpService/havensyncexternal_client_ep?WSDL" soapVersion="1.1">
+      <binding.ws port="http://xmlns.oracle.com/Test/HavenSynExternalFamilyVerificationCmpService/HavenSyncExternal#wsdl.endpoint(havensyncexternal_client_ep/HavenSyncExternal_pt)" location="havensyncexternal_client_ep.wsdl" soapVersion="1.1">
          <property name="weblogic.wsee.wsat.transaction.flowOption" type="xs:string" many="false">WSDLDriven</property>
       </binding.ws>
    </reference>

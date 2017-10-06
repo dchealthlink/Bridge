@@ -33,7 +33,7 @@
     <binding.ws port="http://namespace.softwareag.com/entirex/xml/mapping#wsdl.endpoint(DHSDCASWebservices/EISBATCHSOAP12Port)"
                 location="oramds:/apps/DCAS/ESB/ACEDS/wsdl/DHSDCASWebservices.wsdl"
                 soapVersion="1.2">
-      <!--property name="endpointURI" type="xs:string" many="false">http://10.82.55.72:10010/wsstack/services/DHSDCASWebservices</property-->
+      <property name="endpointURI" type="xs:string" many="false">oramds:/apps/DCAS/ESB/ACEDS/wsdl/DHSDCASWebservices.wsdl</property>
       <property name="weblogic.wsee.wsat.transaction.flowOption"
                 type="xs:string" many="false">WSDLDriven</property>
       <property name="oracle.webservices.httpReadTimeout" type="xs:integer"

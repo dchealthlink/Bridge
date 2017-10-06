@@ -6,7 +6,7 @@
                        UIConnectionName="CuramUAT" adapterRef=""/>
    <endpoint-interaction portType="GetIncomeSP_ptt" operation="GetIncomeSP">
       <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
-         <property name="SchemaName" value="MAMATHA"/>
+         <!--property name="SchemaName" value="MAMATHA"/-->
          <property name="ProcedureName" value="INCOME_GIVEN_CONCERNROLEID"/>
          <property name="GetActiveUnitOfWork" value="false"/>
       </interaction-spec>

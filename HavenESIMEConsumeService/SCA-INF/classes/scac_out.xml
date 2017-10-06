@@ -5,8 +5,8 @@
       <loc>/ns:composite/ns:reference[@name='Invoke_ESIMECService']</loc>
       <line>31</line>
       <col>59</col>
-      <file>/Users/rahulchitturi/jdeveloper/mywork/Haven/HavenESIMEConsumeService/composite.xml</file>
-      <name>/Users/rahulchitturi/jdeveloper/mywork/Haven/HavenESIMEConsumeService/composite.xml</name>
+      <file>/Users/ram/Desktop/PreProd_Files/Bridge-master/HavenESIMEConsumeService/composite.xml</file>
+      <name>/Users/ram/Desktop/PreProd_Files/Bridge-master/HavenESIMEConsumeService/composite.xml</name>
       <fix/>
       <msg>Failed to Find Binding "Invoke_ESIMECService":"{http://gov.hhs.cms.hix.dsh.ee.esi_mec.ext}CalculateOPMPremiumPortType" in WSDL Manager</msg>
    </Fault>
@@ -15,8 +15,8 @@
       <loc>/ns:composite/ns:reference[@name='Invoke_ESIMECService']</loc>
       <line>31</line>
       <col>59</col>
-      <file>/Users/rahulchitturi/jdeveloper/mywork/Haven/HavenESIMEConsumeService/composite.xml</file>
-      <name>/Users/rahulchitturi/jdeveloper/mywork/Haven/HavenESIMEConsumeService/composite.xml</name>
+      <file>/Users/ram/Desktop/PreProd_Files/Bridge-master/HavenESIMEConsumeService/composite.xml</file>
+      <name>/Users/ram/Desktop/PreProd_Files/Bridge-master/HavenESIMEConsumeService/composite.xml</name>
       <fix/>
       <msg>Failed to Find Binding "Invoke_ESIMECService":"{http://gov.hhs.cms.hix.dsh.ee.esi_mec.ext}CalculateOPMPremiumPortType" in WSDL Manager</msg>
    </Fault>

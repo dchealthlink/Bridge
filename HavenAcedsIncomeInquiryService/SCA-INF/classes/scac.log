@@ -1,34 +1,34 @@
 Java HotSpot(TM) 64-Bit Server VM warning: ignoring option PermSize=32m; support was removed in 8.0
 Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=256m; support was removed in 8.0
-Mar 22, 2017 5:30:43 PM oracle.security.jps.util.JpsUtil disableAudit
+Oct 06, 2017 9:56:32 AM oracle.security.jps.util.JpsUtil disableAudit
 INFO: JpsUtil: isAuditDisabled set to true
-Mar 22, 2017 5:30:43 PM oracle.security.jps.util.JpsUtil disableAudit
+Oct 06, 2017 9:56:32 AM oracle.security.jps.util.JpsUtil disableAudit
 INFO: JpsUtil: isAuditDisabled set to false
-Mar 22, 2017 5:30:44 PM oracle.mds
+Oct 06, 2017 9:56:33 AM oracle.mds
 NOTIFICATION: PManager instance is created without multitenancy support as JVM flag "oracle.multitenant.enabled" is not set to enable multitenancy support.
-Mar 22, 2017 5:30:45 PM oracle.security.jps.internal.config.xml.XmlConfigurationFactory initDefaultConfiguration
+Oct 06, 2017 9:56:33 AM oracle.security.jps.internal.config.xml.XmlConfigurationFactory initDefaultConfiguration
 SEVERE: java.io.FileNotFoundException: ./config/jps-config.xml (No such file or directory)
-Mar 22, 2017 5:30:45 PM oracle.mds
+Oct 06, 2017 9:56:33 AM oracle.mds
 NOTIFICATION: Auditing is disabled for component MDS.
-Mar 22, 2017 5:30:46 PM oracle.adf.share.ADFContext getCurrent
+Oct 06, 2017 9:56:34 AM oracle.adf.share.ADFContext getCurrent
 WARNING: Automatically initializing a DefaultContext for getCurrent.
 Caller should ensure that a DefaultContext is proper for this use.
 Memory leaks and/or unexpected behaviour may occur if the automatic initialization is performed improperly.
 This message may be avoided by performing initADFContext before using getCurrent().
 For more information please enable logging for oracle.adf.share.ADFContext at FINEST level.
-Mar 22, 2017 5:30:46 PM oracle.mds
+Oct 06, 2017 9:56:34 AM oracle.mds
 NOTIFICATION: PManager instance is created without multitenancy support as JVM flag "oracle.multitenant.enabled" is not set to enable multitenancy support.
-Mar 22, 2017 5:30:46 PM oracle.security.jps.internal.config.xml.XmlConfigurationFactory initDefaultConfiguration
+Oct 06, 2017 9:56:34 AM oracle.security.jps.internal.config.xml.XmlConfigurationFactory initDefaultConfiguration
 SEVERE: java.io.FileNotFoundException: ./config/jps-config.xml (No such file or directory)
-Mar 22, 2017 5:30:46 PM oracle.mds
+Oct 06, 2017 9:56:34 AM oracle.mds
 NOTIFICATION: Auditing is disabled for component MDS.
-Mar 22, 2017 5:30:46 PM oracle.security.jps.internal.config.xml.XmlConfigurationFactory initDefaultConfiguration
+Oct 06, 2017 9:56:34 AM oracle.security.jps.internal.config.xml.XmlConfigurationFactory initDefaultConfiguration
 SEVERE: java.io.FileNotFoundException: ./config/jps-config.xml (No such file or directory)
-Mar 22, 2017 5:30:46 PM oracle.mds
+Oct 06, 2017 9:56:34 AM oracle.mds
 NOTIFICATION: Auditing is disabled for component ADF-MDS.
-Mar 22, 2017 5:30:46 PM oracle.fabric.common.wsdl.SchemaManager isIncrementalBuildSupported
+Oct 06, 2017 9:56:34 AM oracle.fabric.common.wsdl.SchemaManager isIncrementalBuildSupported
 INFO: XMLSchema incremental build enabled.
-Mar 22, 2017 5:30:47 PM oracle.integration.platform.blocks.FabricConfigManager <clinit>
+Oct 06, 2017 9:56:34 AM oracle.integration.platform.blocks.FabricConfigManager <clinit>
 WARNING: JRF is unable to determine the current application server platform.
-Mar 22, 2017 5:30:47 PM oracle.integration.platform.blocks.WLSPlatformConfigurationProvider <clinit>
+Oct 06, 2017 9:56:34 AM oracle.integration.platform.blocks.WLSPlatformConfigurationProvider <clinit>
 WARNING: JRF is unable to determine the current application server platform.

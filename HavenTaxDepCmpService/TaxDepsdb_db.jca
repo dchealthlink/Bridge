@@ -3,7 +3,7 @@
    <connection-factory location="eis/DB/curamtohaven" UIConnectionName="CuramUAT" adapterRef=""/>
    <endpoint-interaction portType="TaxDepsdb_ptt" operation="TaxDepsdb">
       <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
-         <property name="SchemaName" value="MAMATHA"/>
+         <!--property name="SchemaName" value="MAMATHA"/-->
          <property name="ProcedureName" value="TAX_DEP_GIVEN_CONCERNROLEID"/>
          <property name="GetActiveUnitOfWork" value="false"/>
       </interaction-spec>
