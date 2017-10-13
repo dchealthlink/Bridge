@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="is_resident_evidence">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="filer_IC" type="xs:string"/>
+            <xs:element name="is_resident" type="xs:string"/>
+            <xs:element name="residenceReason" type="xs:string"/>
+            <xs:element name="startDate" type="xs:string"/>
+            <xs:element name="endDate" type="xs:string"/>
+            <xs:element name="temporaryAbsence" type="xs:string"/>
+            <xs:element name="comments" type="xs:string"/>
+            <xs:element name="caseParticipantRoleID" type="xs:string"/>
+            <xs:element name="participantID" type="xs:string"/>
+            <xs:element name="evidenceID" type="xs:string"/>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+</xs:schema>

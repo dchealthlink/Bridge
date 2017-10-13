@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+            vc:minVersion="1.1"
+            xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IsResidentRespService"
+            targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IsResidentRespService"
+            elementFormDefault="qualified">
+  <xsd:element name="is_resident_evidences">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element type="xsd:string" name="ResponseCode"/>
+        <xsd:element type="xsd:string" name="ResponseText"/>
+        <xsd:element name="is_resident_evidence">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="filer_IC" type="xsd:string"/>
+              <xsd:element name="is_resident" type="xsd:string"/>
+              <xsd:element name="residenceReason" type="xsd:string"/>
+              <xsd:element name="startDate" type="xsd:string"/>
+              <xsd:element name="endDate" type="xsd:string"/>
+              <xsd:element name="temporaryAbsence" type="xsd:string"/>
+              <xsd:element name="comments" type="xsd:string"/>
+              <xsd:element name="caseParticipantRoleID" type="xsd:string"/>
+              <xsd:element name="participantID" type="xsd:string"/>
+              <xsd:element name="evidenceID" type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

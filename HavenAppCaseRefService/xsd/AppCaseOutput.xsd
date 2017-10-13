@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+            vc:minVersion="1.1"
+            xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/sp/AppCaseRespService"
+            targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/AppCaseRespService"
+            elementFormDefault="qualified">
+  <xsd:element name="AppRefOutputParameters">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element type="xsd:string" name="ResponseCode"/>
+        <xsd:element type="xsd:string" name="ResponseText"/>
+        <xsd:element name="AppCaseRefFromIC">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="IntegratedCase_ID" type="xsd:string"/>
+              <xsd:element name="AppCaseRef" type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

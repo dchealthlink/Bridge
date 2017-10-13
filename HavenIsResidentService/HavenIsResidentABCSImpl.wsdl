@@ -1,0 +1,55 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="HavenIsResidentABCSImpl"
+     targetNamespace="http://xmlns.oracle.com/Test/HavenIsResidentCmpService/HavenIsResidentABCSImpl"
+     xmlns:db1="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IsResidentRespService"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="http://xmlns.oracle.com/Test/HavenIsResidentCmpService/HavenIsResidentABCSImpl"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:ns1="http://schemas.oracle.com/bpel/extension"
+     xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IsResidentReqService"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    >
+    <plnk:partnerLinkType name="HavenIsResidentABCSImpl">
+        <plnk:role name="HavenIsResidentABCSImplProvider" portType="client:HavenIsResidentABCSImpl"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://xmlns.oracle.com/Test/HavenIsResidentCmpService/HavenIsResidentABCSImpl"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns1="http://schemas.oracle.com/bpel/extension"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:db1="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IsResidentRespService"
+             xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IsResidentReqService">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IsResidentReqService"
+                 schemaLocation="xsd/IsResidentInput.xsd"/>
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IsResidentRespService"
+                 schemaLocation="xsd/IsResidentOutput.xsd"/>
+        </schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:include schemaLocation="xsd/Resident_sp_format.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="IsResidentRequestMessage">
+        <wsdl:part name="IsResidentInputParameters" element="db:IsResidentInputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="IsResidentResponseMessage">
+        <wsdl:part name="IsResidentOutputParameters" element="db1:is_resident_evidences"/>
+    </wsdl:message>
+    <wsdl:portType name="HavenIsResidentABCSImpl">
+        <wsdl:operation name="IsResidentService">
+            <wsdl:input message="client:IsResidentRequestMessage"/>
+            <wsdl:output message="client:IsResidentResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="HavenIsResidentABCSImplSOAP11Binding" type="client:HavenIsResidentABCSImpl">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="IsResidentService">
+            <soap:operation style="document" soapAction="http://xmlns.oracle.com/Test/HavenIsResidentCmpService/HavenIsResidentABCSImpl/IsResidentService"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="IsResidentInputParameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="IsResidentOutputParameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

@@ -1,0 +1,117 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri Oct 13 10:56:36 EDT 2017
+  Author:  rahulchitturi
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="HavenAppCaseRefCmpService"
+               targetNamespace="http://xmlns.oracle.com/Haven/HavenAppCaseRefService/HavenAppCaseRefCmpService"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Haven/HavenAppCaseRefService/HavenAppCaseRefCmpService"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/HavenAppCaseRefService/HavenAppCaseRefABCSImpl"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenAppCaseRefService/AppCaseRefPull"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/sp/AppCaseReqService"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/sp/AppCaseRefPull"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import location="xsd/AppCase_sp_format.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <partnerLinks>
+    <partnerLink name="HavenAppRefService"
+                 partnerLinkType="ns1:HavenAppRefService"
+                 myRole="HavenAppRefABCSImpl"/>
+    <partnerLink name="AppCaseRefPull" partnerLinkType="ns2:AppCaseRefPull"
+                 partnerRole="AppCaseRefPull_ptt"/>
+  </partnerLinks>
+  <variables>
+    <variable name="AppCaseRefService_InputVariable"
+              messageType="ns1:AppRefRequestMessage"/>
+    <variable name="AppCaseRefPull_InputVariable"
+              messageType="ns2:args_in_msg"/>
+    <variable name="AppCaseRefPull_OutputVariable"
+              messageType="ns2:args_out_msg"/>
+    <variable name="AppCaseRefService_OutputVariable"
+              messageType="ns1:AppRefResponseMessage"/>
+    <variable name="FormatOutput" element="AppCaseRefFromIC"/>
+  </variables>
+  <sequence name="main">
+    <receive name="ReceiveRequest" createInstance="yes"
+             partnerLink="HavenAppRefService"
+             portType="ns1:HavenAppRefABCSImpl" operation="AppCaseRefService"
+             variable="AppCaseRefService_InputVariable"/>
+    <assign name="AssignInput">
+      <copy>
+        <from>$AppCaseRefService_InputVariable.AppRefInputParameters/ns3:I_CASEREF</from>
+        <to>$AppCaseRefPull_InputVariable.InputParameters/ns4:I_CASEREF</to>
+      </copy>
+    </assign>
+    <invoke name="InvokeAppRefPull"
+            partnerLink="AppCaseRefPull" portType="ns2:AppCaseRefPull_ptt"
+            operation="AppCaseRefPull"
+            inputVariable="AppCaseRefPull_InputVariable"
+            outputVariable="AppCaseRefPull_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <if name="If1">
+      <documentation/>
+      <condition>$AppCaseRefPull_OutputVariable.OutputParameters/ns4:O_RESPONSE_CODE="DATA_FOUND"</condition>
+      <sequence>
+        <assign name="AsnFormat">
+          <copy>
+            <from>oraext:parseEscapedXML($AppCaseRefPull_OutputVariable.OutputParameters/ns4:O_OUTPUT)</from>
+            <to>$FormatOutput</to>
+          </copy>
+        </assign>
+        <assign name="XformResp">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/XformResponse.xsl", $FormatOutput, "AppCaseRefPull_OutputVariable.OutputParameters", $AppCaseRefPull_OutputVariable.OutputParameters)</from>
+            <to variable="AppCaseRefService_OutputVariable"
+                part="AppRefOutputParameters"/>
+          </copy>
+        </assign>
+      </sequence>
+      <else>
+        <assign name="XformNoDataResp">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Xform_NoDataFoundResp.xsl", $FormatOutput, "AppCaseRefPull_OutputVariable.OutputParameters", $AppCaseRefPull_OutputVariable.OutputParameters)</from>
+            <to variable="AppCaseRefService_OutputVariable"
+                part="AppRefOutputParameters"/>
+          </copy>
+        </assign>
+      </else>
+    </if>
+    <reply name="ReplyOutput" variable="AppCaseRefService_OutputVariable"
+           partnerLink="HavenAppRefService" portType="ns1:HavenAppRefABCSImpl"
+           operation="AppCaseRefService"/>
+  </sequence>
+</process>

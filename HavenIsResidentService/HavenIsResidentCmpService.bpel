@@ -1,0 +1,119 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri Oct 13 10:01:21 EDT 2017
+  Author:  rahulchitturi
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="HavenIsResidentCmpService"
+               targetNamespace="http://xmlns.oracle.com/Haven/HavenIsResidentService/HavenIsResidentCmpService"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Haven/HavenIsResidentService/HavenIsResidentCmpService"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/Test/HavenIsResidentCmpService/HavenIsResidentABCSImpl"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenIsResidentService/IsResidentPull"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IsResidentReqService"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IsResidentPull"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import location="xsd/Resident_sp_format.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <partnerLinks>
+    <partnerLink name="HavenIsResident"
+                 partnerLinkType="ns1:HavenIsResidentABCSImpl"
+                 myRole="HavenIsResidentABCSImplProvider"/>
+    <partnerLink name="IsResidentPull" partnerLinkType="ns2:IsResidentPull_plt"
+                 partnerRole="IsResidentPull_role"/>
+  </partnerLinks>
+  <variables>
+    <variable name="IsResidentService_InputVariable"
+              messageType="ns1:IsResidentRequestMessage"/>
+    <variable name="IsResidentPull_InputVariable"
+              messageType="ns2:args_in_msg"/>
+    <variable name="IsResidentPull_OutputVariable"
+              messageType="ns2:args_out_msg"/>
+    <variable name="IsResidentService_OutputVariable"
+              messageType="ns1:IsResidentResponseMessage"/>
+    <variable name="IsResidentFormat" element="is_resident_evidence"/>
+  </variables>
+  <sequence name="main">
+    <receive name="ReceiveInput" createInstance="yes"
+             partnerLink="HavenIsResident"
+             portType="ns1:HavenIsResidentABCSImpl"
+             operation="IsResidentService"
+             variable="IsResidentService_InputVariable"/>
+    <assign name="Assign1">
+      <copy>
+        <from>$IsResidentService_InputVariable.IsResidentInputParameters/ns4:I_IC</from>
+        <to>$IsResidentPull_InputVariable.InputParameters/ns3:I_IC</to>
+      </copy>
+    </assign>
+    <invoke name="Invoke_IsResidentPull"
+            partnerLink="IsResidentPull" portType="ns2:IsResidentPull_ptt"
+            operation="IsResidentPull"
+            inputVariable="IsResidentPull_InputVariable"
+            outputVariable="IsResidentPull_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <if name="If1">
+      <documentation/>
+      <condition>$IsResidentPull_OutputVariable.OutputParameters/ns3:O_RESPONSE_CODE="DATA_FOUND"</condition>
+      <sequence>
+        <assign name="Assign2">
+          <copy>
+            <from>oraext:parseEscapedXML($IsResidentPull_OutputVariable.OutputParameters/ns3:O_USER_DETAILS_CLOB)</from>
+            <to>$IsResidentFormat</to>
+          </copy>
+        </assign>
+        <assign name="Transform1">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/XformResp.xsl", $IsResidentFormat, "IsResidentPull_OutputVariable.OutputParameters", $IsResidentPull_OutputVariable.OutputParameters)</from>
+            <to variable="IsResidentService_OutputVariable"
+                part="IsResidentOutputParameters"/>
+          </copy>
+        </assign>
+      </sequence>
+      <else>
+        <assign name="Transform2">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/XformNoDataResp.xsl", $IsResidentFormat, "IsResidentPull_OutputVariable.OutputParameters", $IsResidentPull_OutputVariable.OutputParameters)</from>
+            <to variable="IsResidentService_OutputVariable"
+                part="IsResidentOutputParameters"/>
+          </copy>
+        </assign>
+      </else>
+    </if>
+    <reply name="ReplyOutput" variable="IsResidentService_OutputVariable"
+           partnerLink="HavenIsResident"
+           portType="ns1:HavenIsResidentABCSImpl"
+           operation="IsResidentService"/>
+  </sequence>
+</process>

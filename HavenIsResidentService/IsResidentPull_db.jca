@@ -1,0 +1,14 @@
+<adapter-config name="IsResidentPull" adapter="Database Adapter"
+                wsdlLocation="IsResidentPull.wsdl"
+                xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  <connection-factory location="eis/DB/curamtohaven" UIConnectionName="CuramUAT"
+                      adapterRef=""/>
+  <endpoint-interaction portType="IsResidentPull_ptt"
+                        operation="IsResidentPull">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="ProcedureName" value="ISSTATERESIDENT_GIVEN_IC"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+</adapter-config>

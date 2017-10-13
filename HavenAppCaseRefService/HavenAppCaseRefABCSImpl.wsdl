@@ -1,0 +1,58 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions name="HavenIsResidentABCSImpl"
+                  targetNamespace="http://xmlns.oracle.com/HavenAppCaseRefService/HavenAppCaseRefABCSImpl"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:client="http://xmlns.oracle.com/HavenAppCaseRefService/HavenAppCaseRefABCSImpl"
+                  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                  xmlns:ns1="http://schemas.oracle.com/bpel/extension"
+                  xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/AppCaseReqService"
+                  xmlns:db1="http://xmlns.oracle.com/pcbpel/adapter/db/sp/AppCaseRespService"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="HavenAppCaseRefABCSImpl">
+        <plnk:role name="HavenAppCaseRefABCSImplProvider"
+                   portType="client:HavenAppCaseRefABCSImpl"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                xmlns:ns1="http://schemas.oracle.com/bpel/extension"
+                xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                xmlns:db1="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IsResidentRespService"
+                xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IsResidentReqService">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/AppCaseReqService"
+                    schemaLocation="xsd/AppCaseInput.xsd"/>
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/AppCaseRespService"
+                    schemaLocation="xsd/AppCaseOutput.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="AppRefRequestMessage">
+        <wsdl:part name="AppRefInputParameters"
+                   element="db:AppRefInputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="AppRefResponseMessage">
+        <wsdl:part name="AppRefOutputParameters"
+                   element="db1:AppRefOutputParameters"/>
+    </wsdl:message>
+    <wsdl:portType name="HavenAppRefABCSImpl">
+        <wsdl:operation name="AppCaseRefService">
+            <wsdl:input message="client:AppRefRequestMessage"/>
+            <wsdl:output message="client:AppRefResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="HavenAppRefABCSImplSOAP11Binding"
+                  type="client:HavenAppRefABCSImpl">
+        <soap:binding style="document"
+                      transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="AppCaseRefService">
+            <soap:operation style="document"
+                            soapAction="http://xmlns.oracle.com/HavenAppCaseRefService/HavenAppCaseRefABCSImpl/AppCaseRefService"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="AppRefInputParameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="AppRefOutputParameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>
