@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:WL5G3N5="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N4="http://vlp.ee.services.dsh.cms.hhs.gov/wsdl" xmlns:WL5G3N3="http://vclpsav.ee.sim.dsh.cms.hhs.gov" xmlns:WL5G3N2="http://vilpsav.ee.sim.dsh.cms.hhs.gov" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://vlp.ee.sim.dsh.cms.hhs.gov" targetNamespace="http://vlp.ee.services.dsh.cms.hhs.gov/wsdl">
+   <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsu:Id="wss_username_token_service_policy">
+      <sp:SupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+         <wsp:Policy>
+            <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+               <wsp:Policy>
+                  <sp:WssUsernameToken10/>
+               </wsp:Policy>
+            </sp:UsernameToken>
+         </wsp:Policy>
+      </sp:SupportingTokens>
+   </wsp:Policy>
+   <wsdl:types>
+      <xsd:schema xmlns:WL5G3N6="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:WL5G3N7="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ctzn="http://gov.hhs.cms.hix.dsh.ee.ctzn" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ssa="http://gov.hhs.cms.hix.dsh.ee.ssa" xmlns:tns="http://vlp.ee.services.dsh.cms.hhs.gov/wsdl" xmlns:vcl="http://vclpsav.ee.sim.dsh.cms.hhs.gov" xmlns:vil="http://vilpsav.ee.sim.dsh.cms.hhs.gov" xmlns:vlp="http://vlp.ee.sim.dsh.cms.hhs.gov" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://vlp.ee.sim.dsh.cms.hhs.gov" schemaLocation="xsd/Fed.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:WL5G3N6="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:WL5G3N7="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ctzn="http://gov.hhs.cms.hix.dsh.ee.ctzn" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ssa="http://gov.hhs.cms.hix.dsh.ee.ssa" xmlns:tns="http://vlp.ee.services.dsh.cms.hhs.gov/wsdl" xmlns:vcl="http://vclpsav.ee.sim.dsh.cms.hhs.gov" xmlns:vil="http://vilpsav.ee.sim.dsh.cms.hhs.gov" xmlns:vlp="http://vlp.ee.sim.dsh.cms.hhs.gov" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://vilpsav.ee.sim.dsh.cms.hhs.gov" schemaLocation="xsd/Step2.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:WL5G3N6="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:WL5G3N7="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ctzn="http://gov.hhs.cms.hix.dsh.ee.ctzn" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ssa="http://gov.hhs.cms.hix.dsh.ee.ssa" xmlns:tns="http://vlp.ee.services.dsh.cms.hhs.gov/wsdl" xmlns:vcl="http://vclpsav.ee.sim.dsh.cms.hhs.gov" xmlns:vil="http://vilpsav.ee.sim.dsh.cms.hhs.gov" xmlns:vlp="http://vlp.ee.sim.dsh.cms.hhs.gov" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://vclpsav.ee.sim.dsh.cms.hhs.gov" schemaLocation="xsd/Step3.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="VerifyLawfulPresenceRequest">
+      <wsdl:part name="body" element="WL5G3N1:Agency3InitVerifRequest"/>
+   </wsdl:message>
+   <wsdl:message name="VerifyLawfulPresenceResponse">
+      <wsdl:part name="body" element="WL5G3N1:Agency3InitVerifResponse"/>
+   </wsdl:message>
+   <wsdl:message name="ReverifyAgency3InitVerifRequest">
+      <wsdl:part name="body" element="WL5G3N2:ReverifyAgency3InitVerifRequest"/>
+   </wsdl:message>
+   <wsdl:message name="ReverifyAgency3InitVerifResponse">
+      <wsdl:part name="body" element="WL5G3N2:ReverifyAgency3InitVerifResponse"/>
+   </wsdl:message>
+   <wsdl:message name="SubmitAgency3DHSResubRequest">
+      <wsdl:part name="body" element="WL5G3N3:SubmitAgency3DHSResubRequest"/>
+   </wsdl:message>
+   <wsdl:message name="SubmitAgency3DHSResubResponse">
+      <wsdl:part name="body" element="WL5G3N3:SubmitAgency3DHSResubResponse"/>
+   </wsdl:message>
+   <wsdl:portType name="VerifyLawfulPresencePortType">
+      <wsdl:operation name="VerifyLawfulPresence">
+         <wsdl:input message="WL5G3N4:VerifyLawfulPresenceRequest"/>
+         <wsdl:output message="WL5G3N4:VerifyLawfulPresenceResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="ReverifyAgency3InitVerif">
+         <wsdl:input message="WL5G3N4:ReverifyAgency3InitVerifRequest"/>
+         <wsdl:output message="WL5G3N4:ReverifyAgency3InitVerifResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="SubmitAgency3DHSResub">
+         <wsdl:input message="WL5G3N4:SubmitAgency3DHSResubRequest"/>
+         <wsdl:output message="WL5G3N4:SubmitAgency3DHSResubResponse"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="VerifyLawfulPresenceSoapBinding" type="WL5G3N4:VerifyLawfulPresencePortType">
+      <WL5G3N5:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#wss_username_token_service_policy" wsdl:required="false"/>
+      <wsdl:operation name="VerifyLawfulPresence">
+         <WL5G3N5:operation soapActionRequired="false"/>
+         <wsdl:input>
+            <WL5G3N5:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <WL5G3N5:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ReverifyAgency3InitVerif">
+         <WL5G3N5:operation soapActionRequired="false"/>
+         <wsdl:input>
+            <WL5G3N5:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <WL5G3N5:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SubmitAgency3DHSResub">
+         <WL5G3N5:operation soapActionRequired="false"/>
+         <wsdl:input>
+            <WL5G3N5:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <WL5G3N5:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+</wsdl:definitions>

@@ -1,0 +1,747 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema targetNamespace="http://vlp.ee.sim.dsh.cms.hhs.gov/ESB/V1" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:vlp="http://vlp.ee.sim.dsh.cms.hhs.gov/ESB/V1" version="8.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <SchemaComponent>
+            <EffectiveDt>2013-04-01</EffectiveDt>
+            <VersionDt>2013-03-08</VersionDt>
+            <VersionDescriptionTxt>1. Added
+                                       fiveYearBarApplicabilityIndicator to
+                                       request. 2. Added 'X' and 'x' as valid
+                                       values for fiveYearBarMetIndicator. 3.
+                                       Added 'X' and 'x' as valid values for
+                                       fiveYearBarApplyIndicator. 4.
+                                       responseDescriptionText maxLength made
+                                       unlimited. 5. TDSResponseDescriptionText
+                                       maxLength made unlimited. Updates to
+                                       align with NIEM and UpperCamelCase are
+                                       not in scope at this time.</VersionDescriptionTxt>
+            <DescriptionTxt>Request and Response payloads for the SOA
+                                service Verify Lawful Presence.</DescriptionTxt>
+         </SchemaComponent>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:element name="verifyLawfulPresenceInput">
+      <xsd:annotation>
+         <xsd:documentation>Root Element: Request Message - Verify Lawful
+                               Presence.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="lawfulPresenceRequest" type="vlp:lawfulPresenceRequestType" maxOccurs="unbounded"/>
+            <xsd:element name="RequestNumber" type="xsd:string"/>
+            <xsd:element name="PersonID" type="xsd:string"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="lawfulPresenceRequestType">
+      <xsd:sequence>
+         <xsd:element name="DHSID" type="vlp:DHSIDType"/>
+         <xsd:element name="firstName" type="vlp:firstNameType"/>
+         <xsd:element name="middleName" type="vlp:middleNameType" minOccurs="0"/>
+         <xsd:element name="lastName" type="vlp:lastNameType"/>
+         <xsd:element name="dateOfBirth" type="vlp:dateOfBirthType"/>
+         <xsd:element name="AKA" type="vlp:AKAType" minOccurs="0"/>
+         <xsd:element name="I94Number" type="vlp:I94NumberType" minOccurs="0"/>
+         <xsd:element name="comments" type="vlp:commentsType" minOccurs="0"/>
+         <xsd:element name="requestedCoverageStartDate" type="vlp:requestedCoverageStartDateType"/>
+         <xsd:element name="fiveYearBarApplicabilityIndicator" type="vlp:fiveYearBarApplicabilityIndicatorType"/>
+         <xsd:element name="RequestSponsorDataIndicator" type="vlp:RequestSponsorDataIndicatorType" minOccurs="0"/>
+         <xsd:element name="RequestGrantDateIndicator" type="vlp:RequestGrantDateIndicatorType" minOccurs="0"/>
+         <xsd:element name="RequesterCommentsForHub" type="vlp:RequesterCommentsForHubType" minOccurs="0"/>
+         <xsd:element name="CategoryCode" type="vlp:CategoryCodeType" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="DHSIDType">
+      <xsd:choice>
+         <xsd:element name="I327DocumentID" type="vlp:I327DocumentID3Type"/>
+         <xsd:element name="I551DocumentID" type="vlp:I551DocumentID4Type"/>
+         <xsd:element name="I571DocumentID" type="vlp:I571DocumentID5Type"/>
+         <xsd:element name="I766DocumentID" type="vlp:I766DocumentID9Type"/>
+         <xsd:element name="certOfCitDocumentID" type="vlp:CertOfCitDocumentID23Type"/>
+         <xsd:element name="natrOfCertDocumentID" type="vlp:NatrOfCertDocumentID20Type"/>
+         <xsd:element name="macReadI551DocumentID" type="vlp:MacReadI551DocumentID22Type"/>
+         <xsd:element name="tempI551DocumentID" type="vlp:TempI551DocumentID21Type"/>
+         <xsd:element name="I94DocumentID" type="vlp:I94DocumentID2Type"/>
+         <xsd:element name="I94UnexpForeignPassportDocumentID" type="vlp:I94UnexpForeignPassportDocumentID10Type"/>
+         <xsd:element name="unexpForeignPassportDocumentID" type="vlp:UnexpForeignPassportDocumentID30Type"/>
+         <xsd:element name="I20DocumentID" type="vlp:I20DocumentID26Type"/>
+         <xsd:element name="DS2019DocumentID" type="vlp:DS2019DocumentID27Type"/>
+         <xsd:element name="otherCase1DocumentID" type="vlp:OtherCase1DocumentID1Type"/>
+         <xsd:element name="otherCase2DocumentID" type="vlp:OtherCase2DocumentID1Type"/>
+      </xsd:choice>
+   </xsd:complexType>
+   <xsd:complexType name="I327DocumentID3Type">
+      <xsd:sequence>
+         <xsd:element name="alienNumber" type="vlp:alienNumberType"/>
+         <xsd:element name="docExpirationDate" type="vlp:dateType" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="I551DocumentID4Type">
+      <xsd:sequence>
+         <xsd:element name="alienNumber" type="vlp:alienNumberType"/>
+         <xsd:element name="cardNumber" type="xsd:string"/>
+         <xsd:element name="docExpirationDate" type="vlp:dateType" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="I571DocumentID5Type">
+      <xsd:sequence>
+         <xsd:element name="alienNumber" type="vlp:alienNumberType"/>
+         <xsd:element name="docExpirationDate" type="vlp:dateType" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="I688DocumentID6Type">
+      <xsd:sequence>
+         <xsd:element name="alienNumber" type="vlp:alienNumberType"/>
+         <xsd:element name="docExpirationDate" type="vlp:dateType" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="I688ADocumentID7Type">
+      <xsd:sequence>
+         <xsd:element name="alienNumber" type="vlp:alienNumberType"/>
+         <xsd:element name="docExpirationDate" type="vlp:dateType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="I688BDocumentID8Type">
+      <xsd:sequence>
+         <xsd:element name="alienNumber" type="vlp:alienNumberType"/>
+         <xsd:element name="docExpirationDate" type="vlp:dateType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="I766DocumentID9Type">
+      <xsd:sequence>
+         <xsd:element name="alienNumber" type="vlp:alienNumberType"/>
+         <xsd:element name="docExpirationDate" type="vlp:dateType"/>
+         <xsd:element name="cardNumber" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CertOfCitDocumentID23Type">
+      <xsd:sequence>
+         <xsd:element name="alienNumber" type="vlp:alienNumberType"/>
+         <xsd:element name="citizenshipNumber" type="vlp:citizenshipNumberType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="NatrOfCertDocumentID20Type">
+      <xsd:sequence>
+         <xsd:element name="alienNumber" type="vlp:alienNumberType"/>
+         <xsd:element name="naturalizationNumber" type="vlp:naturalizationNumberType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="MacReadI551DocumentID22Type">
+      <xsd:sequence>
+         <xsd:element name="alienNumber" type="vlp:alienNumberType"/>
+         <xsd:element name="visaNumber" type="vlp:visaNumberType" minOccurs="0"/>
+         <xsd:element name="passportNumber" type="vlp:passportNumberType"/>
+         <xsd:element name="countryOfIssuance" type="vlp:countryOfIssuanceType"/>
+         <xsd:element name="docExpirationDate" type="vlp:dateType" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="TempI551DocumentID21Type">
+      <xsd:sequence>
+         <xsd:element name="alienNumber" type="vlp:alienNumberType"/>
+         <xsd:element name="passportCountry" type="vlp:passportCountryType" minOccurs="0"/>
+         <xsd:element name="docExpirationDate" type="vlp:dateType" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="I94DocumentID2Type">
+      <xsd:sequence>
+         <xsd:element name="I94Number" type="vlp:I94NumberType"/>
+         <xsd:element name="SEVISID" type="vlp:SEVISIDType" minOccurs="0"/>
+         <xsd:element name="docExpirationDate" type="vlp:dateType" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="I94UnexpForeignPassportDocumentID10Type">
+      <xsd:sequence>
+         <xsd:element name="I94Number" type="vlp:I94NumberType"/>
+         <xsd:element name="visaNumber" type="vlp:visaNumberType" minOccurs="0"/>
+         <xsd:element name="passportNumber" type="vlp:passportNumberType"/>
+         <xsd:element name="countryOfIssuance" type="vlp:countryOfIssuanceType"/>
+         <xsd:element name="SEVISID" type="vlp:SEVISIDType" minOccurs="0"/>
+         <xsd:element name="docExpirationDate" type="vlp:dateType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="UnexpForeignPassportDocumentID30Type">
+      <xsd:sequence>
+         <xsd:element name="I94Number" type="vlp:I94NumberType" minOccurs="0"/>
+         <xsd:element name="passportNumber" type="vlp:passportNumberType"/>
+         <xsd:element name="countryOfIssuance" type="vlp:countryOfIssuanceType"/>
+         <xsd:element name="docExpirationDate" type="vlp:dateType"/>
+         <xsd:element name="SEVISID" type="vlp:SEVISIDType" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="I20DocumentID26Type">
+      <xsd:sequence>
+         <xsd:element name="I94Number" type="vlp:I94NumberType" minOccurs="0"/>
+         <xsd:element name="SEVISID" type="vlp:SEVISIDType"/>
+         <xsd:element name="docExpirationDate" type="vlp:dateType" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="DS2019DocumentID27Type">
+      <xsd:sequence>
+         <xsd:element name="I94Number" type="vlp:I94NumberType" minOccurs="0"/>
+         <xsd:element name="SEVISID" type="vlp:SEVISIDType"/>
+         <xsd:element name="docExpirationDate" type="vlp:dateType" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="OtherCase1DocumentID1Type">
+      <xsd:sequence>
+         <xsd:element name="alienNumber" type="vlp:alienNumberType"/>
+         <xsd:element name="docExpirationDate" type="vlp:dateType" minOccurs="0"/>
+         <xsd:element name="docDescReq" type="vlp:docDescReqType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="OtherCase2DocumentID1Type">
+      <xsd:sequence>
+         <xsd:element name="I94Number" type="vlp:I94NumberType"/>
+         <xsd:element name="SEVISID" type="vlp:SEVISIDType" minOccurs="0"/>
+         <xsd:element name="docExpirationDate" type="vlp:dateType" minOccurs="0"/>
+         <xsd:element name="docDescReq" type="vlp:docDescReqType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="passportCountryType">
+      <xsd:annotation>
+         <xsd:documentation>This complex type was created in order to enforce
+                               the rule that countryOfIssuance must be submitted
+                               if passportNumber is present on the request. This
+                               complex type is optional, so that if
+                               passportNumber is not included, neither is
+                               needed. However, if passportNumber is submitted,
+                               this complex type must be populated with both
+                               fields.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="passportNumber" type="vlp:passportNumberType"/>
+         <xsd:element name="countryOfIssuance" type="vlp:countryOfIssuanceType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="AKAType">
+      <xsd:annotation>
+         <xsd:documentation>The applicant’s alias name (also-known-as).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:minLength value="1"/>
+         <xsd:maxLength value="40"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="commentsType">
+      <xsd:annotation>
+         <xsd:documentation>Comment field. This is a comment field used to
+                               send a short comment to the MPA.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:minLength value="1"/>
+         <xsd:maxLength value="400"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="requestedCoverageStartDateType">
+      <xsd:annotation>
+         <xsd:documentation>The date when the applicant desires coverage to
+                               begin.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:date"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="countryOfIssuanceType">
+      <xsd:annotation>
+         <xsd:documentation>This field contains the Country of Issuance
+                               country code for a passport presented to SAVE.
+                               This field is required if a passport number exist
+                               in the PassportNumber field.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:minLength value="1"/>
+         <xsd:maxLength value="5"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="fiveYearBarApplicabilityIndicatorType">
+      <xsd:annotation>
+         <xsd:documentation>Indicates whether the five year bar criteria has
+                               to be checked or not based on applicant entry
+                               before or after August 22, 1996. If the applicant
+                               entered the country before 08/22/1996, the
+                               indicator will be set to “False”. If the
+                               applicant entered the country on or after
+                               08/22/1996, the indicator will be set to “True”.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:boolean"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="RequestSponsorDataIndicatorType">
+      <xsd:annotation>
+         <xsd:documentation>“True” indicates that an agency is requesting
+                               that affidavit of support data be returned,
+                               otherwise this field should contain “False”. An
+                               agency has to be configured to receive this data.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:boolean"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="RequestGrantDateIndicatorType">
+      <xsd:annotation>
+         <xsd:documentation>"True” indicates an agency is requesting that a
+                               grant date be returned, otherwise this field
+                               should contain “False”. An agency has to be
+                               configured to receive this data.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:boolean"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="RequesterCommentsForHubType">
+      <xsd:annotation>
+         <xsd:documentation>********************</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="CategoryCodeType">
+      <xsd:annotation>
+         <xsd:documentation>************************</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string"/>
+   </xsd:simpleType>
+   <xsd:element name="verifyLawfulPresenceOutput">
+      <xsd:annotation>
+         <xsd:documentation>Root Element: Response Message - Verify Lawful
+                               Presence.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexType>
+         <xsd:choice>
+            <xsd:element name="responseMetadata" type="vlp:responseMetadataType"/>
+            <xsd:element name="lawfulPresenceResponse" type="vlp:lawfulPresenceResponseType"/>
+         </xsd:choice>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="lawfulPresenceResponseType">
+      <xsd:sequence>
+         <xsd:element name="lawfulPresenceIndividualResponse" type="vlp:lawfulPresenceIndividualResponseType" maxOccurs="unbounded"/>
+         <xsd:element name="RequestNumber" type="xsd:string"/>
+         <xsd:element name="PersonID" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="lawfulPresenceIndividualResponseType">
+      <xsd:sequence>
+         <xsd:element name="responseMetadata" type="vlp:responseMetadataType"/>
+         <xsd:element name="lawfulPresenceVerified" type="vlp:lawfulPresenceVerifiedType"/>
+         <xsd:element name="lawfulPresenceServiceResponseFields" type="vlp:DHSResponseFields"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="responseMetadataType">
+      <xsd:sequence>
+         <xsd:element name="responseCode" type="vlp:responseCodeType"/>
+         <xsd:element name="responseDescriptionText" type="vlp:responseDescriptionTextType"/>
+         <xsd:element name="TDSResponseDescriptionText" type="vlp:TDSResponseDescriptionTextType" minOccurs="0"/>
+         <xsd:element name="RequestNumber" type="xsd:string"/>
+         <xsd:element name="PersonID" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="DHSResponseFields">
+      <xsd:sequence>
+         <xsd:element name="caseNbr" type="vlp:caseNumberType"/>
+         <xsd:element name="nonCitLastName" type="vlp:lastNameType" minOccurs="0"/>
+         <xsd:element name="nonCitFirstName" type="vlp:firstNameType" minOccurs="0"/>
+         <xsd:element name="nonCitMiddleName" type="vlp:middleNameType" minOccurs="0"/>
+         <xsd:element name="nonCitBirthDate" type="vlp:dateType" minOccurs="0"/>
+         <xsd:element name="nonCitEntryDate" type="vlp:dateType" minOccurs="0"/>
+         <xsd:element name="nonCitAdmittedToDate" type="vlp:dateType" minOccurs="0"/>
+         <xsd:element name="nonCitAdmittedToText" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="nonCitCountryBirthCd" type="vlp:nonCitCountryBirthCd" minOccurs="0"/>
+         <xsd:element name="nonCitCountryCitCd" type="vlp:nonCitCountryCitCd" minOccurs="0"/>
+         <xsd:element name="nonCitCoaCode" type="vlp:nonCitCoaCode" minOccurs="0"/>
+         <xsd:element name="nonCitEadsExpireDate" type="vlp:dateType" minOccurs="0"/>
+         <xsd:element name="eligStatementCd" type="vlp:eligStatementCd"/>
+         <xsd:element name="eligStatementTxt" type="vlp:eligStatementTxt"/>
+         <xsd:element name="iavTypeCode" type="vlp:iavTypeCodeType" minOccurs="0"/>
+         <xsd:element name="iavTypeTxt" type="vlp:iavTypeTxtType" minOccurs="0"/>
+         <xsd:element name="webServSftwrVer" type="vlp:webServSftwrVerType"/>
+         <xsd:element name="GrantDate" type="vlp:GrantDateType" minOccurs="0"/>
+         <xsd:element name="GrantDateReasonCd" type="vlp:GrantDateReasonCdType" minOccurs="0"/>
+         <xsd:element name="SponsorDataFoundIndicator" type="vlp:SponsorDataFoundIndicatorType" minOccurs="0"/>
+         <xsd:element name="ArrayOfSponsorshipData" type="vlp:ArrayOfSponsorshipDataType" minOccurs="0"/>
+         <xsd:element name="SponsorshipReasonCd" type="vlp:SponsorshipReasonCdType" minOccurs="0"/>
+         <xsd:element name="CaseSentToSecondaryIndicator" type="vlp:CaseSentToSecondaryIndicatorType"/>
+         <xsd:element name="DSHAutoTriggerStepTwo" type="vlp:YNType"/>
+         <xsd:element name="fiveYearBarApplyIndicator" type="vlp:fiveYearBarApplyIndicatorType"/>
+         <xsd:element name="qualifiedNonCitizenIndicator" type="vlp:qualifiedNonCitizenIndicatorType"/>
+         <xsd:element name="fiveYearBarMetIndicator" type="vlp:fiveYearBarMetIndicatorType"/>
+         <xsd:element name="USCitizenCode" type="vlp:USCitizenCodeType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="nonCitCountryBirthCd">
+      <xsd:restriction base="xsd:string">
+         <xsd:minLength value="1"/>
+         <xsd:maxLength value="5"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="nonCitCountryCitCd">
+      <xsd:restriction base="xsd:string">
+         <xsd:minLength value="1"/>
+         <xsd:maxLength value="5"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="nonCitCoaCode">
+      <xsd:restriction base="xsd:string">
+         <xsd:minLength value="1"/>
+         <xsd:maxLength value="3"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="eligStatementCd">
+      <xsd:restriction base="xsd:integer"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="eligStatementTxt">
+      <xsd:restriction base="xsd:string">
+         <xsd:minLength value="1"/>
+         <xsd:maxLength value="64"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="alienNumberType">
+      <xsd:restriction base="xsd:string">
+         <xsd:length value="9"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="I94NumberType">
+      <xsd:annotation>
+         <xsd:documentation>The applicant’s I-94 number (admission number).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:length value="11"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="SEVISIDType">
+      <xsd:restriction base="xsd:string">
+         <xsd:pattern value="[0-9]{10}"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="passportNumberType">
+      <xsd:restriction base="xsd:string">
+         <xsd:minLength value="6"/>
+         <xsd:maxLength value="12"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="naturalizationNumberType">
+      <xsd:restriction base="xsd:string">
+         <xsd:pattern value="[0-9]{7,12}"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="citizenshipNumberType">
+      <xsd:restriction base="xsd:string">
+         <xsd:pattern value="[0-9]{7,12}"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="iavTypeCodeType">
+      <xsd:restriction base="xsd:string">
+         <xsd:minLength value="1"/>
+         <xsd:maxLength value="25"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="iavTypeTxtType">
+      <xsd:restriction base="xsd:string">
+         <xsd:minLength value="1"/>
+         <xsd:maxLength value="100"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="webServSftwrVerType">
+      <xsd:annotation>
+         <xsd:documentation>The version number of the Agency Web Service
+                               software which executed this Web Service method.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:minLength value="1"/>
+         <xsd:maxLength value="30"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="GrantDateType">
+      <xsd:annotation>
+         <xsd:documentation>Date that the applicant’s Asylum, Parolee,
+                               Refugee, or LPR status was granted.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:date"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="GrantDateReasonCdType">
+      <xsd:annotation>
+         <xsd:documentation>Reason Grant Date was not found.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:minLength value="1"/>
+         <xsd:maxLength value="20"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="SponsorDataFoundIndicatorType">
+      <xsd:annotation>
+         <xsd:documentation>Field indicating whether or not sponsorship data
+                               was found.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:boolean"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="SponsorshipReasonCdType">
+      <xsd:annotation>
+         <xsd:documentation>Reason Sponsorship Data was not found.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:minLength value="1"/>
+         <xsd:maxLength value="20"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="ArrayOfSponsorshipDataType">
+      <xsd:annotation>
+         <xsd:documentation>Type for Array of SponsorshipData objects.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="SponsorshipData" type="vlp:SponsorshipDataType" maxOccurs="unbounded">
+            <xsd:annotation>
+               <xsd:documentation>An object that identifies one individual
+                                       who sponsored the applicant. Consists of
+                                       person name and address information.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="SponsorshipDataType">
+      <xsd:annotation>
+         <xsd:documentation>Each instance of a SponsorshipData object
+                               identifies one individual who sponsored the
+                               applicant. TBD constraints. Intentionally using
+                               some unnamed simpleTypes within this complexType
+                               since they are likely to be removed.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="LastName">
+            <xsd:annotation>
+               <xsd:documentation>The last name of the individual
+                                       sponsoring the non citizen.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:minLength value="1"/>
+                  <xsd:maxLength value="50"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="FirstName">
+            <xsd:annotation>
+               <xsd:documentation>The first name of the individual
+                                       sponsoring the non citizen.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:minLength value="1"/>
+                  <xsd:maxLength value="50"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="MiddleName" minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation>The middle name of the individual
+                                       sponsoring the non citizen.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:minLength value="1"/>
+                  <xsd:maxLength value="50"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="Addr1" minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation>The address line 1 of the individual
+                                       sponsoring the non citizen.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:minLength value="1"/>
+                  <xsd:maxLength value="60"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="Addr2" minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation>The address line 2 of the individual
+                                       sponsoring the non citizen..</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:minLength value="1"/>
+                  <xsd:maxLength value="60"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="City" minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation>The city of the individual sponsoring the
+                                       non citizen.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:minLength value="1"/>
+                  <xsd:maxLength value="30"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="StateCode" minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation>The state code of the individual
+                                       sponsoring the non citizen.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:minLength value="1"/>
+                  <xsd:maxLength value="2"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="ZipCode" minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation>The zip code of the individual sponsoring
+                                       the non citizen.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:minLength value="1"/>
+                  <xsd:maxLength value="9"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="PhotoIncludedIndicatorType">
+      <xsd:annotation>
+         <xsd:documentation>Field indicating whether or not a photo was found.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:boolean"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="PhotoBinaryAttachmentType">
+      <xsd:annotation>
+         <xsd:documentation>Photo returned from ISRS/CPMS.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:base64Binary" xmime:expectedContentTypes="application/octet-stream" xmlns:xmime="http://www.w3.org/2005/05/xmlmime"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="CaseSentToSecondaryIndicatorType">
+      <xsd:annotation>
+         <xsd:documentation>Field indicating whether or not the case was sent
+                               to Secondary.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:boolean"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="USCitizenCodeType">
+      <xsd:annotation>
+         <xsd:documentation>Identifies if the individual is a US Citizen.
+                               (Y–Yes, N-No, P-Pending, X-N/A) – this indicator
+                               is created in the Hub.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:pattern value="[ynpxYNPX]"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="docDescReqType">
+      <xsd:restriction base="xsd:string"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="qualifiedNonCitizenIndicatorType">
+      <xsd:annotation>
+         <xsd:documentation>This element identifies the qualified non-citizen
+                               status of the individual. (Y-Yes, N-No or
+                               P-Pending). This indicator is created in the Hub.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:pattern value="[ynpYNP]"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="caseNumberType">
+      <xsd:annotation>
+         <xsd:documentation>The unique case verification number assigned to
+                               this query. The last two characters in the case
+                               number must be upper case.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:pattern value="[a-z|A-Z|0-9]{13}[A-Z]{2}"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="fiveYearBarMetIndicatorType">
+      <xsd:annotation>
+         <xsd:documentation>FiveYearBarMetIndicator: This element identifies
+                               the individuals who were barred from services for
+                               5 years have met the timeline requirement. For
+                               Sprint 10, this field will be populated with 'P'
+                               (Pending). In the future, logic will dictate the
+                               value, and update the value for the
+                               fiveYearBarIndicator as appropriate.
+                               FiveYearBarIndicator: Identifies if the
+                               individual is barred from services for 5 years
+                               (Y–Yes, N-No, P-Pending, X-N/A) – this indicator
+                               is created in the Hub.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:pattern value="[ynpxYNPX]"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="firstNameType">
+      <xsd:restriction base="xsd:string">
+         <xsd:maxLength value="50"/>
+         <xsd:minLength value="1"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="middleNameType">
+      <xsd:restriction base="xsd:string">
+         <xsd:maxLength value="50"/>
+         <xsd:minLength value="1"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="lastNameType">
+      <xsd:restriction base="xsd:string">
+         <xsd:maxLength value="50"/>
+         <xsd:minLength value="1"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="nameSuffixType">
+      <xsd:restriction base="xsd:string">
+         <xsd:maxLength value="3"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="dateOfBirthType">
+      <xsd:restriction base="xsd:date"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="dateType">
+      <xsd:restriction base="xsd:date"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="visaNumberType">
+      <xsd:restriction base="xsd:string">
+         <xsd:length value="8"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="lawfulPresenceVerifiedType">
+      <xsd:restriction base="xsd:string">
+         <xsd:pattern value="[ynpYNP]"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="YNType">
+      <xsd:restriction base="xsd:string">
+         <xsd:pattern value="[ynYN]"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="fiveYearBarApplyIndicatorType">
+      <xsd:annotation>
+         <xsd:documentation>Identifies if the individual is barred from
+                               services for 5 years (Y-Yes, N-No, P-Pending,
+                               X-N/A)</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:pattern value="[ynpxYNPX]"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="responseCodeType">
+      <xsd:annotation>
+         <xsd:documentation>Response code in initiated by the HUB indicating
+                               failure or success of the request.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:length value="8"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="responseDescriptionTextType">
+      <xsd:annotation>
+         <xsd:documentation>Description of the Response Code.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="TDSResponseDescriptionTextType">
+      <xsd:annotation>
+         <xsd:documentation>In the event that a TDS sends the Hub a new error
+                               code, this field will be populated with a
+                               description of the new code.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string"/>
+   </xsd:simpleType>
+</xsd:schema>

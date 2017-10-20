@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions targetNamespace="http://vlp.ee.services.dsh.cms.hhs.gov/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:WL5G3N4="http://vlp.ee.services.dsh.cms.hhs.gov/wsdl" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+   <plnk:partnerLinkType name="InvokeFedHub">
+      <plnk:role name="VerifyLawfulPresencePortType" portType="WL5G3N4:VerifyLawfulPresencePortType"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://vlp.ee.services.dsh.cms.hhs.gov/wsdl" location="LawfulPresenceFedProxyService.wsdl"/>
+</wsdl:definitions>
