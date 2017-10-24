@@ -6,7 +6,7 @@
   <endpoint-interaction portType="IsResidentPull_ptt"
                         operation="IsResidentPull">
     <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
-      <property name="ProcedureName" value="ISSTATERESIDENT_GIVEN_IC"/>
+      <property name="ProcedureName" value="IsStateResident_Given_IC"/>
       <property name="GetActiveUnitOfWork" value="false"/>
     </interaction-spec>
     <output/>

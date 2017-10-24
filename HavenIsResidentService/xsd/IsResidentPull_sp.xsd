@@ -5,7 +5,9 @@
    <element name="InputParameters">
       <complexType>
          <sequence>
-            <element name="I_IC" type="string" db:index="1" db:type="VARCHAR2"
+            <element name="i_IC" type="string" db:index="1" db:type="VARCHAR2"
+                     minOccurs="0" nillable="true"/>
+            <element name="i_CRID" type="string" db:index="1" db:type="VARCHAR2"
                      minOccurs="0" nillable="true"/>
             <element name="I_DEBUG_PRINT" type="int" db:index="2"
                      db:default="true" db:type="INTEGER" minOccurs="0"
@@ -32,4 +34,5 @@
       </complexType>
    </element>
 </schema>
+
 

@@ -8,8 +8,10 @@
      <xsd:element name="IsResidentInputParameters">
           <xsd:complexType>
                <xsd:sequence>
-                    <xsd:element name="I_IC" type="xsd:string"
-                                 minOccurs="0" maxOccurs="1" nillable="false"/>
+                    <xsd:element name="i_IC" type="xsd:string" minOccurs="0"
+                                 maxOccurs="1" nillable="false"/>
+                    <xsd:element name="i_CRID" type="xsd:string" minOccurs="0"
+                                 maxOccurs="1" nillable="false"/>
                </xsd:sequence>
           </xsd:complexType>
      </xsd:element>

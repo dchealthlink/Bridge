@@ -67,8 +67,12 @@
              variable="IsResidentService_InputVariable"/>
     <assign name="Assign1">
       <copy>
-        <from>$IsResidentService_InputVariable.IsResidentInputParameters/ns4:I_IC</from>
-        <to>$IsResidentPull_InputVariable.InputParameters/ns3:I_IC</to>
+        <from>$IsResidentService_InputVariable.IsResidentInputParameters/ns4:i_IC</from>
+        <to>$IsResidentPull_InputVariable.InputParameters/ns3:i_IC</to>
+      </copy>
+      <copy>
+        <from>$IsResidentService_InputVariable.IsResidentInputParameters/ns4:i_CRID</from>
+        <to>$IsResidentPull_InputVariable.InputParameters/ns3:i_CRID</to>
       </copy>
     </assign>
     <invoke name="Invoke_IsResidentPull"

@@ -1,12 +1,14 @@
-<adapter-config name="AppCaseRefPull" adapter="Database Adapter" wsdlLocation="AppCaseRefPull.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
-  
-  <connection-factory location="eis/DB/CuramUAT" UIConnectionName="CuramUAT" adapterRef=""/>
-  <endpoint-interaction portType="AppCaseRefPull_ptt" operation="AppCaseRefPull">
+<adapter-config name="AppCaseRefPull" adapter="Database Adapter"
+                wsdlLocation="AppCaseRefPull.wsdl"
+                xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  <connection-factory location="eis/DB/curamtohaven" UIConnectionName="CuramUAT"
+                      adapterRef=""/>
+  <endpoint-interaction portType="AppCaseRefPull_ptt"
+                        operation="AppCaseRefPull">
     <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
       <property name="ProcedureName" value="APPREFNUM_GIVEN_ICID"/>
       <property name="GetActiveUnitOfWork" value="false"/>
     </interaction-spec>
     <output/>
   </endpoint-interaction>
-
 </adapter-config>
