@@ -1,7 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<adapter-config name="HavenFiveYearBarService" adapter="Database Adapter" wsdlLocation="HavenFiveYearBarService.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
-   <connection-factory location="eis/DB/curamtohaven" UIConnectionName="ConnectureUAT" adapterRef=""/>
-   <endpoint-interaction portType="HavenFiveYearBarService_ptt" operation="HavenFiveYearBarService">
+<adapter-config name="HavenFiveYearBarService" adapter="Database Adapter"
+                wsdlLocation="HavenFiveYearBarService.wsdl"
+                xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+   <connection-factory location="eis/DB/curamtohaven"
+                       UIConnectionName="ConnectureUAT" adapterRef=""/>
+   <endpoint-interaction portType="HavenFiveYearBarService_ptt"
+                         operation="HavenFiveYearBarService">
       <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
          <property name="ProcedureName" value="FIVEYR_BAR_GIVEN_CONCERNROLEID"/>
          <property name="GetActiveUnitOfWork" value="false"/>

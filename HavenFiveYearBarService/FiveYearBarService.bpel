@@ -127,8 +127,12 @@
              variable="FiveYearBarService_InputVariable" createInstance="yes"/>
     <assign name="Asn_request">
       <copy>
-        <from>$FiveYearBarService_InputVariable.InputParameters/ns2:I_CONCERNROLEID</from>
-        <to>$HavenFiveYearBarService_InputVariable.InputParameters/ns3:I_CONCERNROLEID</to>
+        <from>$FiveYearBarService_InputVariable.InputParameters/ns2:i_IC</from>
+        <to>$HavenFiveYearBarService_InputVariable.InputParameters/ns3:i_IC</to>
+      </copy>
+      <copy>
+        <from>$FiveYearBarService_InputVariable.InputParameters/ns2:i_concernroleid</from>
+        <to>$HavenFiveYearBarService_InputVariable.InputParameters/ns3:i_concernroleid</to>
       </copy>
     </assign>
     <invoke name="InvokeFiveYearBarService"

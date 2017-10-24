@@ -8,7 +8,9 @@
    <xsd:element name="InputParameters">
       <xsd:complexType>
          <xsd:sequence>
-            <xsd:element name="I_CONCERNROLEID" type="xsd:decimal" minOccurs="0"
+            <xsd:element name="i_IC" type="xsd:decimal" minOccurs="0"
+                         maxOccurs="1" nillable="false"/>
+            <xsd:element name="i_concernroleid" type="xsd:decimal" minOccurs="0"
                          maxOccurs="1" nillable="false"/>
          </xsd:sequence>
       </xsd:complexType>
