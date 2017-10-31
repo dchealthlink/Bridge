@@ -6,7 +6,6 @@
                       adapterRef=""/>
   <endpoint-interaction portType="DeductionsSP_ptt" operation="DeductionsSP">
     <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
-      <property name="SchemaName" value="MAMATHA"/>
       <property name="ProcedureName" value="DEDUCTION_GIVEN_CONCERNROLEID"/>
       <property name="GetActiveUnitOfWork" value="false"/>
     </interaction-spec>
