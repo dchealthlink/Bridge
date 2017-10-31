@@ -32,6 +32,9 @@
          xmlns:ns3="http://xmlns.haven.dc.govcom/haven/FilerConsentIn"
          xmlns:ns4="http://xmlns.haven.dc.govcom/haven/FilerConsentsout"
          xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <import namespace="http://schemas.oracle.com/bpel/extension"
+          location="RuntimeFault.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/"/>
   <import location="xsd/Filer_sp_format.xsd"
           importType="http://www.w3.org/2001/XMLSchema"/>
   <import namespace="http://xmlns.oracle.com/Test/HavenFilerConsentCmpService/HavenFilerConsentABCSImpl" location="HavenFilerConsentABCSImpl.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
@@ -72,8 +75,42 @@
     <variable name="outputVariable"
               messageType="client:HavenFilerConsentABCSImplResponseMessage"/>
     <variable name="Title" type="xsd:string"/>
+    <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
   </variables>
-
+  <faultHandlers>
+    <catchAll>
+      <sequence name="Sequence1">
+        <assign name="Assign2">
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>"FilerFaultCode"</from>
+            <to>$FaultVar.code</to>
+          </copy>
+        </assign>
+        <assign name="Assign3">
+          <copy>
+            <from>"FAILURE-500"</from>
+            <to>$outputVariable.payload/ns4:ResponseCode</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$outputVariable.payload/ns4:ResponseText</to>
+          </copy>
+        </assign>
+        <reply name="ReplyErrorResp" variable="outputVariable"
+               partnerLink="havenfilerconsentabcsimpl_client"
+               portType="client:HavenFilerConsentABCSImpl"
+               operation="FilerConsent"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
   <!-- 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
      ORCHESTRATION LOGIC                                               

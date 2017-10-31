@@ -159,22 +159,40 @@ setCompositeInstanceTitle(title);]]>
             inputVariable="HavenFiveYearBarService_InputVariable"
             outputVariable="HavenFiveYearBarService_OutputVariable"
             bpelx:invokeAsDetail="no"/>
-    <assign name="Asn_Format">
-      <copy>
-        <from>oraext:parseEscapedXML($HavenFiveYearBarService_OutputVariable.OutputParameters/ns3:O_USER_DETAILS_CLOB)</from>
-        <to>$FormatOutput</to>
-      </copy>
-    </assign>
-    <assign name="Xform_Response">
-      <bpelx:annotation>
-        <bpelx:pattern patternName="bpelx:transformation"/>
-      </bpelx:annotation>
-      <copy>
-        <from>ora:doXSLTransformForDoc("xsl/Xform_Response.xsl", $HavenFiveYearBarService_OutputVariable.OutputParameters, "FormatOutput", $FormatOutput)</from>
-        <to variable="FiveYearBarService_OutputVariable"
-            part="OutputParameters"/>
-      </copy>
-    </assign>
+    <if name="If1">
+      <documentation/>
+      <condition>$HavenFiveYearBarService_OutputVariable.OutputParameters/ns3:O_RESPONSE_CODE="DATA_FOUND"</condition>
+      <sequence>
+        <assign name="Asn_Format">
+          <copy>
+            <from>oraext:parseEscapedXML($HavenFiveYearBarService_OutputVariable.OutputParameters/ns3:O_USER_DETAILS_CLOB)</from>
+            <to>$FormatOutput</to>
+          </copy>
+        </assign>
+        <assign name="Xform_Response">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Xform_Response.xsl", $HavenFiveYearBarService_OutputVariable.OutputParameters, "FormatOutput", $FormatOutput)</from>
+            <to variable="FiveYearBarService_OutputVariable"
+                part="OutputParameters"/>
+          </copy>
+        </assign>
+      </sequence>
+      <else>
+        <assign name="Transform1">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Transformation_2.xsl", $FormatOutput, "FiveYearBarService_OutputVariable.OutputParameters", $FiveYearBarService_OutputVariable.OutputParameters)</from>
+            <to variable="FiveYearBarService_OutputVariable"
+                part="OutputParameters"/>
+          </copy>
+        </assign>
+      </else>
+    </if>
     <!--<assign name="Transform1">
       <bpelx:annotation>
         <bpelx:pattern patternName="bpelx:transformation"/>

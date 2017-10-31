@@ -13,6 +13,7 @@
     <plnk:partnerLinkType name="HavenIsResidentABCSImpl">
         <plnk:role name="HavenIsResidentABCSImplProvider" portType="client:HavenIsResidentABCSImpl"/>
     </plnk:partnerLinkType>
+    <wsdl:import namespace="http://schemas.oracle.com/bpel/extension" location="RuntimeFault.wsdl"/>
     <wsdl:types>
         <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
              xmlns:client="http://xmlns.oracle.com/Test/HavenIsResidentCmpService/HavenIsResidentABCSImpl"

@@ -31,7 +31,8 @@
          xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
          xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
          xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
-         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns5="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IsResidentRespService">
 
   <!-- 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,6 +41,9 @@
      services integrated within this business process                  
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   -->
+  <import namespace="http://schemas.oracle.com/bpel/extension"
+          location="RuntimeFault.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/"/>
   <import location="xsd/Resident_sp_format.xsd"
           importType="http://www.w3.org/2001/XMLSchema"/>
   <partnerLinks>
@@ -60,7 +64,43 @@
               messageType="ns1:IsResidentResponseMessage"/>
     <variable name="IsResidentFormat" element="is_resident_evidence"/>
     <variable name="Title" type="xsd:string"/>
+    <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
   </variables>
+  <faultHandlers>
+    <catchAll>
+      <sequence name="Sequence1">
+        <assign name="Assign3">
+          <copy>
+            <from>"DeductionsFaultCode"</from>
+            <to>$FaultVar.code</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+        </assign>
+        <assign name="Assign4">
+          <copy>
+            <from>"FAILURE-500"</from>
+            <to>$IsResidentService_OutputVariable.IsResidentOutputParameters/ns5:ResponseCode</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$IsResidentService_OutputVariable.IsResidentOutputParameters/ns5:ResponseText</to>
+          </copy>
+        </assign>
+        <reply name="ReplyErrorResp"
+               variable="IsResidentService_OutputVariable"
+               partnerLink="HavenIsResident"
+               portType="ns1:HavenIsResidentABCSImpl"
+               operation="IsResidentService"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
   <sequence name="main">
     <receive name="ReceiveInput" createInstance="yes"
              partnerLink="HavenIsResident"

@@ -31,6 +31,9 @@
          xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
          xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
          xmlns:ns4="http://xmlns.haven.dc.govcom/haven/taxdepdetailsout">
+  <import namespace="http://schemas.oracle.com/bpel/extension"
+          location="RuntimeFault.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/"/>
   <import location="xsd/TaxDependentSP_sp.xsd"
           importType="http://www.w3.org/2001/XMLSchema"/>
   <import namespace="http://xmlns.oracle.com/Test/HavenTaxDepCmpService/HavenTaxDepABCSImpl" location="HavenTaxDepABCSImpl.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
@@ -68,8 +71,42 @@
               messageType="client:HavenTaxDepABCSImplRequestMessage"/>
     <variable name="replyOutput_TaxDependents_OutputVariable"
               messageType="client:HavenTaxDepABCSImplResponseMessage"/>
+    <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
   </variables>
-
+  <faultHandlers>
+    <catchAll>
+      <sequence name="Sequence1">
+        <assign name="Assign1">
+          <copy>
+            <from>"TaxDepFaultCode"</from>
+            <to>$FaultVar.code</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+        </assign>
+        <assign name="Assign2">
+          <copy>
+            <from>"FAILURE-500"</from>
+            <to>$replyOutput_TaxDependents_OutputVariable.payload/ns4:ResponseCode</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$replyOutput_TaxDependents_OutputVariable.payload/ns4:ResponseText</to>
+          </copy>
+        </assign>
+        <reply name="ReplyErrorResp"
+               variable="replyOutput_TaxDependents_OutputVariable"
+               partnerLink="haventaxdepabcsimpl_client"
+               portType="client:HavenTaxDepABCSImpl" operation="TaxDependents"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
   <!-- 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
      ORCHESTRATION LOGIC                                               
