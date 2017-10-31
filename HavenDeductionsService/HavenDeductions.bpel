@@ -30,7 +30,8 @@
          xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
          xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
          xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
-         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
   <!-- 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,6 +62,7 @@
               messageType="ns1:DeductionsServiceResponseMessage"/>
     <variable name="FormatResp" element="deductions"/>
     <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
+    <variable name="Title" type="xsd:string"/>
   </variables>
   <faultHandlers>
     <catchAll>
@@ -103,6 +105,21 @@
              portType="ns1:DeductionsServiceABCSImpl"
              operation="DeductionsService"
              variable="DeductionsService_InputVariable"/>
+    <assign name="AssignTitle">
+      <copy>
+        <from>$DeductionsService_InputVariable.IncomeInputParameters/ns3:I_CONCERNROLEID</from>
+        <to>$Title</to>
+      </copy>
+    </assign>
+    <extensionActivity>
+      <bpelx:exec name="Java_Embedding1" language="java">
+        <![CDATA[/*Write your java code below e.g. 
+	System.out.println("Hello, World");
+*/
+String title = "ConcernroleID:"+(String)getVariableData("Title");        
+setCompositeInstanceTitle(title);]]>
+      </bpelx:exec>
+    </extensionActivity>
     <assign name="Assign1">
       <copy>
         <from>$DeductionsService_InputVariable.IncomeInputParameters/ns3:I_CONCERNROLEID</from>

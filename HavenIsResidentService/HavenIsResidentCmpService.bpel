@@ -30,7 +30,8 @@
          xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
          xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
          xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
-         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
   <!-- 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,6 +59,7 @@
     <variable name="IsResidentService_OutputVariable"
               messageType="ns1:IsResidentResponseMessage"/>
     <variable name="IsResidentFormat" element="is_resident_evidence"/>
+    <variable name="Title" type="xsd:string"/>
   </variables>
   <sequence name="main">
     <receive name="ReceiveInput" createInstance="yes"
@@ -65,7 +67,22 @@
              portType="ns1:HavenIsResidentABCSImpl"
              operation="IsResidentService"
              variable="IsResidentService_InputVariable"/>
-    <assign name="Assign1">
+    <assign name="AssignTitle">
+      <copy>
+        <from>$IsResidentService_InputVariable.IsResidentInputParameters/ns4:i_IC</from>
+        <to>$Title</to>
+      </copy>
+    </assign>
+    <extensionActivity>
+      <bpelx:exec name="Java_Embedding1" language="java">
+        <![CDATA[/*Write your java code below e.g. 
+	System.out.println("Hello, World");
+*/
+String title = "IsResidentIC:"+(String)getVariableData("Title");        
+setCompositeInstanceTitle(title);]]>
+      </bpelx:exec>
+    </extensionActivity>
+    <assign name="AssignIC">
       <copy>
         <from>$IsResidentService_InputVariable.IsResidentInputParameters/ns4:i_IC</from>
         <to>$IsResidentPull_InputVariable.InputParameters/ns3:i_IC</to>

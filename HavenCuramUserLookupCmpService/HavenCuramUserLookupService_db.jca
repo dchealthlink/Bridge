@@ -2,7 +2,7 @@
 <adapter-config name="HavenCuramUserLookupService" adapter="Database Adapter"
                 wsdlLocation="HavenCuramUserLookupService.wsdl"
                 xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
-   <connection-factory location="eis/DB/SOADemoLocalTx"
+   <connection-factory location="eis/DB/curamtohaven"
                        UIConnectionName="ConnectureUAT" adapterRef=""/>
    <endpoint-interaction portType="HavenCuramUserLookupService_ptt"
                          operation="HavenCuramUserLookupService">

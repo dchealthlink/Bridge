@@ -30,7 +30,8 @@
          xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
          xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
          xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
-         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenCuramUserLookupCmpService/FiveYearBarService">
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenCuramUserLookupCmpService/FiveYearBarService"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <import namespace="http://schemas.oracle.com/bpel/extension"
           location="RuntimeFault.wsdl"
           importType="http://schemas.xmlsoap.org/wsdl/"/>
@@ -77,6 +78,7 @@
               messageType="ns4:args_out_msg"/>
     <variable name="FormatOutput" element="FiveYearBar"/>
     <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
+    <variable name="Title" type="xsd:string"/>
   </variables>
   <faultHandlers>
     <catchAll>
@@ -125,6 +127,21 @@
              portType="ns4:FiveYearBarService_ptt"
              operation="FiveYearBarService"
              variable="FiveYearBarService_InputVariable" createInstance="yes"/>
+    <assign name="AssignTitle">
+      <copy>
+        <from>$HavenFiveYearBarService_InputVariable.InputParameters/ns3:i_IC</from>
+        <to>$Title</to>
+      </copy>
+    </assign>
+    <extensionActivity>
+      <bpelx:exec name="Java_Embedding1" language="java">
+        <![CDATA[/*Write your java code below e.g. 
+	System.out.println("Hello, World");
+*/
+String title = "FiveYearBarIC:"+(String)getVariableData("Title");        
+setCompositeInstanceTitle(title);]]>
+      </bpelx:exec>
+    </extensionActivity>
     <assign name="Asn_request">
       <copy>
         <from>$FiveYearBarService_InputVariable.InputParameters/ns2:i_IC</from>
