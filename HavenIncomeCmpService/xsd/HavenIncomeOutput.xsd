@@ -1,50 +1,45 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
-            vc:minVersion="1.1"
-            xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeRespService"
-            targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeRespService"
-            elementFormDefault="qualified">
-  <xsd:element name="incomes">
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element type="xsd:string" name="ResponseCode"/>
-        <xsd:element type="xsd:string" name="ResponseText"/>
-        <xsd:element name="income">
-          <xsd:complexType>
-            <xsd:sequence>
-              <xsd:element name="start_date" type="xsd:int"/>
-              <xsd:element name="end_date" type="xsd:string"/>
-              <xsd:element name="inc_incomeTypeCode" type="xsd:string"/>
-              <xsd:element name="income_type" type="xsd:string"/>
-              <xsd:element name="amount" type="xsd:int"/>
-              <xsd:element name="inc_frequencyCode" type="xsd:string"/>
-              <xsd:element name="frequency" type="xsd:string"/>
-              <xsd:element name="inc_caseParticipantRoleID" type="xsd:int"/>
-              <xsd:element name="inc_ParticipantRoleID" type="xsd:int"/>
-              <xsd:element name="inc_taxformType" type="xsd:string"/>
-              <xsd:element name="inc_state" type="xsd:string"/>
-              <xsd:element name="inc_street2" type="xsd:string"/>
-              <xsd:element name="inc_zipCode" type="xsd:string"/>
-              <xsd:element name="inc_employer" type="xsd:string"/>
-              <xsd:element name="inc_source" type="xsd:string"/>
-              <xsd:element name="inc_city" type="xsd:string"/>
-              <xsd:element name="inc_street1" type="xsd:string"/>
-              <xsd:element name="inc_zipCodePlusFour" type="xsd:string"/>
-              <xsd:element name="inc_employerName" type="xsd:string"/>
-              <xsd:element name="inc_seasonalIncomeInd" type="xsd:string"/>
-              <xsd:element name="inc_suiteNum" type="xsd:string"/>
-              <xsd:element name="inc_incomeID" type="xsd:string"/>
-              <xsd:element name="inc_taxExemptAmount" type="xsd:int"/>
-              <xsd:element name="inc_comments" type="xsd:string"/>
-              <xsd:element name="evidenceID" type="xsd:string"/>
-              <xsd:element name="statuscode" type="xsd:string"/>
-              <xsd:element name="receiveddate" type="xsd:string"/>
-              <xsd:element name="correctionsetid" type="xsd:string"/>
-            </xsd:sequence>
-          </xsd:complexType>
-        </xsd:element>
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" vc:minVersion="1.1" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeRespService" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeRespService" elementFormDefault="qualified">
+   <xsd:element name="incomes">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element type="xsd:string" name="ResponseCode"/>
+            <xsd:element type="xsd:string" name="ResponseText"/>
+            <xsd:element name="income">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="start_date" type="xsd:int"/>
+                     <xsd:element name="end_date" type="xsd:string"/>
+                     <xsd:element name="inc_incomeTypeCode" type="xsd:string"/>
+                     <xsd:element name="income_type" type="xsd:string"/>
+                     <xsd:element name="amount" type="xsd:int"/>
+                     <xsd:element name="inc_frequencyCode" type="xsd:string"/>
+                     <xsd:element name="frequency" type="xsd:string"/>
+                     <xsd:element name="inc_caseParticipantRoleID" type="xsd:int"/>
+                     <xsd:element name="inc_ParticipantRoleID" type="xsd:int"/>
+                     <xsd:element name="inc_taxformType" type="xsd:string"/>
+                     <xsd:element name="inc_state" type="xsd:string"/>
+                     <xsd:element name="inc_street2" type="xsd:string"/>
+                     <xsd:element name="inc_zipCode" type="xsd:string"/>
+                     <xsd:element name="inc_employer" type="xsd:string"/>
+                     <xsd:element name="inc_source" type="xsd:string"/>
+                     <xsd:element name="inc_city" type="xsd:string"/>
+                     <xsd:element name="inc_street1" type="xsd:string"/>
+                     <xsd:element name="inc_zipCodePlusFour" type="xsd:string"/>
+                     <xsd:element name="inc_employerName" type="xsd:string"/>
+                     <xsd:element name="inc_seasonalIncomeInd" type="xsd:string"/>
+                     <xsd:element name="inc_suiteNum" type="xsd:string"/>
+                     <xsd:element name="inc_incomeID" type="xsd:string"/>
+                     <xsd:element name="inc_taxExemptAmount" type="xsd:int"/>
+                     <xsd:element name="inc_comments" type="xsd:string"/>
+                     <xsd:element name="evidenceID" type="xsd:string"/>
+                     <xsd:element name="statuscode" type="xsd:string"/>
+                     <xsd:element name="receiveddate" type="xsd:string"/>
+                     <xsd:element name="correctionsetid" type="xsd:string"/>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
 </xsd:schema>

@@ -1,16 +1,10 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
-            vc:minVersion="1.1"
-            xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeReqService"
-            targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeReqService"
-            elementFormDefault="qualified">
-     <xsd:element name="IncomeInputParameters">
-          <xsd:complexType>
-               <xsd:sequence>
-                    <xsd:element name="I_CONCERNROLEID" type="xsd:decimal"
-                                 minOccurs="0" maxOccurs="1" nillable="false"/>
-               </xsd:sequence>
-          </xsd:complexType>
-     </xsd:element>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" vc:minVersion="1.1" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeReqService" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeReqService" elementFormDefault="qualified">
+   <xsd:element name="IncomeInputParameters">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="I_CONCERNROLEID" type="xsd:decimal" minOccurs="0" maxOccurs="1" nillable="false"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
 </xsd:schema>

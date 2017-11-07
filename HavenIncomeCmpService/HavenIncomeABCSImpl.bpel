@@ -30,8 +30,7 @@
          xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
          xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
          xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeReqService"
-         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeRespService"
-         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/sp/IncomeRespService">
   <import location="xsd/Income_sp_format.xsd"
           importType="http://www.w3.org/2001/XMLSchema"/>
   <import namespace="http://schemas.oracle.com/bpel/extension"
@@ -65,7 +64,6 @@
               messageType="client:HavenIncomeResponseMessage"/>
     <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
     <variable name="IncomeFormat" element="incomes"/>
-    <variable name="Title" type="xsd:string"/>
   </variables>
   <faultHandlers>
     <catchAll>
@@ -122,22 +120,7 @@
              partnerLink="havenincomeabcsimpl_client"
              portType="client:HavenIncomeABCSImpl" operation="IncomeService"
              variable="IncomeService_InputVariable"/>
-    <assign name="AssignTitle">
-      <copy>
-        <from>$IncomeService_InputVariable.IncomeInputParameters/ns3:I_CONCERNROLEID</from>
-        <to>$Title</to>
-      </copy>
-    </assign>
-    <extensionActivity>
-      <bpelx:exec name="Java_Embedding1" language="java">
-        <![CDATA[/*Write your java code below e.g. 
-	System.out.println("Hello, World");
-*/
-String title = "IncomeIC:"+(String)getVariableData("Title");        
-setCompositeInstanceTitle(title);]]>
-      </bpelx:exec>
-    </extensionActivity>
-    <assign name="AssignIC">
+    <assign name="Assign1">
       <copy>
         <from>$IncomeService_InputVariable.IncomeInputParameters/ns3:I_CONCERNROLEID</from>
         <to>$Invoke_GetIncomeSP_InputVariable.InputParameters/ns2:I_CONCERNROLEID</to>
@@ -155,7 +138,7 @@ setCompositeInstanceTitle(title);]]>
       <sequence>
         <assign name="Assign2">
           <copy>
-            <from>oraext:parseEscapedXML($Invoke_GetIncomeSP_OutputVariable.OutputParameters/ns2:O_USER_DETAILS_CLOB)</from>
+            <from>oraext:parseXML($Invoke_GetIncomeSP_OutputVariable.OutputParameters/ns2:O_USER_DETAILS_CLOB)</from>
             <to>$IncomeFormat</to>
           </copy>
         </assign>

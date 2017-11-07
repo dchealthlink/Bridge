@@ -1,18 +1,18 @@
 Java HotSpot(TM) 64-Bit Server VM warning: ignoring option PermSize=32m; support was removed in 8.0
 Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=256m; support was removed in 8.0
-Oct 03, 2017 8:45:41 AM oracle.security.jps.util.JpsUtil disableAudit
+Nov 07, 2017 9:56:34 AM oracle.security.jps.util.JpsUtil disableAudit
 INFO: JpsUtil: isAuditDisabled set to true
-Oct 03, 2017 8:45:41 AM oracle.security.jps.util.JpsUtil disableAudit
+Nov 07, 2017 9:56:34 AM oracle.security.jps.util.JpsUtil disableAudit
 INFO: JpsUtil: isAuditDisabled set to false
-Oct 03, 2017 8:45:43 AM oracle.mds
+Nov 07, 2017 9:56:36 AM oracle.mds
 NOTIFICATION: PManager instance is created without multitenancy support as JVM flag "oracle.multitenant.enabled" is not set to enable multitenancy support.
-Oct 03, 2017 8:45:43 AM oracle.security.jps.internal.config.xml.XmlConfigurationFactory initDefaultConfiguration
+Nov 07, 2017 9:56:37 AM oracle.security.jps.internal.config.xml.XmlConfigurationFactory initDefaultConfiguration
 SEVERE: java.io.FileNotFoundException: ./config/jps-config.xml (No such file or directory)
-Oct 03, 2017 8:45:43 AM oracle.mds
+Nov 07, 2017 9:56:37 AM oracle.mds
 NOTIFICATION: Auditing is disabled for component MDS.
-Oct 03, 2017 8:45:43 AM oracle.fabric.common.wsdl.SchemaManager isIncrementalBuildSupported
+Nov 07, 2017 9:56:37 AM oracle.fabric.common.wsdl.SchemaManager isIncrementalBuildSupported
 INFO: XMLSchema incremental build enabled.
-Oct 03, 2017 8:45:44 AM oracle.integration.platform.blocks.FabricConfigManager <clinit>
+Nov 07, 2017 9:56:39 AM oracle.integration.platform.blocks.FabricConfigManager <clinit>
 WARNING: JRF is unable to determine the current application server platform.
-Oct 03, 2017 8:45:44 AM oracle.integration.platform.blocks.WLSPlatformConfigurationProvider <clinit>
+Nov 07, 2017 9:56:39 AM oracle.integration.platform.blocks.WLSPlatformConfigurationProvider <clinit>
 WARNING: JRF is unable to determine the current application server platform.

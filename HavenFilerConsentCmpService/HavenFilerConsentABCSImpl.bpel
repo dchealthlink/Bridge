@@ -30,8 +30,7 @@
          xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
          xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
          xmlns:ns3="http://xmlns.haven.dc.govcom/haven/FilerConsentIn"
-         xmlns:ns4="http://xmlns.haven.dc.govcom/haven/FilerConsentsout"
-         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         xmlns:ns4="http://xmlns.haven.dc.govcom/haven/FilerConsentsout">
   <import namespace="http://schemas.oracle.com/bpel/extension"
           location="RuntimeFault.wsdl"
           importType="http://schemas.xmlsoap.org/wsdl/"/>
@@ -74,7 +73,6 @@
     <variable name="Filer_Format" element="FilersConsent"/>
     <variable name="outputVariable"
               messageType="client:HavenFilerConsentABCSImplResponseMessage"/>
-    <variable name="Title" type="xsd:string"/>
     <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
   </variables>
   <faultHandlers>
@@ -82,16 +80,16 @@
       <sequence name="Sequence1">
         <assign name="Assign2">
           <copy>
-            <from>ora:getFaultName()</from>
-            <to>$FaultVar.detail</to>
+            <from>"FilerConsentFailure"</from>
+            <to>$FaultVar.code</to>
           </copy>
           <copy>
             <from>ora:getFaultAsString()</from>
             <to>$FaultVar.summary</to>
           </copy>
           <copy>
-            <from>"FilerFaultCode"</from>
-            <to>$FaultVar.code</to>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
           </copy>
         </assign>
         <assign name="Assign3">
@@ -123,16 +121,6 @@
     <!-- Receive input from requestor. (Note: This maps to operation defined in HavenFilerConsentABCSImpl.wsdl) -->
     <receive name="receiveInput" partnerLink="havenfilerconsentabcsimpl_client" portType="client:HavenFilerConsentABCSImpl"
              operation="FilerConsent" variable="inputVariable" createInstance="yes"/>
-    <assign name="AssignTitle"></assign>
-    <extensionActivity>
-      <bpelx:exec name="Java_Embedding1" language="java">
-        <![CDATA[/*Write your java code below e.g. 
-	System.out.println("Hello, World");
-*/
-String title = "FilerIC:"+(String)getVariableData("Title");        
-setCompositeInstanceTitle(title);]]>
-      </bpelx:exec>
-    </extensionActivity>
     <assign name="FilerConsentSPInput">
       <copy>
         <from>$inputVariable.payload/ns3:IC_Input_List</from>
