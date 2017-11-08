@@ -1,0 +1,184 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Nov 07 13:23:13 EST 2017
+  Author:  burujukati
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="HavenInsuranceDetailsABCSImpl"
+               targetNamespace="http://xmlns.oracle.com/Test/HavenInsuranceDetailsCmpService/HavenInsuranceDetailsABCSImpl"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Test/HavenInsuranceDetailsCmpService/HavenInsuranceDetailsABCSImpl"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/Test/HavenInsuranceDetailsCmpService/InsDetailsSP"
+         xmlns:ns2="https://openhbx.gov/haven/insurancedetails/spfomrat"
+         xmlns:ns3="https://openhbx.gov/haven/insurancedetails/response"
+         xmlns:ns4="https://openhbx.gov/haven/insurancedetails/request"
+         xmlns:ns5="http://xmlns.oracle.com/pcbpel/adapter/db/sp/InsDetailsSP"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <import namespace="http://schemas.oracle.com/bpel/extension"
+          location="RuntimeFault.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <import namespace="https://openhbx.gov/haven/insurancedetails/spfomrat"
+          location="xsd/InsuranceDetails_spformat.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="http://xmlns.oracle.com/Test/HavenInsuranceDetailsCmpService/HavenInsuranceDetailsABCSImpl" location="HavenInsuranceDetailsABCSImpl.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="haveninsurancedetailsabcsimpl_client" partnerLinkType="client:HavenInsuranceDetailsABCSImpl" myRole="HavenInsuranceDetailsABCSImplProvider"/>
+    <partnerLink name="InsDetailsSP" partnerLinkType="ns1:InsDetailsSP_plt"
+                 partnerRole="InsDetailsSP_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:HavenInsuranceDetailsABCSImplRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:HavenInsuranceDetailsABCSImplResponseMessage"/>
+    <variable name="InsDetailsSP_Input" messageType="ns1:args_in_msg"/>
+    <variable name="InsDetailsSP_Output" messageType="ns1:args_out_msg"/>
+    <variable name="InsDetailsSP_Output_format"
+              element="ns2:participant_insured_or_eligible"/>
+    <variable name="Title" type="xsd:string"/>
+    <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
+  </variables>
+  <faultHandlers>
+    <catchAll>
+      <sequence name="Sequence2">
+        <assign name="Assign1">
+          <copy>
+            <from>ora:getFaultName()</from>
+            <to>$FaultVar.detail</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultAsString()</from>
+            <to>$FaultVar.summary</to>
+          </copy>
+          <copy>
+            <from>"InsuranceFaultCode"</from>
+            <to>$FaultVar.code</to>
+          </copy>
+        </assign>
+        <assign name="Assign2">
+          <copy>
+            <from>"FAILURE-500"</from>
+            <to>$outputVariable.payload/ns3:ResponseCode</to>
+          </copy>
+          <copy>
+            <from>$FaultVar.summary</from>
+            <to>$outputVariable.payload/ns3:ResponseText</to>
+          </copy>
+        </assign>
+        <reply name="ReplyErrorResp" variable="outputVariable"
+               partnerLink="haveninsurancedetailsabcsimpl_client"
+               portType="client:HavenInsuranceDetailsABCSImpl"
+               operation="process"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in HavenInsuranceDetailsABCSImpl.wsdl) -->
+    <receive name="receiveInput" partnerLink="haveninsurancedetailsabcsimpl_client" portType="client:HavenInsuranceDetailsABCSImpl" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="AssignTitle">
+      <copy>
+        <from>$inputVariable.payload/ns4:I_CONCERNROLEID</from>
+        <to>$Title</to>
+      </copy>
+    </assign>
+    <extensionActivity>
+      <bpelx:exec name="Java_Embedding1" language="java">
+        <![CDATA[/*Write your java code below e.g. 
+	System.out.println("Hello, World");
+*/
+String title = "InsuranceID:"+(String)getVariableData("Title");        
+setCompositeInstanceTitle(title);]]>
+      </bpelx:exec>
+    </extensionActivity>
+    <assign name="SP_input">
+      <copy>
+        <from>$inputVariable.payload/ns4:I_CONCERNROLEID</from>
+        <to>$InsDetailsSP_Input.InputParameters/ns5:I_CONCERNROLEID</to>
+      </copy>
+    </assign>
+    <invoke name="Invoke_insdet"
+            partnerLink="InsDetailsSP" portType="ns1:InsDetailsSP_ptt"
+            operation="InsDetailsSP" inputVariable="InsDetailsSP_Input" outputVariable="InsDetailsSP_Output"
+            bpelx:invokeAsDetail="no"/>
+    <if name="If1">
+      <documentation/>
+      <condition>$InsDetailsSP_Output.OutputParameters/ns5:O_RESPONSE_CODE="DATA_FOUND"</condition>
+      <sequence>
+        <assign name="FormatSPOut">
+          <copy>
+            <from>oraext:parseXML($InsDetailsSP_Output.OutputParameters/ns5:O_USER_DETAILS_CLOB)</from>
+            <to>$InsDetailsSP_Output_format</to>
+          </copy>
+        </assign>
+        <assign name="IsnurnaceDetailsOut">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/XFormIsnurnaceDetailsOut.xsl", $InsDetailsSP_Output.OutputParameters, "InsDetailsSP_Output_format", $InsDetailsSP_Output_format)</from>
+            <to variable="outputVariable" part="payload"/>
+          </copy>
+        </assign>
+      </sequence>
+      <else>
+        <assign name="Transform1">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"/>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("xsl/Transformation_1.xsl", $InsDetailsSP_Output_format, "InsDetailsSP_Output.OutputParameters", $InsDetailsSP_Output.OutputParameters)</from>
+            <to variable="outputVariable" part="payload"/>
+          </copy>
+        </assign>
+      </else>
+    </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="haveninsurancedetailsabcsimpl_client" portType="client:HavenInsuranceDetailsABCSImpl" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

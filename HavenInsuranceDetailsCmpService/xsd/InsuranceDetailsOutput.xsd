@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://openhbx.gov/haven/insurancedetails/response" xmlns="https://openhbx.gov/haven/insurancedetails/response">
+   <xs:element name="participant_insured_or_eligible">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element type="xs:string" name="ResponseCode"/>
+            <xs:element type="xs:string" name="ResponseText"/>
+            <xs:element name="benefits">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element name="benefit" maxOccurs="unbounded" minOccurs="0">
+                        <xs:complexType>
+                           <xs:sequence>
+                              <xs:element type="xs:string" name="participantEnrolled"/>
+                              <xs:element type="xs:string" name="insuranceTypeCode"/>
+                              <xs:element type="xs:string" name="type"/>
+                              <xs:element type="xs:string" name="start_date"/>
+                              <xs:element type="xs:string" name="end_date"/>
+                           </xs:sequence>
+                        </xs:complexType>
+                     </xs:element>
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+            <xs:element name="isPersonEligible">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element type="xs:string" name="participantEligible"/>
+                     <xs:element type="xs:string" name="start_date"/>
+                     <xs:element type="xs:string" name="end_date"/>
+                     <xs:element type="xs:string" name="employerName"/>
+                     <xs:element type="xs:string" name="employerID"/>
+                     <xs:element type="xs:string" name="planExists"/>
+                     <xs:element type="xs:string" name="planCoverage"/>
+                     <xs:element type="xs:string" name="personCost"/>
+                     <xs:element type="xs:string" name="costFrequency"/>
+                     <xs:element type="xs:string" name="planMEC"/>
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+</xs:schema>

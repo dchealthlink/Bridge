@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<adapter-config name="InsDetailsSP" adapter="Database Adapter" wsdlLocation="InsDetailsSP.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+   <connection-factory location="eis/DB/curamtohaven" UIConnectionName="CuramUAT" adapterRef=""/>
+   <endpoint-interaction portType="InsDetailsSP_ptt" operation="InsDetailsSP">
+      <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+         <property name="ProcedureName" value="INSURANCE_GIVEN_CONCERNROLEID"/>
+         <property name="GetActiveUnitOfWork" value="false"/>
+      </interaction-spec>
+      <output/>
+   </endpoint-interaction>
+</adapter-config>
