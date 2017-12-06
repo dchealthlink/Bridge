@@ -1,0 +1,13 @@
+<adapter-config name="InvokeFosterCareSP" adapter="Database Adapter" wsdlLocation="InvokeFosterCareSP.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/curamtohaven" UIConnectionName="CuramUAT" adapterRef=""/>
+  <endpoint-interaction portType="InvokeFosterCareSP_ptt" operation="InvokeFosterCareSP">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="MAMATHA"/>
+      <property name="ProcedureName" value="FOSTERCARE_GIVEN_CONCERNROLEID"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

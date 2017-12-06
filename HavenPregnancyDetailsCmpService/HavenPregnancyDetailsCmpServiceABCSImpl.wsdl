@@ -1,0 +1,47 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="HavenPregnancyDetailsCmpServiceABCSImpl"
+     targetNamespace="http://xmlns.oracle.com/Test/HavenPregnancyDetailsCmpService/HavenPregnancyDetailsCmpServiceABCSImpl"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="http://xmlns.oracle.com/Test/HavenPregnancyDetailsCmpService/HavenPregnancyDetailsCmpServiceABCSImpl"
+     xmlns:ns2="https://openhbx.gov/haven/Pregnancyedetails/response"
+     xmlns:ns1="https://openhbx.gov/haven/Pregnancydetails/request"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:ns3="https://openhbx.gov/haven/Pregnancydetails/spformat"
+    >
+    <plnk:partnerLinkType name="HavenPregnancyDetailsCmpServiceABCSImpl">
+        <plnk:role name="HavenPregnancyDetailsCmpServiceABCSImplProvider" portType="client:HavenPregnancyDetailsCmpServiceABCSImpl"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://xmlns.oracle.com/Test/HavenPregnancyDetailsCmpService/HavenPregnancyDetailsCmpServiceABCSImpl"
+             xmlns:ns2="https://openhbx.gov/haven/Pregnancyedetails/response" xmlns:ns1="https://openhbx.gov/haven/Pregnancydetails/request"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns3="https://openhbx.gov/haven/Pregnancydetails/spformat">
+            <import namespace="https://openhbx.gov/haven/Pregnancydetails/request" schemaLocation="xsd/PregnancydetailsInput.xsd"/>
+        </schema>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://xmlns.oracle.com/Test/HavenPregnancyDetailsCmpService/HavenPregnancyDetailsCmpServiceABCSImpl"
+             xmlns:ns2="https://openhbx.gov/haven/Pregnancyedetails/response" xmlns:ns1="https://openhbx.gov/haven/Pregnancydetails/request"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns3="https://openhbx.gov/haven/Pregnancydetails/spformat">
+            <import namespace="https://openhbx.gov/haven/Pregnancyedetails/response" schemaLocation="xsd/PregnancydetailsOutput.xsd"/>
+        </schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://xmlns.oracle.com/Test/HavenPregnancyDetailsCmpService/HavenPregnancyDetailsCmpServiceABCSImpl"
+             xmlns:ns2="https://openhbx.gov/haven/Pregnancyedetails/response" xmlns:ns1="https://openhbx.gov/haven/Pregnancydetails/request"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns3="https://openhbx.gov/haven/Pregnancydetails/spformat">
+            <xsd:import namespace="https://openhbx.gov/haven/Pregnancydetails/spformat" schemaLocation="xsd/PregnancyDetails_spformat.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="HavenPregnancyDetailsCmpServiceABCSImplRequestMessage">
+        <wsdl:part name="payload" element="ns1:PregnancydetailsInput"/>
+    </wsdl:message>
+    <wsdl:message name="HavenPregnancyDetailsCmpServiceABCSImplResponseMessage">
+        <wsdl:part name="payload" element="ns2:participant_pregnant"/>
+    </wsdl:message>
+    <wsdl:portType name="HavenPregnancyDetailsCmpServiceABCSImpl">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:HavenPregnancyDetailsCmpServiceABCSImplRequestMessage"/>
+            <wsdl:output message="client:HavenPregnancyDetailsCmpServiceABCSImplResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

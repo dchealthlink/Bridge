@@ -1,0 +1,120 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri Dec 01 15:16:09 EST 2017
+  Author:  burujukati
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="HavenPregnancyDetailsCmpServiceABCSImpl"
+               targetNamespace="http://xmlns.oracle.com/Test/HavenPregnancyDetailsCmpService/HavenPregnancyDetailsCmpServiceABCSImpl"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Test/HavenPregnancyDetailsCmpService/HavenPregnancyDetailsCmpServiceABCSImpl"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/Test/HavenPregnancyDetailsCmpService/InvokePregnancyDetSP"
+         xmlns:ns3="https://openhbx.gov/haven/Pregnancydetails/request"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/sp/InvokePregnancyDetSP"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns4="https://openhbx.gov/haven/Pregnancydetails/spformat"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns5="https://openhbx.gov/haven/Pregnancyedetails/response">
+  <import namespace="https://openhbx.gov/haven/Pregnancyedetails/response"
+          location="xsd/PregnancydetailsOutput.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="https://openhbx.gov/haven/Pregnancydetails/spformat"
+          location="xsd/PregnancyDetails_spformat.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="http://xmlns.oracle.com/Test/HavenPregnancyDetailsCmpService/HavenPregnancyDetailsCmpServiceABCSImpl" location="HavenPregnancyDetailsCmpServiceABCSImpl.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="havenpregnancydetailscmpserviceabcsimpl_client" partnerLinkType="client:HavenPregnancyDetailsCmpServiceABCSImpl" myRole="HavenPregnancyDetailsCmpServiceABCSImplProvider"/>
+    <partnerLink name="InvokePregnancyDetSP"
+                 partnerLinkType="ns1:InvokePregnancyDetSP_plt"
+                 partnerRole="InvokePregnancyDetSP_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:HavenPregnancyDetailsCmpServiceABCSImplRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:HavenPregnancyDetailsCmpServiceABCSImplResponseMessage"/>
+    <variable name="InvokePregnancyDetSP_InputVariable"
+              messageType="ns1:args_in_msg"/>
+    <variable name="InvokePregnancyDetSP_OutputVariable"
+              messageType="ns1:args_out_msg"/>
+    <variable name="FormatSPOutput" element="ns4:participant_pregnant"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in HavenPregnancyDetailsCmpServiceABCSImpl.wsdl) -->
+    <receive name="receiveInput" partnerLink="havenpregnancydetailscmpserviceabcsimpl_client" portType="client:HavenPregnancyDetailsCmpServiceABCSImpl" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="AssignRequest">
+      <copy>
+        <from>$inputVariable.payload/ns3:I_CONCERNROLEID</from>
+        <to>$InvokePregnancyDetSP_InputVariable.InputParameters/ns2:I_CONCERNROLEID</to>
+      </copy>
+    </assign>
+    <invoke name="InvokeSP"
+            partnerLink="InvokePregnancyDetSP"
+            portType="ns1:InvokePregnancyDetSP_ptt"
+            operation="InvokePregnancyDetSP"
+            inputVariable="InvokePregnancyDetSP_InputVariable"
+            outputVariable="InvokePregnancyDetSP_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <assign name="AssignSpOutput">
+      <copy>
+        <from>oraext:parseXML($InvokePregnancyDetSP_OutputVariable.OutputParameters/ns2:O_USER_DETAILS_CLOB)</from>
+        <to>$outputVariable.payload/ns5:pregnancy</to>
+      </copy>
+      <copy>
+        <from>$InvokePregnancyDetSP_OutputVariable.OutputParameters/ns2:O_RESPONSE_TEXT</from>
+        <to>$outputVariable.payload/ns5:ResponseText</to>
+      </copy>
+      <copy>
+        <from>$InvokePregnancyDetSP_OutputVariable.OutputParameters/ns2:O_RESPONSE_CODE</from>
+        <to>$outputVariable.payload/ns5:ResponseCode</to>
+      </copy>
+    </assign>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="havenpregnancydetailscmpserviceabcsimpl_client" portType="client:HavenPregnancyDetailsCmpServiceABCSImpl" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>
