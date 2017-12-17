@@ -1,0 +1,18 @@
+Java HotSpot(TM) 64-Bit Server VM warning: ignoring option PermSize=32m; support was removed in 8.0
+Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=256m; support was removed in 8.0
+Dec 14, 2017 12:40:37 PM oracle.security.jps.util.JpsUtil disableAudit
+INFO: JpsUtil: isAuditDisabled set to true
+Dec 14, 2017 12:40:37 PM oracle.security.jps.util.JpsUtil disableAudit
+INFO: JpsUtil: isAuditDisabled set to false
+Dec 14, 2017 12:40:39 PM oracle.mds
+NOTIFICATION: PManager instance is created without multitenancy support as JVM flag "oracle.multitenant.enabled" is not set to enable multitenancy support.
+Dec 14, 2017 12:40:39 PM oracle.security.jps.internal.config.xml.XmlConfigurationFactory initDefaultConfiguration
+SEVERE: java.io.FileNotFoundException: ./config/jps-config.xml (No such file or directory)
+Dec 14, 2017 12:40:39 PM oracle.mds
+NOTIFICATION: Auditing is disabled for component MDS.
+Dec 14, 2017 12:40:39 PM oracle.fabric.common.wsdl.SchemaManager isIncrementalBuildSupported
+INFO: XMLSchema incremental build enabled.
+Dec 14, 2017 12:40:40 PM oracle.integration.platform.blocks.FabricConfigManager <clinit>
+WARNING: JRF is unable to determine the current application server platform.
+Dec 14, 2017 12:40:40 PM oracle.integration.platform.blocks.WLSPlatformConfigurationProvider <clinit>
+WARNING: JRF is unable to determine the current application server platform.
