@@ -83,23 +83,9 @@
   <faultHandlers>
     <catchAll>
       <sequence name="Sequence1">
-        <assign name="Assign2">
-          <copy>
-            <from>"FiveYearBarFaultCode"</from>
-            <to>$FaultVar.code</to>
-          </copy>
-          <copy>
-            <from>ora:getFaultAsString()</from>
-            <to>$FaultVar.summary</to>
-          </copy>
-          <copy>
-            <from>ora:getFaultName()</from>
-            <to>$FaultVar.detail</to>
-          </copy>
-        </assign>
         <assign name="Assign1">
           <copy>
-            <from>$FaultVar.summary</from>
+            <from>ora:getFaultAsString()</from>
             <to>$FiveYearBarService_OutputVariable.OutputParameters/ns2:O_RESPONSE_TEXT</to>
           </copy>
           <copy>
@@ -107,7 +93,7 @@
             <to>$FiveYearBarService_OutputVariable.OutputParameters/ns2:O_RESPONSE_CODE</to>
           </copy>
         </assign>
-        <reply name="Reply1" variable="FiveYearBarService_OutputVariable"
+        <reply name="ReplyErrorResp" variable="FiveYearBarService_OutputVariable"
                partnerLink="fiveyearbarservice_client_ep"
                portType="ns4:FiveYearBarService_ptt"
                operation="FiveYearBarService"/>
@@ -129,7 +115,7 @@
              variable="FiveYearBarService_InputVariable" createInstance="yes"/>
     <assign name="AssignTitle">
       <copy>
-        <from>$HavenFiveYearBarService_InputVariable.InputParameters/ns3:i_IC</from>
+        <from>$FiveYearBarService_InputVariable.InputParameters/ns2:i_IC</from>
         <to>$Title</to>
       </copy>
     </assign>
@@ -138,7 +124,7 @@
         <![CDATA[/*Write your java code below e.g. 
 	System.out.println("Hello, World");
 */
-String title = "FiveYearBarIC:"+(String)getVariableData("Title");        
+String title = "FiveYearID:"+(String)getVariableData("Title");        
 setCompositeInstanceTitle(title);]]>
       </bpelx:exec>
     </extensionActivity>
@@ -160,7 +146,6 @@ setCompositeInstanceTitle(title);]]>
             outputVariable="HavenFiveYearBarService_OutputVariable"
             bpelx:invokeAsDetail="no"/>
     <if name="If1">
-      <documentation/>
       <condition>$HavenFiveYearBarService_OutputVariable.OutputParameters/ns3:O_RESPONSE_CODE="DATA_FOUND"</condition>
       <sequence>
         <assign name="Asn_Format">

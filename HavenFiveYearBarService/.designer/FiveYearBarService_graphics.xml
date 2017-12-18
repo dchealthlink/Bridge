@@ -4,11 +4,11 @@
    <annotationfile/>
    <iconize/>
    <partnerlink_locations>
-      <partnerlink name="fiveyearbarservice_client_ep" x="0" y="446" side="left"/>
-      <partnerlink name="HavenFiveYearBarService" x="691" y="452" side="right"/>
+      <partnerlink name="fiveyearbarservice_client_ep" x="0" y="417" side="left"/>
+      <partnerlink name="HavenFiveYearBarService" x="726" y="452" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,235,821,637" show_swimlanes="true">
-      <layout_item collapsed="false" xpath="/process" type="process" showhandlers="false"/>
+   <graph_layout viewport="0,611,722,252" show_swimlanes="true">
+      <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/faultHandlers/catchAll" type="catchall"/>
       <layout_item collapsed="false" xpath="/process/faultHandlers/catchAll/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>

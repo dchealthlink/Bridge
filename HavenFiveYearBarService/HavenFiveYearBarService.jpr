@@ -100,8 +100,6 @@
          <string v=".xsd"/>
          <string v=".exm"/>
          <string v=".xml"/>
-         <string v=".exm"/>
-         <string v=".xml"/>
       </list>
       <value n="internalEncoding" v="UTF8"/>
       <list n="Javac.commandline.optionlist">
@@ -273,8 +271,8 @@
       </list>
    </hash>
    <hash n="oracle.jdeveloper.model.J2eeSettings">
-      <value n="j2eeWebAppName" v="Haven-HavenFiveYearBarService-webapp"/>
-      <value n="j2eeWebContextRoot" v="Haven-HavenFiveYearBarService-context-root"/>
+      <value n="j2eeWebAppName" v="Test-HavenFiveYearBarService-webapp"/>
+      <value n="j2eeWebContextRoot" v="Test-HavenFiveYearBarService-context-root"/>
    </hash>
    <hash n="oracle.jdeveloper.model.PathsConfiguration">
       <hash n="javaContentSet">
