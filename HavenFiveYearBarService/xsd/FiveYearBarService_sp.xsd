@@ -1,124 +1,71 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
-            vc:minVersion="1.1"
-            xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/sp/FiveYearBarService"
-            targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/FiveYearBarService"
-            elementFormDefault="qualified">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" vc:minVersion="1.1" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/sp/FiveYearBarService" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/FiveYearBarService" elementFormDefault="qualified">
    <xsd:element name="InputParameters">
       <xsd:complexType>
          <xsd:sequence>
-            <xsd:element name="i_IC" type="xsd:decimal" minOccurs="0"
-                         maxOccurs="1" nillable="false"/>
-            <xsd:element name="i_concernroleid" type="xsd:decimal" minOccurs="0"
-                         maxOccurs="1" nillable="false"/>
+            <xsd:element name="i_IC" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="false"/>
+            <xsd:element name="i_concernroleid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="false"/>
          </xsd:sequence>
       </xsd:complexType>
    </xsd:element>
    <xsd:element name="five_year_bar">
       <xsd:complexType>
          <xsd:sequence>
-            <xsd:element name="O_RESPONSE_CODE" type="xsd:string"
-                         minOccurs="0"/>
-            <xsd:element name="O_RESPONSE_TEXT" type="xsd:string"
-                         minOccurs="0"/>
+            <xsd:element name="O_RESPONSE_CODE" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="O_RESPONSE_TEXT" type="xsd:string" minOccurs="0"/>
             <xsd:element name="cs_evidenceID" type="xsd:string" minOccurs="0"/>
             <xsd:element name="cs_comments" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="cs_dhsCaseStatus" type="xsd:string"
-                         minOccurs="0"/>
-            <xsd:element name="cs_isRetroCitizenship" type="xsd:string"
-                         minOccurs="0" maxOccurs="1"/>
-            <xsd:element name="cs_dhsCaseNumber" type="xsd:string"
-                         minOccurs="0"/>
-            <xsd:element name="cs_docsMailDate" type="xsd:string" minOccurs="0"
-                         nillable="true"/>
-            <xsd:element name="cs_endDate" type="xsd:string" minOccurs="0"
-                         nillable="true"/>
-            <xsd:element name="cs_citizenStatusCode" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="cs_exemptedImmigrationStatus" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="cs_isProductTypePresumptive" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="cs_caseParticipantRoleID" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="cs_ParticipantRoleID" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="cs_dhsCaseStatusNew" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="cs_approxDocsReceiveDate" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="cs_dateOfEntry" type="xsd:string" minOccurs="0"
-                         nillable="true"/>
-            <xsd:element name="cs_startDate" type="xsd:string" minOccurs="0"
-                         nillable="true"/>
+            <xsd:element name="cs_dhsCaseStatus" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="cs_isRetroCitizenship" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="cs_dhsCaseNumber" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="cs_docsMailDate" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="cs_endDate" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="cs_citizenStatusCode" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="cs_exemptedImmigrationStatus" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="cs_isProductTypePresumptive" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="cs_caseParticipantRoleID" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="cs_ParticipantRoleID" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="cs_dhsCaseStatusNew" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="cs_approxDocsReceiveDate" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="cs_dateOfEntry" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="cs_startDate" type="xsd:string" minOccurs="0" nillable="true"/>
             <xsd:element name="ss_evidenceID" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="ss_raiseOutStandVerification" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_lprStatusDate" type="xsd:string" minOccurs="0"
-                         nillable="true"/>
-            <xsd:element name="ss_lawfulPresenceVerifiedCode" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_g845MajorCode" type="xsd:string" minOccurs="0"
-                         nillable="true"/>
-            <xsd:element name="ss_fiveYearBarMetCode" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_fiveYearBarApplyStatus" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_errorDescription" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_errorCode" type="xsd:string" minOccurs="0"
-                         nillable="true"/>
-            <xsd:element name="ss_citizenshipVerified" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_webServSftwrVer" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_verificationCode" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_usCitizenCode" type="xsd:string" minOccurs="0"
-                         nillable="true"/>
-            <xsd:element name="ss_startDate" type="xsd:string" minOccurs="0"
-                         nillable="true"/>
-            <xsd:element name="ss_qualfiedNonCitizenCode" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_pendStatusDesc" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_nonCitizenStatus" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_nonCitEntryDate" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_nonCitCoaCode" type="xsd:string" minOccurs="0"
-                         nillable="true"/>
-            <xsd:element name="ss_lawfulPresenceVerified" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_grantDate" type="xsd:string" minOccurs="0"
-                         nillable="true"/>
-            <xsd:element name="ss_fiveYearBarMetStatus" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_fiveYearBarApplyCode" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_endDate" type="xsd:string" minOccurs="0"
-                         nillable="true"/>
-            <xsd:element name="ss_eligStatementTxt" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_eligStatementCd" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_dhsCaseStatus" type="xsd:string" minOccurs="0"
-                         nillable="true"/>
-            <xsd:element name="ss_dhsCaseNumber" type="xsd:string" minOccurs="0"
-                         nillable="true"/>
-            <xsd:element name="ss_dhsAutotriggerStepTwo" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_dhsAutotriggerStepThree" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_coaCode" type="xsd:string" minOccurs="0"
-                         nillable="true"/>
-            <xsd:element name="ss_citizenshipSource" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_caseParticipantRoleID" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
-            <xsd:element name="ss_ParticipantRoleID" type="xsd:string"
-                         minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_raiseOutStandVerification" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_lprStatusDate" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_lawfulPresenceVerifiedCode" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_lawfulPresenceVerifiedDesc" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_g845MajorCode" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_fiveYearBarMetCode" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_fiveYearBarMetDesc" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_fiveYearBarMetStatus" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_errorDescription" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_errorCode" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_citizenshipVerified" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_webServSftwrVer" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_verificationCode" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_usCitizenCode" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_startDate" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_qualfiedNonCitizenCode" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_pendStatusDesc" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_nonCitizenStatus" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_nonCitEntryDate" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_nonCitCoaCode" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_lawfulPresenceVerified" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_grantDate" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_fiveYearBarApplyStatus" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_fiveYearBarApplyDesc" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_fiveYearBarApplyCode" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_endDate" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_eligStatementTxt" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_eligStatementCd" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_dhsCaseStatus" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_dhsCaseNumber" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_dhsAutotriggerStepTwo" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_dhsAutotriggerStepThree" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_coaCode" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_citizenshipSource" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_caseParticipantRoleID" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="ss_ParticipantRoleID" type="xsd:string" minOccurs="0" nillable="true"/>
          </xsd:sequence>
       </xsd:complexType>
    </xsd:element>

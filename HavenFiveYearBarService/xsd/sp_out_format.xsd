@@ -1,116 +1,73 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
-           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
    <xs:element name="FiveYearBar">
       <xs:complexType>
          <xs:sequence>
-            <xs:element name="FiveYearBar_info" maxOccurs="unbounded"
-                        minOccurs="0">
+            <xs:element name="FiveYearBar_info" maxOccurs="unbounded" minOccurs="0">
                <xs:complexType>
                   <xs:sequence>
-                     <xs:element name="evidenceID_cs" maxOccurs="unbounded"
-                                 minOccurs="0">
+                     <xs:element name="evidenceID_cs" maxOccurs="unbounded" minOccurs="0">
                         <xs:complexType>
                            <xs:sequence>
-                              <xs:element type="xs:string"
-                                          name="cs_evidenceID"/>
+                              <xs:element type="xs:string" name="cs_evidenceID"/>
                               <xs:element type="xs:string" name="cs_comments"/>
-                              <xs:element type="xs:string"
-                                          name="cs_dhsCaseStatus"/>
-                              <xs:element type="xs:string"
-                                          name="cs_isRetroCitizenship"/>
-                              <xs:element type="xs:string"
-                                          name="cs_dhsCaseNumber"/>
-                              <xs:element type="xs:string"
-                                          name="cs_docsMailDate"/>
+                              <xs:element type="xs:string" name="cs_dhsCaseStatus"/>
+                              <xs:element type="xs:string" name="cs_isRetroCitizenship"/>
+                              <xs:element type="xs:string" name="cs_dhsCaseNumber"/>
+                              <xs:element type="xs:string" name="cs_docsMailDate"/>
                               <xs:element type="xs:string" name="cs_endDate"/>
-                              <xs:element type="xs:string"
-                                          name="cs_citizenStatusCode"/>
-                              <xs:element type="xs:string"
-                                          name="cs_exemptedImmigrationStatus"/>
-                              <xs:element type="xs:string"
-                                          name="cs_isProductTypePresumptive"/>
-                              <xs:element type="xs:string"
-                                          name="cs_caseParticipantRoleID"/>
-                              <xs:element type="xs:string"
-                                          name="cs_ParticipantRoleID"/>
-                              <xs:element type="xs:string"
-                                          name="cs_dhsCaseStatusNew"/>
-                              <xs:element type="xs:string"
-                                          name="cs_approxDocsReceiveDate"/>
-                              <xs:element type="xs:string"
-                                          name="cs_dateOfEntry"/>
+                              <xs:element type="xs:string" name="cs_citizenStatusCode"/>
+                              <xs:element type="xs:string" name="cs_exemptedImmigrationStatus"/>
+                              <xs:element type="xs:string" name="cs_isProductTypePresumptive"/>
+                              <xs:element type="xs:string" name="cs_caseParticipantRoleID"/>
+                              <xs:element type="xs:string" name="cs_ParticipantRoleID"/>
+                              <xs:element type="xs:string" name="cs_dhsCaseStatusNew"/>
+                              <xs:element type="xs:string" name="cs_approxDocsReceiveDate"/>
+                              <xs:element type="xs:string" name="cs_dateOfEntry"/>
                               <xs:element type="xs:string" name="cs_startDate"/>
                            </xs:sequence>
                         </xs:complexType>
                      </xs:element>
-                     <xs:element name="evidenceID_ss" maxOccurs="unbounded"
-                                 minOccurs="0">
+                     <xs:element name="evidenceID_ss" maxOccurs="unbounded" minOccurs="0">
                         <xs:complexType>
                            <xs:sequence>
-                              <xs:element type="xs:string"
-                                          name="ss_evidenceID"/>
-                              <xs:element type="xs:string"
-                                          name="ss_raiseOutStandVerification"/>
-                              <xs:element type="xs:string"
-                                          name="ss_lprStatusDate"/>
-                              <xs:element type="xs:string"
-                                          name="ss_lawfulPresenceVerifiedCode"/>
-                              <xs:element type="xs:string"
-                                          name="ss_g845MajorCode"/>
-                              <xs:element type="xs:string"
-                                          name="ss_fiveYearBarMetCode"/>
-                              <xs:element type="xs:string"
-                                          name="ss_fiveYearBarApplyStatus"/>
-                              <xs:element type="xs:string"
-                                          name="ss_errorDescription"/>
+                              <xs:element type="xs:string" name="ss_evidenceID"/>
+                              <xs:element type="xs:string" name="ss_raiseOutStandVerification"/>
+                              <xs:element type="xs:string" name="ss_lprStatusDate"/>
+                              <xs:element type="xs:string" name="ss_lawfulPresenceVerifiedCode"/>
+                              <xs:element type="xs:string" name="ss_lawfulPresenceVerifiedDesc"/>
+                              <xs:element type="xs:string" name="ss_g845MajorCode"/>
+                              <xs:element type="xs:string" name="ss_fiveYearBarMetCode"/>
+                              <xs:element type="xs:string" name="ss_fiveYearBarMetDesc"/>
+                              <xs:element type="xs:string" name="ss_fiveYearBarMetStatus"/>
+                              <xs:element type="xs:string" name="ss_errorDescription"/>
                               <xs:element type="xs:string" name="ss_errorCode"/>
-                              <xs:element type="xs:string"
-                                          name="ss_citizenshipVerified"/>
-                              <xs:element type="xs:string"
-                                          name="ss_webServSftwrVer"/>
-                              <xs:element type="xs:string"
-                                          name="ss_verificationCode"/>
-                              <xs:element type="xs:string"
-                                          name="ss_usCitizenCode"/>
+                              <xs:element type="xs:string" name="ss_citizenshipVerified"/>
+                              <xs:element type="xs:string" name="ss_webServSftwrVer"/>
+                              <xs:element type="xs:string" name="ss_verificationCode"/>
+                              <xs:element type="xs:string" name="ss_usCitizenCode"/>
                               <xs:element type="xs:string" name="ss_startDate"/>
-                              <xs:element type="xs:string"
-                                          name="ss_qualfiedNonCitizenCode"/>
-                              <xs:element type="xs:string"
-                                          name="ss_pendStatusDesc"/>
-                              <xs:element type="xs:string"
-                                          name="ss_nonCitizenStatus"/>
-                              <xs:element type="xs:string"
-                                          name="ss_nonCitEntryDate"/>
-                              <xs:element type="xs:string"
-                                          name="ss_nonCitCoaCode"/>
-                              <xs:element type="xs:string"
-                                          name="ss_lawfulPresenceVerified"/>
+                              <xs:element type="xs:string" name="ss_qualfiedNonCitizenCode"/>
+                              <xs:element type="xs:string" name="ss_pendStatusDesc"/>
+                              <xs:element type="xs:string" name="ss_nonCitizenStatus"/>
+                              <xs:element type="xs:string" name="ss_nonCitEntryDate"/>
+                              <xs:element type="xs:string" name="ss_nonCitCoaCode"/>
+                              <xs:element type="xs:string" name="ss_lawfulPresenceVerified"/>
                               <xs:element type="xs:string" name="ss_grantDate"/>
-                              <xs:element type="xs:string"
-                                          name="ss_fiveYearBarMetStatus"/>
-                              <xs:element type="xs:string"
-                                          name="ss_fiveYearBarApplyCode"/>
+                              <xs:element type="xs:string" name="ss_fiveYearBarApplyStatus"/>
+                              <xs:element type="xs:string" name="ss_fiveYearBarApplyCode"/>
+                              <xs:element type="xs:string" name="ss_fiveYearBarApplyDesc"/>
                               <xs:element type="xs:string" name="ss_endDate"/>
-                              <xs:element type="xs:string"
-                                          name="ss_eligStatementTxt"/>
-                              <xs:element type="xs:string"
-                                          name="ss_eligStatementCd"/>
-                              <xs:element type="xs:string"
-                                          name="ss_dhsCaseStatus"/>
-                              <xs:element type="xs:string"
-                                          name="ss_dhsCaseNumber"/>
-                              <xs:element type="xs:string"
-                                          name="ss_dhsAutotriggerStepTwo"/>
-                              <xs:element type="xs:string"
-                                          name="ss_dhsAutotriggerStepThree"/>
+                              <xs:element type="xs:string" name="ss_eligStatementTxt"/>
+                              <xs:element type="xs:string" name="ss_eligStatementCd"/>
+                              <xs:element type="xs:string" name="ss_dhsCaseStatus"/>
+                              <xs:element type="xs:string" name="ss_dhsCaseNumber"/>
+                              <xs:element type="xs:string" name="ss_dhsAutotriggerStepTwo"/>
+                              <xs:element type="xs:string" name="ss_dhsAutotriggerStepThree"/>
                               <xs:element type="xs:string" name="ss_coaCode"/>
-                              <xs:element type="xs:string"
-                                          name="ss_citizenshipSource"/>
-                              <xs:element type="xs:string"
-                                          name="ss_caseParticipantRoleID"/>
-                              <xs:element type="xs:string"
-                                          name="ss_ParticipantRoleID"/>
+                              <xs:element type="xs:string" name="ss_citizenshipSource"/>
+                              <xs:element type="xs:string" name="ss_caseParticipantRoleID"/>
+                              <xs:element type="xs:string" name="ss_ParticipantRoleID"/>
                            </xs:sequence>
                         </xs:complexType>
                      </xs:element>
@@ -121,7 +78,3 @@
       </xs:complexType>
    </xs:element>
 </xs:schema>
-                                                
-                                                
-                                 
-           

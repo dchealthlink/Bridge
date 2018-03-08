@@ -21,7 +21,7 @@
    <faultHandlers>
       <catchAll>
          <sequence name="Sequence1">
-            <assign name="Assign1">
+            <assign name="AssignFault">
                <copy>
                   <from>"PregnancyFaultCode"</from>
                   <to>$FaultVar.code</to>
@@ -35,7 +35,7 @@
                   <to>$FaultVar.detail</to>
                </copy>
             </assign>
-            <assign name="Assign2">
+            <assign name="ErrorResp">
                <copy>
                   <from>"FAILURE-500"</from>
                   <to>$outputVariable.payload/ns5:ResponseCode</to>
@@ -45,7 +45,7 @@
                   <to>$outputVariable.payload/ns5:ResponseText</to>
                </copy>
             </assign>
-            <reply name="Reply1" variable="outputVariable"
+            <reply name="ReplyError" variable="outputVariable"
                    partnerLink="havenpregnancydetailscmpserviceabcsimpl_client"
                    portType="client:HavenPregnancyDetailsCmpServiceABCSImpl"
                    operation="process"/>

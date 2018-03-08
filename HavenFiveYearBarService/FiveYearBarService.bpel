@@ -1,211 +1,95 @@
-<?xml version = "1.0" encoding = "UTF-8" ?>
-<!--
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  Oracle JDeveloper BPEL Designer 
-  
-  Created: Thu Aug 24 22:05:25 EDT 2017
-  Author:  rahulchitturi
-  Type: BPEL 2.0 Process
-  Purpose: Synchronous BPEL Process
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
--->
-<process name="FiveYearBarService"
-         targetNamespace="http://xmlns.oracle.com/Haven/HavenFiveYearBarService/FiveYearBarService"
-         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
-         xmlns:client="http://xmlns.oracle.com/Haven/HavenFiveYearBarService/FiveYearBarService"
-         xmlns:ora="http://schemas.oracle.com/xpath/extension"
-         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
-         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
-         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenFiveYearBarService/HavenFiveYearBarService"
-         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/sp/HavenFiveYearBarService"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/sp/FiveYearBarService"
-         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
-         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
-         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
-         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
-         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
-         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
-         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
-         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
-         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
-         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
-         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenCuramUserLookupCmpService/FiveYearBarService"
-         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <import namespace="http://schemas.oracle.com/bpel/extension"
-          location="RuntimeFault.wsdl"
-          importType="http://schemas.xmlsoap.org/wsdl/"/>
-  <import location="xsd/sp_out_format.xsd"
-          importType="http://www.w3.org/2001/XMLSchema"/>
-  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenCuramUserLookupCmpService/FiveYearBarService"
-          location="FiveYearBarService.wsdl"
-          importType="http://schemas.xmlsoap.org/wsdl/"/>
-  <!-- 
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        PARTNERLINKS                                                      
-        List of services participating in this BPEL process               
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    -->
-  <partnerLinks>
-    <!-- 
-      The 'client' role represents the requester of this service. It is 
-      used for callback. The location and correlation information associated
-      with the client role are automatically set using WS-Addressing.
-    -->
-    <partnerLink name="HavenFiveYearBarService"
-                 partnerLinkType="ns1:HavenFiveYearBarService_plt"
-                 partnerRole="HavenFiveYearBarService_role"/>
-    <partnerLink name="fiveyearbarservice_client_ep"
-                 partnerLinkType="ns4:fiveyearbarservice_client_ep"
-                 myRole="FiveYearBarService_ptt"/>
-  </partnerLinks>
-  <!-- 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      VARIABLES                                                        
-      List of messages and XML documents used within this BPEL process 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  -->
-  <variables>
-    <!-- Reference to the message passed as input during initiation -->
-    <!-- Reference to the message that will be returned to the requester-->
-    <variable name="HavenFiveYearBarService_InputVariable"
-              messageType="ns1:args_in_msg"/>
-    <variable name="HavenFiveYearBarService_OutputVariable"
-              messageType="ns1:args_out_msg"/>
-    <variable name="FiveYearBarService_InputVariable"
-              messageType="ns4:args_in_msg"/>
-    <variable name="FiveYearBarService_OutputVariable"
-              messageType="ns4:args_out_msg"/>
-    <variable name="FormatOutput" element="FiveYearBar"/>
-    <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
-    <variable name="Title" type="xsd:string"/>
-  </variables>
-  <faultHandlers>
-    <catchAll>
-      <sequence name="Sequence1">
-        <assign name="Assign2">
-          <copy>
-            <from>"FiveYearBarFaultCode"</from>
-            <to>$FaultVar.code</to>
-          </copy>
-          <copy>
-            <from>ora:getFaultAsString()</from>
-            <to>$FaultVar.summary</to>
-          </copy>
-          <copy>
-            <from>ora:getFaultName()</from>
-            <to>$FaultVar.detail</to>
-          </copy>
-        </assign>
-        <assign name="Assign1">
-          <copy>
-            <from>$FaultVar.summary</from>
-            <to>$FiveYearBarService_OutputVariable.OutputParameters/ns2:O_RESPONSE_TEXT</to>
-          </copy>
-          <copy>
-            <from>"FAILURE-500"</from>
-            <to>$FiveYearBarService_OutputVariable.OutputParameters/ns2:O_RESPONSE_CODE</to>
-          </copy>
-        </assign>
-        <reply name="Reply1" variable="FiveYearBarService_OutputVariable"
-               partnerLink="fiveyearbarservice_client_ep"
-               portType="ns4:FiveYearBarService_ptt"
-               operation="FiveYearBarService"/>
-      </sequence>
-    </catchAll>
-  </faultHandlers>
-  <!-- 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-     ORCHESTRATION LOGIC                                               
-     Set of activities coordinating the flow of messages across the    
-     services integrated within this business process                  
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  -->
-  <sequence name="main">
-    <!-- Receive input from requestor. (Note: This maps to operation defined in FiveYearBarService.wsdl) -->
-    <receive name="Request" partnerLink="fiveyearbarservice_client_ep"
-             portType="ns4:FiveYearBarService_ptt"
-             operation="FiveYearBarService"
-             variable="FiveYearBarService_InputVariable" createInstance="yes"/>
-    <assign name="AssignTitle">
-      <copy>
-        <from>$HavenFiveYearBarService_InputVariable.InputParameters/ns3:i_IC</from>
-        <to>$Title</to>
-      </copy>
-    </assign>
-    <extensionActivity>
-      <bpelx:exec name="Java_Embedding1" language="java">
-        <![CDATA[/*Write your java code below e.g. 
+<?xml version='1.0' encoding='UTF-8'?>
+<process name="FiveYearBarService" targetNamespace="http://xmlns.oracle.com/Haven/HavenFiveYearBarService/FiveYearBarService" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://xmlns.oracle.com/Haven/HavenFiveYearBarService/FiveYearBarService" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenFiveYearBarService/HavenFiveYearBarService" xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/sp/HavenFiveYearBarService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/sp/FiveYearBarService" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenCuramUserLookupCmpService/FiveYearBarService" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://schemas.oracle.com/bpel/extension" location="RuntimeFault.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+   <import location="xsd/sp_out_format.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+   <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Haven/HavenCuramUserLookupCmpService/FiveYearBarService" location="FiveYearBarService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+   <partnerLinks>
+      <partnerLink name="HavenFiveYearBarService" partnerLinkType="ns1:HavenFiveYearBarService_plt" partnerRole="HavenFiveYearBarService_role"/>
+      <partnerLink name="fiveyearbarservice_client_ep" partnerLinkType="ns4:fiveyearbarservice_client_ep" myRole="FiveYearBarService_ptt"/>
+   </partnerLinks>
+   <variables>
+      <variable name="HavenFiveYearBarService_InputVariable" messageType="ns1:args_in_msg"/>
+      <variable name="HavenFiveYearBarService_OutputVariable" messageType="ns1:args_out_msg"/>
+      <variable name="FiveYearBarService_InputVariable" messageType="ns4:args_in_msg"/>
+      <variable name="FiveYearBarService_OutputVariable" messageType="ns4:args_out_msg"/>
+      <variable name="FormatOutput" element="FiveYearBar"/>
+      <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
+      <variable name="Title" type="xsd:string"/>
+   </variables>
+   <faultHandlers>
+      <catchAll>
+         <sequence name="Sequence1">
+            <assign name="Assign1">
+               <copy>
+                  <from>ora:getFaultAsString()</from>
+                  <to>$FiveYearBarService_OutputVariable.OutputParameters/ns2:O_RESPONSE_TEXT</to>
+               </copy>
+               <copy>
+                  <from>"FAILURE-500"</from>
+                  <to>$FiveYearBarService_OutputVariable.OutputParameters/ns2:O_RESPONSE_CODE</to>
+               </copy>
+            </assign>
+            <reply name="ReplyErrorResp" variable="FiveYearBarService_OutputVariable" partnerLink="fiveyearbarservice_client_ep" portType="ns4:FiveYearBarService_ptt" operation="FiveYearBarService"/>
+         </sequence>
+      </catchAll>
+   </faultHandlers>
+   <sequence name="main">
+      <receive name="Request" partnerLink="fiveyearbarservice_client_ep" portType="ns4:FiveYearBarService_ptt" operation="FiveYearBarService" variable="FiveYearBarService_InputVariable" createInstance="yes"/>
+      <assign name="AssignTitle">
+         <copy>
+            <from>$FiveYearBarService_InputVariable.InputParameters/ns2:i_IC</from>
+            <to>$Title</to>
+         </copy>
+      </assign>
+      <extensionActivity>
+         <bpelx:exec name="Java_Embedding1" language="java"><![CDATA[/*Write your java code below e.g. 
 	System.out.println("Hello, World");
 */
-String title = "FiveYearBarIC:"+(String)getVariableData("Title");        
-setCompositeInstanceTitle(title);]]>
-      </bpelx:exec>
-    </extensionActivity>
-    <assign name="Asn_request">
-      <copy>
-        <from>$FiveYearBarService_InputVariable.InputParameters/ns2:i_IC</from>
-        <to>$HavenFiveYearBarService_InputVariable.InputParameters/ns3:i_IC</to>
-      </copy>
-      <copy>
-        <from>$FiveYearBarService_InputVariable.InputParameters/ns2:i_concernroleid</from>
-        <to>$HavenFiveYearBarService_InputVariable.InputParameters/ns3:i_concernroleid</to>
-      </copy>
-    </assign>
-    <invoke name="InvokeFiveYearBarService"
-            partnerLink="HavenFiveYearBarService"
-            portType="ns1:HavenFiveYearBarService_ptt"
-            operation="HavenFiveYearBarService"
-            inputVariable="HavenFiveYearBarService_InputVariable"
-            outputVariable="HavenFiveYearBarService_OutputVariable"
-            bpelx:invokeAsDetail="no"/>
-    <if name="If1">
-      <documentation/>
-      <condition>$HavenFiveYearBarService_OutputVariable.OutputParameters/ns3:O_RESPONSE_CODE="DATA_FOUND"</condition>
-      <sequence>
-        <assign name="Asn_Format">
-          <copy>
-            <from>oraext:parseEscapedXML($HavenFiveYearBarService_OutputVariable.OutputParameters/ns3:O_USER_DETAILS_CLOB)</from>
-            <to>$FormatOutput</to>
-          </copy>
-        </assign>
-        <assign name="Xform_Response">
-          <bpelx:annotation>
-            <bpelx:pattern patternName="bpelx:transformation"/>
-          </bpelx:annotation>
-          <copy>
-            <from>ora:doXSLTransformForDoc("xsl/Xform_Response.xsl", $HavenFiveYearBarService_OutputVariable.OutputParameters, "FormatOutput", $FormatOutput)</from>
-            <to variable="FiveYearBarService_OutputVariable"
-                part="OutputParameters"/>
-          </copy>
-        </assign>
-      </sequence>
-      <else>
-        <assign name="Transform1">
-          <bpelx:annotation>
-            <bpelx:pattern patternName="bpelx:transformation"/>
-          </bpelx:annotation>
-          <copy>
-            <from>ora:doXSLTransformForDoc("xsl/Transformation_2.xsl", $FormatOutput, "FiveYearBarService_OutputVariable.OutputParameters", $FiveYearBarService_OutputVariable.OutputParameters)</from>
-            <to variable="FiveYearBarService_OutputVariable"
-                part="OutputParameters"/>
-          </copy>
-        </assign>
-      </else>
-    </if>
-    <!--<assign name="Transform1">
-      <bpelx:annotation>
-        <bpelx:pattern patternName="bpelx:transformation"/>
-      </bpelx:annotation>
-      <copy>
-        <from>ora:doXSLTransformForDoc("xsl/Transformation_1.xsl", $FiveYearBarService_OutputVariable.OutputParameters)</from>
-        <to variable="FiveYearBarService_OutputVariable"
-            part="OutputParameters"/>
-      </copy>
-    </assign> -->
-    <!-- Generate reply to synchronous request -->
-    <reply name="FiveYear_Resposne" partnerLink="fiveyearbarservice_client_ep"
-           portType="ns4:FiveYearBarService_ptt" operation="FiveYearBarService"
-           variable="FiveYearBarService_OutputVariable"/>
-  </sequence>
+String title = "FiveYearID:"+(String)getVariableData("Title");        
+setCompositeInstanceTitle(title);]]></bpelx:exec>
+      </extensionActivity>
+      <assign name="Asn_request">
+         <copy>
+            <from>$FiveYearBarService_InputVariable.InputParameters/ns2:i_IC</from>
+            <to>$HavenFiveYearBarService_InputVariable.InputParameters/ns3:i_IC</to>
+         </copy>
+         <copy>
+            <from>$FiveYearBarService_InputVariable.InputParameters/ns2:i_concernroleid</from>
+            <to>$HavenFiveYearBarService_InputVariable.InputParameters/ns3:i_concernroleid</to>
+         </copy>
+      </assign>
+      <invoke name="InvokeFiveYearBarService" partnerLink="HavenFiveYearBarService" portType="ns1:HavenFiveYearBarService_ptt" operation="HavenFiveYearBarService" inputVariable="HavenFiveYearBarService_InputVariable" outputVariable="HavenFiveYearBarService_OutputVariable" bpelx:invokeAsDetail="no"/>
+      <if name="If1">
+         <condition>$HavenFiveYearBarService_OutputVariable.OutputParameters/ns3:O_RESPONSE_CODE="DATA_FOUND"</condition>
+         <sequence>
+            <assign name="Asn_Format">
+               <copy>
+                  <from>oraext:parseEscapedXML($HavenFiveYearBarService_OutputVariable.OutputParameters/ns3:O_USER_DETAILS_CLOB)</from>
+                  <to>$FormatOutput</to>
+               </copy>
+            </assign>
+            <assign name="Xform_Response">
+               <bpelx:annotation>
+                  <bpelx:pattern patternName="bpelx:transformation"/>
+               </bpelx:annotation>
+               <copy>
+                  <from>ora:doXSLTransformForDoc("xsl/Xform_Response.xsl", $HavenFiveYearBarService_OutputVariable.OutputParameters, "FormatOutput", $FormatOutput)</from>
+                  <to variable="FiveYearBarService_OutputVariable" part="OutputParameters"/>
+               </copy>
+            </assign>
+         </sequence>
+         <else>
+            <assign name="Transform1">
+               <bpelx:annotation>
+                  <bpelx:pattern patternName="bpelx:transformation"/>
+               </bpelx:annotation>
+               <copy>
+                  <from>ora:doXSLTransformForDoc("xsl/Transformation_2.xsl", $FormatOutput, "FiveYearBarService_OutputVariable.OutputParameters", $FiveYearBarService_OutputVariable.OutputParameters)</from>
+                  <to variable="FiveYearBarService_OutputVariable" part="OutputParameters"/>
+               </copy>
+            </assign>
+         </else>
+      </if>
+      <reply name="FiveYear_Resposne" partnerLink="fiveyearbarservice_client_ep" portType="ns4:FiveYearBarService_ptt" operation="FiveYearBarService" variable="FiveYearBarService_OutputVariable"/>
+   </sequence>
 </process>
