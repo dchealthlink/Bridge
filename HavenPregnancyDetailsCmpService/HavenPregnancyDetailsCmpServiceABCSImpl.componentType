@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<componentType xmlns="http://xmlns.oracle.com/sca/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ui="http://xmlns.oracle.com/soa/designer/">
+   <service name="havenpregnancydetailscmpserviceabcsimpl_client" ui:wsdlLocation="HavenPregnancyDetailsCmpServiceABCSImpl.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/Test/HavenPregnancyDetailsCmpService/HavenPregnancyDetailsCmpServiceABCSImpl#wsdl.interface(HavenPregnancyDetailsCmpServiceABCSImpl)"/>
+   </service>
+   <reference name="InvokePregnancyDetSP" ui:wsdlLocation="InvokePregnancyDetSP.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/Test/HavenPregnancyDetailsCmpService/InvokePregnancyDetSP#wsdl.interface(InvokePregnancyDetSP_ptt)"/>
+   </reference>
+</componentType>

@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://openhbx.gov/haven/Fostercaredetails/response" xmlns="https://openhbx.gov/haven/Fostercaredetails/response">
+   <xs:element name="participant_fostercare">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element type="xs:string" name="ResponseCode"/>
+            <xs:element type="xs:string" name="ResponseText"/>
+            <xs:element name="fostercare">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element type="xs:string" name="comments"/>
+                     <xs:element type="xs:string" name="ageWhenLeavingFosterCare"/>
+                     <xs:element type="xs:string" name="enrolledOnMedicaid"/>
+                     <xs:element type="xs:string" name="isFosterCareVerified"/>
+                     <xs:element type="xs:string" name="fosterCareState"/>
+                     <xs:element type="xs:string" name="start_date"/>
+                     <xs:element type="xs:string" name="end_date"/>
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+</xs:schema>

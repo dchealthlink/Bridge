@@ -1,0 +1,40 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="FosterCareDetailsCMPServiceABCSImpl"
+     targetNamespace="http://xmlns.oracle.com/Test/FosterCareDetailsCMPService/FosterCareDetailsCMPServiceABCSImpl"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="http://xmlns.oracle.com/Test/FosterCareDetailsCMPService/FosterCareDetailsCMPServiceABCSImpl"
+     xmlns:ns2="https://openhbx.gov/haven/Fostercaredetails/response"
+     xmlns:ns1="https://openhbx.gov/haven/Fostercaredetails/request"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:ns4="http://schemas.oracle.com/bpel/extension"
+     xmlns:ns3="https://openhbx.gov/haven/Fostercaredetails/spfomrat"
+    >
+    <plnk:partnerLinkType name="FosterCareDetailsCMPServiceABCSImpl">
+        <plnk:role name="FosterCareDetailsCMPServiceABCSImplProvider" portType="client:FosterCareDetailsCMPServiceABCSImpl"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://schemas.oracle.com/bpel/extension" location="RuntimeFault.wsdl"/>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="https://openhbx.gov/haven/Fostercaredetails/request" schemaLocation="xsd/FostercareInput.xsd"/>
+        </schema>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="https://openhbx.gov/haven/Fostercaredetails/response" schemaLocation="xsd/FosterCareOutput.xsd"/>
+        </schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="https://openhbx.gov/haven/Fostercaredetails/spfomrat" schemaLocation="xsd/FormatSP.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="FosterCareDetailsCMPServiceABCSImplRequestMessage">
+        <wsdl:part name="payload" element="ns1:FostercareInput"/>
+    </wsdl:message>
+    <wsdl:message name="FosterCareDetailsCMPServiceABCSImplResponseMessage">
+        <wsdl:part name="payload" element="ns2:participant_fostercare"/>
+    </wsdl:message>
+    <wsdl:portType name="FosterCareDetailsCMPServiceABCSImpl">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:FosterCareDetailsCMPServiceABCSImplRequestMessage"/>
+            <wsdl:output message="client:FosterCareDetailsCMPServiceABCSImplResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

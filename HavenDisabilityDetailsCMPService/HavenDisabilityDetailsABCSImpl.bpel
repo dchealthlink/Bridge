@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<process name="HavenDisabilityDetailsABCSImpl" targetNamespace="http://xmlns.oracle.com/Test/HavenDisabilityDetailsCMPService/HavenDisabilityDetailsABCSImpl" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://xmlns.oracle.com/Test/HavenDisabilityDetailsCMPService/HavenDisabilityDetailsABCSImpl" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/Test/HavenDisabilityDetailsCMPService/InvokeDisabilitySP" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns2="https://openhbx.gov/haven/Disabilitydetails/request" xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/sp/InvokeDisabilitySP" xmlns:ns4="https://openhbx.gov/haven/Disabilitydetails/response" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+   <import namespace="http://schemas.oracle.com/bpel/extension"
+           location="RuntimeFault.wsdl"
+           importType="http://schemas.xmlsoap.org/wsdl/"/>
+   <import namespace="http://xmlns.oracle.com/Test/HavenDisabilityDetailsCMPService/HavenDisabilityDetailsABCSImpl" location="HavenDisabilityDetailsABCSImpl.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+   <partnerLinks>
+      <partnerLink name="havendisabilitydetailsabcsimpl_client" partnerLinkType="client:HavenDisabilityDetailsABCSImpl" myRole="HavenDisabilityDetailsABCSImplProvider"/>
+      <partnerLink name="InvokeDisabilitySP" partnerLinkType="ns1:InvokeDisabilitySP_plt" partnerRole="InvokeDisabilitySP_role"/>
+   </partnerLinks>
+   <variables>
+      <variable name="inputVariable" messageType="client:HavenDisabilityDetailsABCSImplRequestMessage"/>
+      <variable name="outputVariable" messageType="client:HavenDisabilityDetailsABCSImplResponseMessage"/>
+      <variable name="InvokeDisabilitySP_InputVariable" messageType="ns1:args_in_msg"/>
+      <variable name="InvokeDisabilitySP_OutputVariable" messageType="ns1:args_out_msg"/>
+      <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
+   </variables>
+   <faultHandlers>
+      <catchAll>
+         <sequence name="Sequence1">
+            <assign name="AssignFault">
+               <copy>
+                  <from>"DisabilityFaultCode"</from>
+                  <to>$FaultVar.code</to>
+               </copy>
+               <copy>
+                  <from>ora:getFaultAsString()</from>
+                  <to>$FaultVar.summary</to>
+               </copy>
+               <copy>
+                  <from>ora:getFaultName()</from>
+                  <to>$FaultVar.detail</to>
+               </copy>
+            </assign>
+            <assign name="AssignErrorResp">
+               <copy>
+                  <from>"FAILURE-500"</from>
+                  <to>$outputVariable.payload/ns4:ResponseCode</to>
+               </copy>
+               <copy>
+                  <from>$FaultVar.summary</from>
+                  <to>$outputVariable.payload/ns4:ResponseText</to>
+               </copy>
+            </assign>
+            <reply name="ReplyError" variable="outputVariable"
+                   partnerLink="havendisabilitydetailsabcsimpl_client"
+                   portType="client:HavenDisabilityDetailsABCSImpl"
+                   operation="process"/>
+         </sequence>
+      </catchAll>
+   </faultHandlers>
+   <sequence name="main">
+      <receive name="receiveInput" partnerLink="havendisabilitydetailsabcsimpl_client" portType="client:HavenDisabilityDetailsABCSImpl" operation="process" variable="inputVariable" createInstance="yes"/>
+      <assign name="AssignRequest">
+         <copy>
+            <from>$inputVariable.payload/ns2:I_CONCERNROLEID</from>
+            <to>$InvokeDisabilitySP_InputVariable.InputParameters/ns3:I_CONCERNROLEID</to>
+         </copy>
+      </assign>
+      <invoke name="InvokeDisabilitySP" partnerLink="InvokeDisabilitySP" portType="ns1:InvokeDisabilitySP_ptt" operation="InvokeDisabilitySP" inputVariable="InvokeDisabilitySP_InputVariable" outputVariable="InvokeDisabilitySP_OutputVariable" bpelx:invokeAsDetail="no"/>
+      <assign name="AssignResponse">
+         <copy>
+            <from>$InvokeDisabilitySP_OutputVariable.OutputParameters/ns3:O_RESPONSE_CODE</from>
+            <to>$outputVariable.payload/ns4:ResponseCode</to>
+         </copy>
+         <copy>
+            <from>$InvokeDisabilitySP_OutputVariable.OutputParameters/ns3:O_RESPONSE_TEXT</from>
+            <to>$outputVariable.payload/ns4:ResponseText</to>
+         </copy>
+         <copy>
+            <from>oraext:parseXML($InvokeDisabilitySP_OutputVariable.OutputParameters/ns3:O_USER_DETAILS_CLOB)</from>
+            <to>$outputVariable.payload/ns4:disabilities</to>
+         </copy>
+      </assign>
+      <reply name="replyOutput" partnerLink="havendisabilitydetailsabcsimpl_client" portType="client:HavenDisabilityDetailsABCSImpl" operation="process" variable="outputVariable"/>
+   </sequence>
+</process>

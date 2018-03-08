@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<adapter-config name="InvokePregnancyDetSP" adapter="Database Adapter" wsdlLocation="InvokePregnancyDetSP.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+   <connection-factory location="eis/DB/curamtohaven" UIConnectionName="CuramUAT" adapterRef=""/>
+   <endpoint-interaction portType="InvokePregnancyDetSP_ptt" operation="InvokePregnancyDetSP">
+      <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+         <property name="SchemaName" value="MAMATHA"/>
+         <property name="ProcedureName" value="PREGNANCY_GIVEN_CONCERNROLEID"/>
+         <property name="GetActiveUnitOfWork" value="false"/>
+      </interaction-spec>
+      <output/>
+   </endpoint-interaction>
+</adapter-config>
